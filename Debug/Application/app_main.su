@@ -1,0 +1,6 @@
+../Application/app_main.cpp:29:6:void UniqueID::CharToHexasc(uint8_t*, uint8_t)	16	static
+../Application/app_main.cpp:35:7:char* UniqueID::GetUid()	24	static
+../Application/app_main.cpp:62:6:void app_mainCpp()	8	static
+../Application/app_main.cpp:80:10:void app_mainC()	8	static
+../Application/app_main.cpp:86:1:void __static_initialization_and_destruction_0(int, int)	24	static
+../Application/app_main.cpp:86:1:cpp)	8	static

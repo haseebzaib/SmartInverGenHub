@@ -1,0 +1,52 @@
+C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/c++/12.3.1/cstring:118:3:char* std::strstr(char*, const char*)	16	static
+../Application/Modem/Modem.cpp:22:1:Modem::simA7672::simA7672(UART_HandleTypeDef*)	16	static
+../Application/Modem/Modem.cpp:38:23:Modem::simA7672::status Modem::simA7672::init()	32	static
+../Application/Modem/Modem.cpp:94:23:Modem::simA7672::status Modem::simA7672::loop()	24	static
+../Application/Modem/Modem.cpp:101:23:Modem::simA7672::status Modem::simA7672::setTextMode()	32	static
+../Application/Modem/Modem.cpp:110:23:Modem::simA7672::status Modem::simA7672::setTimeDate(char*)	80	static
+../Application/Modem/Modem.cpp:130:23:Modem::simA7672::status Modem::simA7672::setAPN(char*)	80	static
+../Application/Modem/Modem.cpp:151:23:Modem::simA7672::status Modem::simA7672::activate_deactivatePDP(pdp_stat)	48	static
+../Application/Modem/Modem.cpp:175:6:void Modem::simA7672::getSim(char*)	40	static
+../Application/Modem/Modem.cpp:196:6:void Modem::simA7672::getPin()	16	static
+../Application/Modem/Modem.cpp:199:6:void Modem::simA7672::getNetwork(char*)	48	static
+../Application/Modem/Modem.cpp:269:6:void Modem::simA7672::getNetworkPDP(char*)	48	static
+../Application/Modem/Modem.cpp:334:6:void Modem::simA7672::getPDPstatus(pdp_stat*)	48	static
+../Application/Modem/Modem.cpp:372:6:void Modem::simA7672::getUEsystemInfo(UE_systemInfo*)	48	static
+../Application/Modem/Modem.cpp:406:6:void Modem::simA7672::getSignalQ(char*)	48	static
+../Application/Modem/Modem.cpp:442:6:void Modem::simA7672::getTimeDate(char*, char*, char*)	40	static
+../Application/Modem/Modem.cpp:470:27:Modem::simA7672::mqtt_flags Modem::simA7672::getmqttconnectionstatus(char*)	136	static
+../Application/Modem/Modem.cpp:497:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttStart(uint8_t*)	48	static
+../Application/Modem/Modem.cpp:526:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttStop()	48	static
+../Application/Modem/Modem.cpp:550:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttSetClient(uint8_t, char*, uint8_t)	120	static
+../Application/Modem/Modem.cpp:572:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttReleaseClient(uint8_t)	112	static
+../Application/Modem/Modem.cpp:593:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttConnectServer(uint8_t, char*)	200	static
+../Application/Modem/Modem.cpp:623:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttDisconnectServer(uint8_t)	192	static
+../Application/Modem/Modem.cpp:653:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttPubData(uint8_t, char*, char*, uint16_t)	32	static
+../Application/Modem/Modem.cpp:671:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttsubTopicAndRead(uint8_t, char*, char*, uint16_t)	200	static
+../Application/Modem/Modem.cpp:718:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttunsubTopic(uint8_t, char*)	208	static
+../Application/Modem/Modem.cpp:759:26:Modem::simA7672::ssl_flags Modem::simA7672::mqttsslenable(uint8_t)	112	static
+../Application/Modem/Modem.cpp:781:26:Modem::simA7672::ssl_flags Modem::simA7672::sslversionset()	32	static
+../Application/Modem/Modem.cpp:800:26:Modem::simA7672::ssl_flags Modem::simA7672::sslauthset()	32	static
+../Application/Modem/Modem.cpp:819:26:Modem::simA7672::ssl_flags Modem::simA7672::sslcacertset()	32	static
+../Application/Modem/Modem.cpp:838:26:Modem::simA7672::ssl_flags Modem::simA7672::ssldevicecertset()	32	static
+../Application/Modem/Modem.cpp:857:26:Modem::simA7672::ssl_flags Modem::simA7672::ssldevicekeyset()	32	static
+../Application/Modem/Modem.cpp:878:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttSetPubTopic(uint8_t, char*)	200	static
+../Application/Modem/Modem.cpp:913:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttSetPubPayload(uint8_t, char*, uint16_t)	192	static
+../Application/Modem/Modem.cpp:945:27:Modem::simA7672::mqtt_flags Modem::simA7672::mqttPublishData(uint8_t)	200	static
+../Application/Modem/Modem.cpp:975:6:void Modem::simA7672::PrepRx(uint8_t, Rxmode)	16	static
+../Application/Modem/Modem.cpp:991:6:void Modem::simA7672::PrepRx(uint8_t, uint8_t, uint8_t, Rxmode)	16	static
+../Application/Modem/Modem.cpp:1009:6:void Modem::simA7672::PrepTx(const uint8_t*, uint16_t, uint16_t)	24	static
+../Application/Modem/Modem.cpp:1016:6:void Modem::simA7672::PrepTx(const uint8_t*, uint16_t, uint8_t, uint16_t)	24	static
+../Application/Modem/Modem.cpp:1025:6:void Modem::simA7672::PrepRxTx(const uint8_t*, uint16_t, uint16_t, uint8_t, Rxmode)	24	static
+../Application/Modem/Modem.cpp:1044:6:void Modem::simA7672::PrepRxTx(const uint8_t*, uint16_t, uint8_t, uint16_t, uint8_t, Rxmode)	24	static
+../Application/Modem/Modem.cpp:1065:6:void Modem::simA7672::PrepRxTx(const uint8_t*, uint16_t, uint16_t, uint8_t, uint8_t, uint8_t, Rxmode)	24	static
+../Application/Modem/Modem.cpp:1087:6:void Modem::simA7672::PrepRxTx(const uint8_t*, uint16_t, uint8_t, uint16_t, uint8_t, uint8_t, uint8_t, Rxmode)	24	static
+../Application/Modem/Modem.cpp:1112:13:void Modem::simA7672::set_event(eventType)	16	static
+../Application/Modem/Modem.cpp:1115:13:void Modem::simA7672::rst_event(eventType)	16	static
+../Application/Modem/Modem.cpp:1118:23:Modem::simA7672::status Modem::simA7672::check_event(eventType)	24	static
+../Application/Modem/Modem.cpp:1131:23:Modem::simA7672::status Modem::simA7672::check_eventForever(eventType)	24	static
+../Application/Modem/Modem.cpp:1141:23:Modem::simA7672::status Modem::simA7672::check_eventTimeout(eventType, uint16_t)	24	static
+../Application/Modem/Modem.cpp:1163:6:void Modem::simA7672::RxCB(uint8_t)	16	static
+../Application/Modem/Modem.cpp:1248:6:void Modem::simA7672::TxCB(UART_HandleTypeDef*)	16	static
+../Application/Modem/Modem.cpp:1252:6:static void Modem::simA7672::RxCBStatic(UART_HandleTypeDef*, uint8_t)	24	static
+../Application/Modem/Modem.cpp:1266:6:static void Modem::simA7672::TxCBStatic(UART_HandleTypeDef*)	16	static
