@@ -11,7 +11,7 @@
 //#include "main.h"
 //#include "app_main.hpp"
 #include "System/System_Rtos.hpp"
-
+#include "Sensor/sensor_pzem.hpp"
 
 void ModemTask(void * pvParameters);
 void InverterTask(void * pvParameters);
@@ -64,20 +64,20 @@ static constexpr char networkInfo[2][12] = {
 		        "\"Time stamp\":\"%ld\""\
 		    "},"\
 		    "\"sourceRelatedProperties\":{"\
-		        "\"V1\":\"230.5\","\
-		        "\"V2\":\"229.8\","\
-		        "\"V3\":\"231.0\","\
-		        "\"I1\":\"10.2\","\
-		        "\"I2\":\"9.8\","\
-		        "\"I3\":\"11.1\","\
-		        "\"P1\":\"2.3\","\
-		        "\"P2\":\"2.2\","\
-		        "\"P3\":\"2.5\","\
-		        "\"energy\":\"150.75\","\
-		        "\"frequency\":\"50.0\""\
+		        "\"V1\":\"%.2f\","\
+		        "\"V2\":\"%.2f\","\
+		        "\"V3\":\"%.2f\","\
+		        "\"I1\":\"%.2f\","\
+		        "\"I2\":\"%.2f\","\
+		        "\"I3\":\"%.2f\","\
+		        "\"P1\":\"%.2f\","\
+		        "\"P2\":\"%.2f\","\
+		        "\"P3\":\"%.2f\","\
+		        "\"energy\":\"%.2f\","\
+		        "\"frequency\":\"%.2f\""\
 		    "},"\
 		    "\"source\":{"\
-		        "\"sourceIdentification\":\"2\","\
+		        "\"sourceIdentification\":\"%d\","\
 		        "\"startTime\":\"1731929299\","\
 		        "\"endTime\":\"1731929299\""\
 		    "},"\
@@ -94,9 +94,9 @@ static constexpr char networkInfo[2][12] = {
 		        "\"refuelingEndTime\":\"%ld\""\
 		    "},"\
 		    "\"battery\":{"\
-		        "\"batteryLevel\":\"85\","\
-		        "\"batteryChargeStartTime\":\"1731929299\","\
-		        "\"batteryChargeEndTime\":\"1731929299\""\
+		        "\"batteryLevel\":\"%d\","\
+		        "\"batteryChargeStartTime\":\"%ld\","\
+		        "\"batteryChargeEndTime\":\"%ld\""\
 		    "},"\
 		    "\"IDs\":{"\
 		        "\"fuelTankID\":\"123456789\","\
@@ -259,6 +259,8 @@ enum class inverter_data_qpigsN_faultCodes {
 };
 
 
+
+
 struct InverterData_Queue{
 	char inverterData_qpigs[24][10]; //store all the data
 	char inverterData_qpigs2[3][10];
@@ -270,6 +272,14 @@ struct InverterData_Queue{
 	                     //4: battery mode
 	                     //5: fault mode
 	                     //6: shutdown mode
+
+	sensor_pzem::PZEM_004T::PZEM pzem1_data;
+	sensor_pzem::PZEM_004T::PZEM pzem2_data;
+	sensor_pzem::PZEM_004T::PZEM pzem3_data;
+
+	float rms_volt1;
+	float rms_volt2;
+	float rms_volt3;
 
 };
 

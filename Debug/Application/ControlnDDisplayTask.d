@@ -54,6 +54,8 @@ Application/ControlnDDisplayTask.o: \
  ../Application/Sensor/sensor_liquidMeas.hpp \
  ../Application/Sensor/sensor_TempHumd.hpp \
  ../Application/Inverter/Invertercmd.hpp ../Application/Init.hpp \
+ ../Application/Sensor/sensor_pzem.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
  ../Core/Inc/i2c.h ../Core/Inc/rtc.h
 ../Application/app_main.hpp:
 ../Core/Inc/main.h:
@@ -115,5 +117,7 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_seri
 ../Application/Sensor/sensor_TempHumd.hpp:
 ../Application/Inverter/Invertercmd.hpp:
 ../Application/Init.hpp:
+../Application/Sensor/sensor_pzem.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
 ../Core/Inc/i2c.h:
 ../Core/Inc/rtc.h:

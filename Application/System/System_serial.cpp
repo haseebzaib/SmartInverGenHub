@@ -44,7 +44,7 @@ HAL_StatusTypeDef My_UART_Receive_Endless(UART_HandleTypeDef *huart) {
 			uhData |= (uhErr << 8);
 
 
-		if (huart == &HMI_UART5) {
+		if (huart == &HMI_U) {
 
 			if(LocalDisplayRxCB)
 			{
@@ -53,7 +53,7 @@ HAL_StatusTypeDef My_UART_Receive_Endless(UART_HandleTypeDef *huart) {
 
 		}
 
-		if (huart == &GSM_USART2) {
+		if (huart == &GSM_U) {
 			if(LocalModemRxCB)
 			{
 				LocalModemRxCB(huart,(uint8_t)uhData);
@@ -61,7 +61,7 @@ HAL_StatusTypeDef My_UART_Receive_Endless(UART_HandleTypeDef *huart) {
 
 		}
 
-		if (huart == &INVERTER_USART3) {
+		if (huart == &INVERTER_U) {
 
 			if(LocalInverterRxCB)
 			{
@@ -196,7 +196,7 @@ void My_UART_IRQHandler(UART_HandleTypeDef *huart) {
 	  /* UART in mode Transmitter ------------------------------------------------*/
 	  if(((isrflags & USART_SR_TXE) != RESET) && ((cr1its & USART_CR1_TXEIE) != RESET))
 	  {
-			if (huart == &HMI_UART5) {
+			if (huart == &HMI_U) {
 
 				if(LocalDisplayTxCB)
 				{
@@ -205,7 +205,7 @@ void My_UART_IRQHandler(UART_HandleTypeDef *huart) {
 
 			}
 
-			if (huart == &GSM_USART2) {
+			if (huart == &GSM_U) {
 				if(LocalModemTxCB)
 				{
 					LocalModemTxCB(huart);
@@ -213,7 +213,7 @@ void My_UART_IRQHandler(UART_HandleTypeDef *huart) {
 
 			}
 
-			if (huart == &INVERTER_USART3) {
+			if (huart == &INVERTER_U) {
 
 				if(LocalInverterTxCB)
 				{
@@ -248,9 +248,17 @@ serial::serial(UART_HandleTypeDef *huart) {
 	Internal_UartHandler = huart;
 }
 
+void serial::ReceiveData(uint8_t *data,uint16_t size,uint32_t timeout)
+{
+
+	HAL_UART_Receive(Internal_UartHandler, data, size, timeout);
+
+}
+
 void serial::TransmitData(const uint8_t *data, uint16_t size, uint32_t timeout) {
 
 	HAL_UART_Transmit(Internal_UartHandler, data, size, timeout);
+
 
 }
 

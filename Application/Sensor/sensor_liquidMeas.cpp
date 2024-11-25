@@ -109,6 +109,7 @@ void liquidSensor::refuelingDetection(uint32_t curEpochTime,uint32_t *startEpoch
     	  refueling_active = 1;
     	  refueling_prev_time = refueling_start_time;
     	  *startEpochtime = curEpochTime;
+    	  *endEpochtime = 0; //make it zero so we know we are refueling now to erase previous end time so user dont get confused
       }
   }
   else
@@ -120,6 +121,10 @@ void liquidSensor::refuelingDetection(uint32_t curEpochTime,uint32_t *startEpoch
 			  *endEpochtime = curEpochTime;
 
 		  }
+	  }
+	  else
+	  {
+    	  refueling_prev_time = refueling_start_time;
 	  }
   }
 

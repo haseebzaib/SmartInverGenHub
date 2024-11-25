@@ -51,7 +51,9 @@ Application/ModemTask.o: ../Application/ModemTask.cpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
- ../Application/System/System_sys.hpp ../Application/Init.hpp
+ ../Application/System/System_sys.hpp ../Application/Init.hpp \
+ ../Application/Sensor/sensor_pzem.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp
 ../Application/app_main.hpp:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -110,3 +112,5 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Application/System/System_sys.hpp:
 ../Application/Init.hpp:
+../Application/Sensor/sensor_pzem.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:

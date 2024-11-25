@@ -14,7 +14,7 @@
 #include "cstring"
 
 
-Modem::simA7672 simA7672(&GSM_USART2);
+Modem::simA7672 simA7672(&GSM_U);
 //System_sys::Parsing_Checking parsing;
 
 struct ModemData_TaskUsage {
@@ -221,9 +221,30 @@ void ModemTask(void *pvParameters) {
 			{
 				ModemData.internet = 1;
 				mqtt_counter = 0;
-				std::sprintf(reinterpret_cast<char *>(simA7672.Txbuffer),sendbufMQTT,ControlData.uniqueID,ControlData.timestamp,ControlData.fuelPer
-						,ControlData.fuelConsp,ControlData.refuelingStartTime,ControlData.refuelingEndTime,
-						ControlData.temp,ControlData.humid);
+				std::sprintf(reinterpret_cast<char *>(simA7672.Txbuffer),sendbufMQTT
+						 ,ControlData.uniqueID
+						 ,ControlData.timestamp
+						 ,ControlData.V_1
+						 ,ControlData.V_2
+						 ,ControlData.V_3
+						 ,ControlData.I_1
+						 ,ControlData.I_2
+						 ,ControlData.I_3
+						 ,ControlData.P_1
+						 ,ControlData.P_2
+						 ,ControlData.P_3
+						 ,ControlData.Energy
+						 ,ControlData.Freq
+						 ,ControlData.sourceIdentification
+						 ,ControlData.fuelPer
+						 ,ControlData.fuelConsp
+						 ,ControlData.refuelingStartTime
+						 ,ControlData.refuelingEndTime
+						 ,ControlData.batteryLevel
+						 ,ControlData.batteryChargeStartTime
+						 ,ControlData.batteryChargeEndTime
+						 ,ControlData.temp
+						 ,ControlData.humid);
 				//simA7672.mqttPubData(ModemData.mqtt_client_index,ModemData.mqttPubTopic,reinterpret_cast<char *>(simA7672.Txbuffer),std::strlen(reinterpret_cast<char *>(simA7672.Txbuffer)));
 				if(simA7672.mqttsubTopicAndRead(ModemData.mqtt_client_index, ModemData.mqttSubTopic, command_buffer,255) == Modem::simA7672::mqtt_msgrecv)
 				{

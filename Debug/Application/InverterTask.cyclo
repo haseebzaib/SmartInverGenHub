@@ -1,3 +1,6 @@
-../Application/InverterTask.cpp:27:6:void InverterTask(void*)	1
-../Application/InverterTask.cpp:47:1:void __static_initialization_and_destruction_0(int, int)	3
-../Application/InverterTask.cpp:47:1:cpp)	1
+../Application/InverterTask.cpp:47:7:float calculate_rms(uint16_t*, uint16_t, float, float)	2
+../Application/InverterTask.cpp:70:6:void InverterTask(void*)	5
+../Application/InverterTask.cpp:151:6:void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef*)	3
+../Application/InverterTask.cpp:166:6:void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef*)	3
+../Application/InverterTask.cpp:177:1:void __static_initialization_and_destruction_0(int, int)	3
+../Application/InverterTask.cpp:177:1:cpp)	1
