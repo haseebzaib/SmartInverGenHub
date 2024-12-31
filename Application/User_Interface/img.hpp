@@ -19,9 +19,12 @@ struct imgContainer {
 
 
 
-extern struct imgContainer smartgrid;
-
-
+extern const struct imgContainer smartgrid;
+extern const struct imgContainer setting;
+extern const struct imgContainer Selectedsetting;
+extern const struct imgContainer leftrightArrow;
+extern const struct imgContainer Phase;
+extern const struct imgContainer selectedPhase;
 
 
 

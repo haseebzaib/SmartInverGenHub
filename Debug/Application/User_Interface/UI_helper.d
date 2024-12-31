@@ -1,4 +1,5 @@
-Application/User_Interface/UI.o: ../Application/User_Interface/UI.cpp \
+Application/User_Interface/UI_helper.o: \
+ ../Application/User_Interface/UI_helper.cpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/u8g2/csrc/u8g2.h \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/u8g2/csrc/u8x8.h \
  ../Core/Inc/spi.h ../Core/Inc/main.h \

@@ -13,6 +13,7 @@
 "./Application/System/System_serial.o"
 "./Application/System/System_sys.o"
 "./Application/User_Interface/UI.o"
+"./Application/User_Interface/UI_helper.o"
 "./Application/User_Interface/img.o"
 "./Application/u8g2/csrc/u8g2_bitmap.o"
 "./Application/u8g2/csrc/u8g2_box.o"

@@ -1,2 +1,7 @@
-../Application/User_Interface/UI.cpp:40:6:void UI::main(u8g2_t*)	1
-../Application/User_Interface/UI.cpp:76:6:void UI::loop(u8g2_t*)	5
+../Application/User_Interface/UI.cpp:54:6:void UI::fuel_temp_humd(u8g2_t*)	1
+../Application/User_Interface/UI.cpp:58:6:void UI::Alarms(u8g2_t*)	1
+../Application/User_Interface/UI.cpp:62:6:void UI::Battery(u8g2_t*)	1
+../Application/User_Interface/UI.cpp:66:6:void UI::source(u8g2_t*)	1
+../Application/User_Interface/UI.cpp:70:6:void UI::network(u8g2_t*)	1
+../Application/User_Interface/UI.cpp:76:6:void UI::power(u8g2_t*)	1
+../Application/User_Interface/UI.cpp:107:6:void UI::loop(u8g2_t*)	5

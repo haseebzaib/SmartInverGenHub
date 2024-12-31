@@ -6,14 +6,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../Application/User_Interface/UI.cpp \
+../Application/User_Interface/UI_helper.cpp \
 ../Application/User_Interface/img.cpp 
 
 OBJS += \
 ./Application/User_Interface/UI.o \
+./Application/User_Interface/UI_helper.o \
 ./Application/User_Interface/img.o 
 
 CPP_DEPS += \
 ./Application/User_Interface/UI.d \
+./Application/User_Interface/UI_helper.d \
 ./Application/User_Interface/img.d 
 
 
@@ -24,7 +27,7 @@ Application/User_Interface/%.o Application/User_Interface/%.su Application/User_
 clean: clean-Application-2f-User_Interface
 
 clean-Application-2f-User_Interface:
-	-$(RM) ./Application/User_Interface/UI.cyclo ./Application/User_Interface/UI.d ./Application/User_Interface/UI.o ./Application/User_Interface/UI.su ./Application/User_Interface/img.cyclo ./Application/User_Interface/img.d ./Application/User_Interface/img.o ./Application/User_Interface/img.su
+	-$(RM) ./Application/User_Interface/UI.cyclo ./Application/User_Interface/UI.d ./Application/User_Interface/UI.o ./Application/User_Interface/UI.su ./Application/User_Interface/UI_helper.cyclo ./Application/User_Interface/UI_helper.d ./Application/User_Interface/UI_helper.o ./Application/User_Interface/UI_helper.su ./Application/User_Interface/img.cyclo ./Application/User_Interface/img.d ./Application/User_Interface/img.o ./Application/User_Interface/img.su
 
 .PHONY: clean-Application-2f-User_Interface
 
