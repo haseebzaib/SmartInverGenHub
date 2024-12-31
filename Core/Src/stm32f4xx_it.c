@@ -59,7 +59,6 @@
 extern DMA_HandleTypeDef hdma_adc2;
 extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc2;
-extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim3;
@@ -225,22 +224,6 @@ void USART3_IRQHandler(void)
 
   My_UART_IRQHandlerC(&huart3);
   /* USER CODE END USART3_IRQn 1 */
-}
-
-/**
-  * @brief This function handles UART5 global interrupt.
-  */
-void UART5_IRQHandler(void)
-{
-  /* USER CODE BEGIN UART5_IRQn 0 */
-#ifdef nix
-  /* USER CODE END UART5_IRQn 0 */
-  HAL_UART_IRQHandler(&huart5);
-  /* USER CODE BEGIN UART5_IRQn 1 */
-#endif
-
-  My_UART_IRQHandlerC(&huart5);
-  /* USER CODE END UART5_IRQn 1 */
 }
 
 /**

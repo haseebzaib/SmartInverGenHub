@@ -1,0 +1,4 @@
+../Application/u8g2/csrc/u8x8_d_st75256.c:110:16:u8x8_d_st75256_256x128_generic	8
+../Application/u8g2/csrc/u8x8_d_st75256.c:287:9:u8x8_d_st75256_jlx256128	6
+../Application/u8g2/csrc/u8x8_d_st75256.c:421:9:u8x8_d_st75256_jlx25664	6
+../Application/u8g2/csrc/u8x8_d_st75256.c:578:9:u8x8_d_st75256_jlx172104	12

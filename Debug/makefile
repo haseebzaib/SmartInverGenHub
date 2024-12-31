@@ -16,11 +16,12 @@ RM := rm -rf
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Application/u8g2/csrc/subdir.mk
+-include Application/User_Interface/subdir.mk
 -include Application/System/subdir.mk
 -include Application/Sensor/subdir.mk
 -include Application/Modem/subdir.mk
 -include Application/Inverter/subdir.mk
--include Application/Display/subdir.mk
 -include Application/subdir.mk
 -include objects.mk
 

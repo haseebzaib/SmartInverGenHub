@@ -1,0 +1,2 @@
+../Application/User_Interface/UI.cpp:40:6:void UI::main(u8g2_t*)	1
+../Application/User_Interface/UI.cpp:76:6:void UI::loop(u8g2_t*)	5

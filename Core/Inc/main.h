@@ -57,12 +57,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define PZEM3_U huart4
-#define GSM_U huart2
 #define PZEM2_U huart6
-#define HMI_U huart5
+#define PZEM3_U huart4
 #define INVERTER_U huart3
 #define PZEM1_U huart1
+#define GSM_U huart2
+#define OLEDSpi hspi2
 #define ADC1_0_LevelSensor_Pin GPIO_PIN_0
 #define ADC1_0_LevelSensor_GPIO_Port GPIOA
 #define alive_led_Pin GPIO_PIN_1
@@ -77,8 +77,14 @@ void Error_Handler(void);
 #define INVERTER_USART3_TX_GPIO_Port GPIOB
 #define INVERTER_USART3_RX_Pin GPIO_PIN_11
 #define INVERTER_USART3_RX_GPIO_Port GPIOB
+#define DISPLAY_DC_Pin GPIO_PIN_12
+#define DISPLAY_DC_GPIO_Port GPIOB
+#define DISPLAY_RES_Pin GPIO_PIN_14
+#define DISPLAY_RES_GPIO_Port GPIOB
 #define Relay_cont_Pin GPIO_PIN_8
 #define Relay_cont_GPIO_Port GPIOD
+#define DISPLAY_CS_Pin GPIO_PIN_9
+#define DISPLAY_CS_GPIO_Port GPIOD
 #define PZEM2_USART6_TX_Pin GPIO_PIN_6
 #define PZEM2_USART6_TX_GPIO_Port GPIOC
 #define PZEM2_USART6_RX_Pin GPIO_PIN_7
@@ -91,10 +97,6 @@ void Error_Handler(void);
 #define PZEM3_UART4_TX_GPIO_Port GPIOC
 #define PZEM3_UART4_RX_Pin GPIO_PIN_11
 #define PZEM3_UART4_RX_GPIO_Port GPIOC
-#define HMI_UART5_TX_Pin GPIO_PIN_12
-#define HMI_UART5_TX_GPIO_Port GPIOC
-#define HMI_UART5_RX_Pin GPIO_PIN_2
-#define HMI_UART5_RX_GPIO_Port GPIOD
 
 /* USER CODE BEGIN Private defines */
 

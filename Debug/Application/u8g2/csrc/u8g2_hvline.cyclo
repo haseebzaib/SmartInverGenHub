@@ -1,0 +1,8 @@
+../Application/u8g2/csrc/u8g2_hvline.c:63:16:u8g2_clip_intersection	6
+../Application/u8g2/csrc/u8g2_hvline.c:115:13:u8g2_draw_hv_line_2dir	6
+../Application/u8g2/csrc/u8g2_hvline.c:163:6:u8g2_draw_hv_line_4dir	6
+../Application/u8g2/csrc/u8g2_hvline.c:206:6:u8g2_DrawHVLine	2
+../Application/u8g2/csrc/u8g2_hvline.c:215:6:u8g2_DrawHLine	2
+../Application/u8g2/csrc/u8g2_hvline.c:224:6:u8g2_DrawVLine	2
+../Application/u8g2/csrc/u8g2_hvline.c:233:6:u8g2_DrawPixel	5
+../Application/u8g2/csrc/u8g2_hvline.c:261:6:u8g2_SetDrawColor	2

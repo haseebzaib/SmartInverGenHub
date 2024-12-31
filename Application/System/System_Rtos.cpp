@@ -91,5 +91,40 @@ enum freertos_queues::queues_stat freertos_queues::queueReceive(void *RecvBuf)
 }
 
 
+freertos_semaphore::freertos_semaphore()
+{
+
+}
+
+void freertos_semaphore::semaphoreCreate()
+{
+	xSemaphor = xSemaphoreCreateMutex();
+}
+
+
+enum freertos_semaphore::semaphore_stat freertos_semaphore::semaphoreTake()
+{
+	enum semaphore_stat stat = senaphore_nothing;
+
+    if( xSemaphoreTake(xSemaphor,
+					   pdMS_TO_TICKS(1000)) == pdPASS )
+      {
+    	 return semaphore_recived;
+      }
+
+
+	return stat;
+}
+
+
+enum freertos_semaphore::semaphore_stat freertos_semaphore::semaphoreGive()
+{
+	enum semaphore_stat stat = senaphore_nothing;
+	xSemaphoreGive(xSemaphor);
+
+	return stat;
+}
+
+
 }
 

@@ -13,16 +13,16 @@
 
 #define numberofuart 3
 
-    using DisplayRxCB = void(*)(UART_HandleTypeDef *,uint8_t);
+
     using ModemRxCB= void(*)(UART_HandleTypeDef *,uint8_t);
     using InverterRxCB=void(*)(UART_HandleTypeDef *,uint8_t);
 
-    using DisplayTxCB=void(*)(UART_HandleTypeDef *);
+
     using ModemTxCB= void(*)(UART_HandleTypeDef *);
     using InverterTxCB=void(*)(UART_HandleTypeDef *);
 
 
-   void setDisplayCallback(DisplayRxCB Rxcb,DisplayTxCB TxCB);
+
    void setModemCallback(ModemRxCB Rxcb,ModemTxCB TxCB);
    void setInverterCallback(InverterRxCB Rxcb,InverterTxCB TxCB);
 

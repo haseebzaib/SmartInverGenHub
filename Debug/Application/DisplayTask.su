@@ -1,0 +1,3 @@
+../Application/DisplayTask.cpp:17:9:uint8_t u8x8_stm32_gpio_and_delay(u8x8_t*, uint8_t, uint8_t, void*)	24	static
+../Application/DisplayTask.cpp:48:9:uint8_t u8x8_byte_stm32_hw_spi(u8x8_t*, uint8_t, uint8_t, void*)	24	static
+../Application/DisplayTask.cpp:81:6:void DisplayTask(void*)	24	static

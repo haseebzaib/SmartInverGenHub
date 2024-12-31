@@ -13,6 +13,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "semphr.h"
 
 
 
@@ -74,6 +75,26 @@ private:
 
 
 
+
+
+};
+
+
+class freertos_semaphore {
+public:
+	enum semaphore_stat {
+		semaphore_recived = 0,
+		senaphore_nothing,
+	};
+
+	freertos_semaphore();
+	void semaphoreCreate();
+	enum semaphore_stat semaphoreTake();
+	enum semaphore_stat semaphoreGive();
+
+
+private:
+	SemaphoreHandle_t xSemaphor;
 
 
 };

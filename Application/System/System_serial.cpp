@@ -9,18 +9,15 @@
 #include "usart.h"
 #include "app_main.hpp"
 
- DisplayRxCB LocalDisplayRxCB = nullptr ;
+
  ModemRxCB LocalModemRxCB = nullptr ;
  InverterRxCB LocalInverterRxCB= nullptr ;
 
- DisplayTxCB LocalDisplayTxCB = nullptr ;
+
  ModemTxCB LocalModemTxCB = nullptr ;
  InverterTxCB LocalInverterTxCB = nullptr ;
 
-void setDisplayCallback(DisplayRxCB Rxcb, DisplayTxCB TxCB) {
-	LocalDisplayRxCB = Rxcb;
-	LocalDisplayTxCB = TxCB;
-}
+
 void setModemCallback(ModemRxCB Rxcb, ModemTxCB TxCB) {
 	LocalModemRxCB = Rxcb;
 	LocalModemTxCB = TxCB;
@@ -44,14 +41,7 @@ HAL_StatusTypeDef My_UART_Receive_Endless(UART_HandleTypeDef *huart) {
 			uhData |= (uhErr << 8);
 
 
-		if (huart == &HMI_U) {
 
-			if(LocalDisplayRxCB)
-			{
-				LocalDisplayRxCB(huart,(uint8_t)uhData);
-			}
-
-		}
 
 		if (huart == &GSM_U) {
 			if(LocalModemRxCB)
@@ -196,14 +186,7 @@ void My_UART_IRQHandler(UART_HandleTypeDef *huart) {
 	  /* UART in mode Transmitter ------------------------------------------------*/
 	  if(((isrflags & USART_SR_TXE) != RESET) && ((cr1its & USART_CR1_TXEIE) != RESET))
 	  {
-			if (huart == &HMI_U) {
 
-				if(LocalDisplayTxCB)
-				{
-					LocalDisplayTxCB(huart);
-				}
-
-			}
 
 			if (huart == &GSM_U) {
 				if(LocalModemTxCB)

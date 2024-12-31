@@ -7,3 +7,7 @@
 ../Application/System/System_Rtos.cpp:59:6:void System_Rtos::freertos_queues::queueCreate()	32	static
 ../Application/System/System_Rtos.cpp:65:35:System_Rtos::freertos_queues::queues_stat System_Rtos::freertos_queues::queueSend(void*)	24	static
 ../Application/System/System_Rtos.cpp:78:35:System_Rtos::freertos_queues::queues_stat System_Rtos::freertos_queues::queueReceive(void*)	24	static
+../Application/System/System_Rtos.cpp:94:1:System_Rtos::freertos_semaphore::freertos_semaphore()	16	static
+../Application/System/System_Rtos.cpp:99:6:void System_Rtos::freertos_semaphore::semaphoreCreate()	16	static
+../Application/System/System_Rtos.cpp:105:41:System_Rtos::freertos_semaphore::semaphore_stat System_Rtos::freertos_semaphore::semaphoreTake()	24	static
+../Application/System/System_Rtos.cpp:120:41:System_Rtos::freertos_semaphore::semaphore_stat System_Rtos::freertos_semaphore::semaphoreGive()	24	static

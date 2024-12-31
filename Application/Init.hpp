@@ -12,25 +12,32 @@
 //#include "app_main.hpp"
 #include "System/System_Rtos.hpp"
 #include "Sensor/sensor_pzem.hpp"
+#include "System_rtc.hpp"
 
 void ModemTask(void * pvParameters);
 void InverterTask(void * pvParameters);
-void ControlnDDisplayTask(void * pvParameters);
-
+void ControlTask(void * pvParameters);
+void DisplayTask(void *pvParameters);
 
 
 #define _StackSize_Modem 512
 #define _StackSize_Inverter 512
-#define _StackSize_ControlnDDisplay 512
+#define _StackSize_Control 512
+#define _StackSize_Display 512
 
 
 extern System_Rtos::freertos_Tasks ModemTaskHandler;
 extern System_Rtos::freertos_Tasks InverterTaskHandler;
-extern System_Rtos::freertos_Tasks ControlnDDisplayTaskHandler;
+extern System_Rtos::freertos_Tasks ControlTaskHandler;
+extern System_Rtos::freertos_Tasks DisplayTaskHandler;
+
 
 extern System_Rtos::freertos_queues ModemDataQueue;
 extern System_Rtos::freertos_queues ControlDataQueue;
 extern System_Rtos::freertos_queues InverterDataQueue;
+
+
+extern System_rtc::stmRTC stmRTC;
 
 
 struct ModemData_Queue {

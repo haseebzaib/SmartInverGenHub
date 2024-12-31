@@ -1,0 +1,3 @@
+../Application/u8g2/csrc/u8x8_setup.c:39:9:u8x8_dummy_cb	1
+../Application/u8g2/csrc/u8x8_setup.c:52:6:u8x8_SetupDefaults	1
+../Application/u8g2/csrc/u8x8_setup.c:89:6:u8x8_Setup	1

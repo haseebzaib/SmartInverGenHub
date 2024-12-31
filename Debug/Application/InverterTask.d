@@ -32,6 +32,7 @@ Application/InverterTask.o: ../Application/InverterTask.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
@@ -51,10 +52,16 @@ Application/InverterTask.o: ../Application/InverterTask.cpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Application/System/System_sys.hpp \
  ../Application/Sensor/sensor_pzem.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
- ../Application/Init.hpp ../Core/Inc/tim.h
+ ../Application/Init.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ ../Core/Inc/tim.h
 ../Application/app_main.hpp:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -89,6 +96,7 @@ Application/InverterTask.o: ../Application/InverterTask.cpp \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
@@ -111,8 +119,13 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.
 ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Application/System/System_sys.hpp:
 ../Application/Sensor/sensor_pzem.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
 ../Application/Init.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 ../Core/Inc/tim.h:

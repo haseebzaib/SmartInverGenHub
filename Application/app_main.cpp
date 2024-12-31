@@ -8,11 +8,13 @@
 
 #include "app_main.hpp"
 #include "Init.hpp"
+#include "rtc.h"
 
 
 System_Rtos::freertos_Tasks ModemTaskHandler(ModemTask,"Modem",_StackSize_Modem, (void*) 1,24);
 System_Rtos::freertos_Tasks InverterTaskHandler(InverterTask,"Inverter",_StackSize_Inverter, (void*) 1,24);
-System_Rtos::freertos_Tasks ControlnDDisplayTaskHandler(ControlnDDisplayTask,"ControlDis",_StackSize_ControlnDDisplay, (void*) 1,24);
+System_Rtos::freertos_Tasks ControlTaskHandler(ControlTask,"Control",_StackSize_Control, (void*) 1,24);
+System_Rtos::freertos_Tasks DisplayTaskHandler(DisplayTask,"Display",_StackSize_Display, (void*) 1,24);
 
 
 uint8_t queuebuffer[1*sizeof(struct ModemData_Queue)];
@@ -23,6 +25,10 @@ System_Rtos::freertos_queues ControlDataQueue(1,sizeof(struct ControlData_Queue)
 
 uint8_t queuebuffer_2[1*sizeof(struct InverterData_Queue)];
 System_Rtos::freertos_queues InverterDataQueue(1,sizeof(struct InverterData_Queue),	queuebuffer_2);
+
+System_rtc::stmRTC stmRTC(&hrtc,5);
+
+
 
 const char kaHexAsc[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
@@ -64,10 +70,14 @@ void app_mainCpp()
 
 	ModemTaskHandler.createTask();
 	InverterTaskHandler.createTask();
-    ControlnDDisplayTaskHandler.createTask();
+    ControlTaskHandler.createTask();
+    DisplayTaskHandler.createTask();
+
     ModemDataQueue.queueCreate();
     ControlDataQueue.queueCreate();
     InverterDataQueue.queueCreate();
+
+
 
 }
 
