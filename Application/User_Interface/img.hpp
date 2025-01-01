@@ -18,15 +18,18 @@ struct imgContainer {
 };
 
 
-
+namespace imgcont {
 extern const struct imgContainer smartgrid;
 extern const struct imgContainer setting;
 extern const struct imgContainer Selectedsetting;
 extern const struct imgContainer leftrightArrow;
 extern const struct imgContainer Phase;
 extern const struct imgContainer selectedPhase;
-
-
-
+extern const struct imgContainer Network;
+extern const struct imgContainer Source;
+extern const struct imgContainer Battery;
+extern const struct imgContainer Alarms;
+extern const struct imgContainer SensorInfo;
+}
 
 #endif /* USER_INTERFACE_IMG_HPP_ */

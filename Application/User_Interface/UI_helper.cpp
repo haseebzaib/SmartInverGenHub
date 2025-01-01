@@ -36,12 +36,7 @@ void UI::common_iconsMain(u8g2_t *u8g2)
 	u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 	u8g2_DrawStr(u8g2, 0, 10, time);
 	u8g2_DrawStr(u8g2, 88, 10, date);
-	u8g2_DrawXBM(u8g2,55,48,setting.w,setting.h,setting.img);
-	u8g2_DrawXBM(u8g2,112,48,leftrightArrow.w,leftrightArrow.h,leftrightArrow.img);
-
-
-
-
-
+	u8g2_DrawXBM(u8g2,55,48,imgcont::setting.w,imgcont::setting.h,imgcont::setting.img);
+	u8g2_DrawXBM(u8g2,112,48,imgcont::leftrightArrow.w,imgcont::leftrightArrow.h,imgcont::leftrightArrow.img);
 
 }

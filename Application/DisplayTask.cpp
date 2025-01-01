@@ -85,7 +85,7 @@ void DisplayTask(void *pvParameters)
   u8g2_InitDisplay(&u8g2_M);
   u8g2_ClearBuffer(&u8g2_M);
   u8g2_SetPowerSave(&u8g2_M, 0);
-  u8g2_DrawXBM(&u8g2_M,32,0,smartgrid.w,smartgrid.h,smartgrid.img);
+  u8g2_DrawXBM(&u8g2_M,32,0,imgcont::smartgrid.w,imgcont::smartgrid.h,imgcont::smartgrid.img);
   u8g2_SendBuffer(&u8g2_M);
   System_Rtos::delay(2000);
 
