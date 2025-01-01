@@ -11,3 +11,8 @@
 ../Application/System/System_Rtos.cpp:99:6:void System_Rtos::freertos_semaphore::semaphoreCreate()	1
 ../Application/System/System_Rtos.cpp:105:41:System_Rtos::freertos_semaphore::semaphore_stat System_Rtos::freertos_semaphore::semaphoreTake()	2
 ../Application/System/System_Rtos.cpp:120:41:System_Rtos::freertos_semaphore::semaphore_stat System_Rtos::freertos_semaphore::semaphoreGive()	1
+../Application/System/System_Rtos.cpp:131:1:System_Rtos::freertos_events::freertos_events()	1
+../Application/System/System_Rtos.cpp:135:6:void System_Rtos::freertos_events::eventCreate()	1
+../Application/System/System_Rtos.cpp:140:6:void System_Rtos::freertos_events::eventGive()	4
+../Application/System/System_Rtos.cpp:157:6:void System_Rtos::freertos_events::eventTake()	1
+../Application/System/System_Rtos.cpp:161:6:void System_Rtos::freertos_events::eventTakeTimed(uint32_t)	1

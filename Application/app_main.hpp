@@ -32,7 +32,7 @@ extern "C"
 
 void app_mainC();  // C function to call into Cpp event loop from main
 void My_UART_IRQHandlerC(UART_HandleTypeDef *huart);  // C function to call into Cpp event loop from main
-
+void My_Button_IRQHandlerC();
 
 #ifdef __cplusplus
 }

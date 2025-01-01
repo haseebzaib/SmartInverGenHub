@@ -126,5 +126,43 @@ enum freertos_semaphore::semaphore_stat freertos_semaphore::semaphoreGive()
 }
 
 
+
+
+freertos_events::freertos_events() {
+
+}
+
+void freertos_events::eventCreate()
+{
+	xeventgroup = xEventGroupCreate();
+}
+
+void freertos_events::eventGive()
+{
+	if( (__get_IPSR() != 0U))
+     {
+		 xHigherPriorityTaskWoken = pdFALSE;
+		 xResult = xEventGroupSetBitsFromISR(xeventgroup,  1, &xHigherPriorityTaskWoken );
+		 if( xResult != pdFAIL )
+          {
+			 portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+          }
+     }
+     else
+     {
+    	 xEventGroupSetBits( xeventgroup, 1);
+     }
+
+}
+void freertos_events::eventTake()
+{
+	 xEventGroupWaitBits(xeventgroup, 1 , pdTRUE,pdFALSE, portMAX_DELAY);
+}
+void freertos_events::eventTakeTimed(uint32_t time)
+{
+	 xEventGroupWaitBits(xeventgroup, 1 , pdTRUE,pdFALSE, pdMS_TO_TICKS(time));
+}
+
+
 }
 

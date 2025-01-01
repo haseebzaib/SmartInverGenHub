@@ -52,6 +52,8 @@ Application/Inverter/Inverter.o: ../Application/Inverter/Inverter.cpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Inverter/Invertercmd.hpp
 ../Application/Inverter/Inverter.hpp:
 ../Core/Inc/main.h:
@@ -107,4 +109,6 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Inverter/Invertercmd.hpp:

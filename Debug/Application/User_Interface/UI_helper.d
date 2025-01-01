@@ -55,6 +55,8 @@ Application/User_Interface/UI_helper.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
@@ -120,6 +122,8 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:

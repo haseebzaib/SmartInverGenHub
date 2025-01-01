@@ -9,6 +9,7 @@
 #include "app_main.hpp"
 #include "Init.hpp"
 #include "rtc.h"
+#include "button.hpp"
 
 
 System_Rtos::freertos_Tasks ModemTaskHandler(ModemTask,"Modem",_StackSize_Modem, (void*) 1,24);
@@ -77,6 +78,8 @@ void app_mainCpp()
     ControlDataQueue.queueCreate();
     InverterDataQueue.queueCreate();
 
+
+    button::btn_init();
 
 
 }

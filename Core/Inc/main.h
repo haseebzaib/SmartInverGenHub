@@ -97,6 +97,16 @@ void Error_Handler(void);
 #define PZEM3_UART4_TX_GPIO_Port GPIOC
 #define PZEM3_UART4_RX_Pin GPIO_PIN_11
 #define PZEM3_UART4_RX_GPIO_Port GPIOC
+#define BTN_UP_Pin GPIO_PIN_1
+#define BTN_UP_GPIO_Port GPIOD
+#define BTN_ENTR_Pin GPIO_PIN_2
+#define BTN_ENTR_GPIO_Port GPIOD
+#define BTN_DWN_Pin GPIO_PIN_3
+#define BTN_DWN_GPIO_Port GPIOD
+#define BTN_RGT_Pin GPIO_PIN_4
+#define BTN_RGT_GPIO_Port GPIOD
+#define BTN_LFT_Pin GPIO_PIN_5
+#define BTN_LFT_GPIO_Port GPIOD
 
 /* USER CODE BEGIN Private defines */
 

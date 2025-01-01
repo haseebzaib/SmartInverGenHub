@@ -51,6 +51,8 @@ Application/ControlTask.o: ../Application/ControlTask.cpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Application/System/System_sys.hpp \
  ../Application/Sensor/sensor_liquidMeas.hpp \
  ../Application/Sensor/sensor_TempHumd.hpp \
@@ -117,6 +119,8 @@ Application/ControlTask.o: ../Application/ControlTask.cpp \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 ../Application/System/System_sys.hpp:
 ../Application/Sensor/sensor_liquidMeas.hpp:
 ../Application/Sensor/sensor_TempHumd.hpp:

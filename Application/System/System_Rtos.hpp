@@ -14,7 +14,7 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
-
+#include "event_groups.h"
 
 
 namespace System_Rtos {
@@ -96,6 +96,25 @@ public:
 private:
 	SemaphoreHandle_t xSemaphor;
 
+
+};
+
+class freertos_events {
+public:
+	enum event_stat {
+		event_recv = 0,
+		event_nothing,
+	};
+	freertos_events();
+	void eventCreate();
+	void eventGive();
+	void eventTake();
+	void eventTakeTimed(uint32_t time);
+
+private:
+	EventGroupHandle_t xeventgroup;
+	BaseType_t xHigherPriorityTaskWoken;
+	BaseType_t xResult;
 
 };
 

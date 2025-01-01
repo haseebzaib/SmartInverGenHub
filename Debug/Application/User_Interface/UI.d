@@ -54,6 +54,8 @@ Application/User_Interface/UI.o: ../Application/User_Interface/UI.cpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
@@ -62,7 +64,8 @@ Application/User_Interface/UI.o: ../Application/User_Interface/UI.cpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
  ../Core/Inc/rtc.h ../Application/User_Interface/UI.hpp \
- ../Application/User_Interface/img.hpp
+ ../Application/User_Interface/img.hpp \
+ ../Application/User_Interface/button.hpp
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/u8g2/csrc/u8g2.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/u8g2/csrc/u8x8.h:
 ../Core/Inc/spi.h:
@@ -119,6 +122,8 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
@@ -129,3 +134,4 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.
 ../Core/Inc/rtc.h:
 ../Application/User_Interface/UI.hpp:
 ../Application/User_Interface/img.hpp:
+../Application/User_Interface/button.hpp:
