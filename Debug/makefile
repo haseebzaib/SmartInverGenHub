@@ -21,7 +21,6 @@ RM := rm -rf
 -include Application/System/subdir.mk
 -include Application/Sensor/subdir.mk
 -include Application/Modem/subdir.mk
--include Application/Inverter/subdir.mk
 -include Application/subdir.mk
 -include objects.mk
 

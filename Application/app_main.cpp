@@ -13,7 +13,6 @@
 
 
 System_Rtos::freertos_Tasks ModemTaskHandler(ModemTask,"Modem",_StackSize_Modem, (void*) 1,24);
-System_Rtos::freertos_Tasks InverterTaskHandler(InverterTask,"Inverter",_StackSize_Inverter, (void*) 1,24);
 System_Rtos::freertos_Tasks ControlTaskHandler(ControlTask,"Control",_StackSize_Control, (void*) 1,24);
 System_Rtos::freertos_Tasks DisplayTaskHandler(DisplayTask,"Display",_StackSize_Display, (void*) 1,24);
 
@@ -24,8 +23,6 @@ System_Rtos::freertos_queues ModemDataQueue(1,sizeof(struct ModemData_Queue),	qu
 uint8_t queuebuffer_1[1*sizeof(struct ControlData_Queue)];
 System_Rtos::freertos_queues ControlDataQueue(1,sizeof(struct ControlData_Queue),	queuebuffer_1);
 
-uint8_t queuebuffer_2[1*sizeof(struct InverterData_Queue)];
-System_Rtos::freertos_queues InverterDataQueue(1,sizeof(struct InverterData_Queue),	queuebuffer_2);
 
 System_rtc::stmRTC stmRTC(&hrtc,5);
 
@@ -70,13 +67,12 @@ void app_mainCpp()
 {
 
 	ModemTaskHandler.createTask();
-	InverterTaskHandler.createTask();
     ControlTaskHandler.createTask();
     DisplayTaskHandler.createTask();
 
     ModemDataQueue.queueCreate();
     ControlDataQueue.queueCreate();
-    InverterDataQueue.queueCreate();
+
 
 
     button::btn_init();

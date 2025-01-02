@@ -41,7 +41,6 @@ CPP_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 Application \
-Application/Inverter \
 Application/Modem \
 Application/Sensor \
 Application/System \

@@ -10,7 +10,6 @@
 #include "System/System_sys.hpp"
 #include "Sensor/sensor_liquidMeas.hpp"
 #include "Sensor/sensor_TempHumd.hpp"
-#include "Inverter/Invertercmd.hpp"
 #include "i2c.h"
 #include "rtc.h"
 #include "Init.hpp"
@@ -52,7 +51,7 @@ void ControlTask(void *pvParameters) {
 
 	struct ControlData_Queue ControlData = { 0 };
 
-	InverterData_Queue InverterData = { 0 };
+
 
 	System_Rtos::delay(1000);
 
@@ -86,64 +85,64 @@ void ControlTask(void *pvParameters) {
 //							const_cast<char*>("DisConn"));
 		}
 
-		if (InverterDataQueue.queueReceive((void*) &InverterData)
-				== InverterDataQueue.queues_recived) {
-
-			ControlData.batteryLevel =
-					std::atoi(
-							const_cast<const char*>(InverterData.inverterData_qpigs[static_cast<int>(inverter_data_qpigs_cmd::batt_cap)]));
-
-			parsing.binarystringToUint8(
-					InverterData.inverterData_qpigs[static_cast<int>(inverter_data_qpigs_cmd::dev_stat_1)],
-					&batt_charging_status);
-			if (InverterData.device_mode == 3) {
-//				LCD.SendTextData(LCD.source_bat, const_cast<char*>("OFF"));
-//				LCD.SendTextData(LCD.source_gen, const_cast<char*>("ON"));
-//				LCD.SendTextData(LCD.source_sol, const_cast<char*>("OFF"));
-			} else if (InverterData.device_mode == 4) {
-//				LCD.SendTextData(LCD.source_bat, const_cast<char*>("ON"));
-//				LCD.SendTextData(LCD.source_gen, const_cast<char*>("OFF"));
-//				LCD.SendTextData(LCD.source_sol, const_cast<char*>("OFF"));
-			} else {
-//				LCD.SendTextData(LCD.source_bat, const_cast<char*>("OFF"));
-//				LCD.SendTextData(LCD.source_gen, const_cast<char*>("OFF"));
-//				LCD.SendTextData(LCD.source_sol, const_cast<char*>("OFF"));
-			}
-
-			ControlData.sourceIdentification = InverterData.device_mode;
-
-//			LCD.SendNumericData(LCD.Battery,
-//					static_cast<uint16_t>(ControlData.batteryLevel));
-
-			ControlData.V_1 = InverterData.rms_volt1;
-			ControlData.V_2 = InverterData.rms_volt2;
-			ControlData.V_3 = InverterData.rms_volt3;
-
-			ControlData.I_1 = InverterData.pzem1_data.current;
-			ControlData.I_2 = InverterData.pzem2_data.current;
-			ControlData.I_3 = InverterData.pzem3_data.current;
-
-			ControlData.P_1 = InverterData.pzem1_data.power;
-			ControlData.P_2 = InverterData.pzem2_data.power;
-			ControlData.P_3 = InverterData.pzem3_data.power;
-
-			ControlData.Energy = InverterData.pzem1_data.energy;
-
-//			LCD.SendFloatData(LCD.phase1, ControlData.V_1);
-//			LCD.SendFloatData(LCD.phase2, ControlData.V_2);
-//			LCD.SendFloatData(LCD.phase3, ControlData.V_3);
+//		if (InverterDataQueue.queueReceive((void*) &InverterData)
+//				== InverterDataQueue.queues_recived) {
 //
-//			LCD.SendFloatData(LCD.curr1, ControlData.I_1);
-//			LCD.SendFloatData(LCD.curr2, ControlData.I_2);
-//			LCD.SendFloatData(LCD.curr3, ControlData.I_3);
+//			ControlData.batteryLevel =
+//					std::atoi(
+//							const_cast<const char*>(InverterData.inverterData_qpigs[static_cast<int>(inverter_data_qpigs_cmd::batt_cap)]));
 //
-//			LCD.SendFloatData(LCD.pwr1, ControlData.P_1);
-//			LCD.SendFloatData(LCD.pwr2, ControlData.P_2);
-//			LCD.SendFloatData(LCD.pwr3, ControlData.P_3);
+//			parsing.binarystringToUint8(
+//					InverterData.inverterData_qpigs[static_cast<int>(inverter_data_qpigs_cmd::dev_stat_1)],
+//					&batt_charging_status);
+//			if (InverterData.device_mode == 3) {
+////				LCD.SendTextData(LCD.source_bat, const_cast<char*>("OFF"));
+////				LCD.SendTextData(LCD.source_gen, const_cast<char*>("ON"));
+////				LCD.SendTextData(LCD.source_sol, const_cast<char*>("OFF"));
+//			} else if (InverterData.device_mode == 4) {
+////				LCD.SendTextData(LCD.source_bat, const_cast<char*>("ON"));
+////				LCD.SendTextData(LCD.source_gen, const_cast<char*>("OFF"));
+////				LCD.SendTextData(LCD.source_sol, const_cast<char*>("OFF"));
+//			} else {
+////				LCD.SendTextData(LCD.source_bat, const_cast<char*>("OFF"));
+////				LCD.SendTextData(LCD.source_gen, const_cast<char*>("OFF"));
+////				LCD.SendTextData(LCD.source_sol, const_cast<char*>("OFF"));
+//			}
 //
-//			LCD.SendFloatData(LCD.energy, ControlData.Energy);
-
-		}
+//			ControlData.sourceIdentification = InverterData.device_mode;
+//
+////			LCD.SendNumericData(LCD.Battery,
+////					static_cast<uint16_t>(ControlData.batteryLevel));
+//
+//			ControlData.V_1 = InverterData.rms_volt1;
+//			ControlData.V_2 = InverterData.rms_volt2;
+//			ControlData.V_3 = InverterData.rms_volt3;
+//
+//			ControlData.I_1 = InverterData.pzem1_data.current;
+//			ControlData.I_2 = InverterData.pzem2_data.current;
+//			ControlData.I_3 = InverterData.pzem3_data.current;
+//
+//			ControlData.P_1 = InverterData.pzem1_data.power;
+//			ControlData.P_2 = InverterData.pzem2_data.power;
+//			ControlData.P_3 = InverterData.pzem3_data.power;
+//
+//			ControlData.Energy = InverterData.pzem1_data.energy;
+//
+////			LCD.SendFloatData(LCD.phase1, ControlData.V_1);
+////			LCD.SendFloatData(LCD.phase2, ControlData.V_2);
+////			LCD.SendFloatData(LCD.phase3, ControlData.V_3);
+////
+////			LCD.SendFloatData(LCD.curr1, ControlData.I_1);
+////			LCD.SendFloatData(LCD.curr2, ControlData.I_2);
+////			LCD.SendFloatData(LCD.curr3, ControlData.I_3);
+////
+////			LCD.SendFloatData(LCD.pwr1, ControlData.P_1);
+////			LCD.SendFloatData(LCD.pwr2, ControlData.P_2);
+////			LCD.SendFloatData(LCD.pwr3, ControlData.P_3);
+////
+////			LCD.SendFloatData(LCD.energy, ControlData.Energy);
+//
+//		}
 
 		if ((batt_charging_status & 0x07) == SCC_AC_charge_on
 				|| (batt_charging_status & 0x07) == SCC_charge_on
