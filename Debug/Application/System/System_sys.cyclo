@@ -7,11 +7,11 @@ C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Application/System/System_sys.cpp:264:31:System_sys::Parsing_Checking::status System_sys::Parsing_Checking::extractData(const char*, const char*, char, char, char*, uint16_t)	6
 ../Application/System/System_sys.cpp:310:31:System_sys::Parsing_Checking::status System_sys::Parsing_Checking::extractdatainsegments(char*, char*, uint16_t, uint16_t*, uint8_t)	11
 ../Application/System/System_sys.cpp:349:31:System_sys::Parsing_Checking::status System_sys::Parsing_Checking::binarystringToUint8(char*, uint8_t*)	6
-../Application/System/System_sys.cpp:379:9:int32_t System_sys::Parsing_Checking::convertToEpoch(char*)	6
-../Application/System/System_sys.cpp:426:9:int32_t System_sys::Parsing_Checking::convertToEpoch(char*, char*, char*)	6
-../Application/System/System_sys.cpp:473:9:int32_t System_sys::Parsing_Checking::convertToEpoch(RTC_DateTypeDef, RTC_TimeTypeDef, int8_t)	5
-../Application/System/System_sys.cpp:517:6:void System_sys::Parsing_Checking::convertEpochToSimTime(int32_t, int, char*)	2
-../Application/System/System_sys.cpp:553:6:void System_sys::Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef*, int32_t, int)	1
-../Application/System/System_sys.cpp:587:6:bool System_sys::Parsing_Checking::isLeapYear(int)	4
-../Application/System/System_sys.cpp:591:5:int System_sys::Parsing_Checking::daysInMonth(int, int)	4
-../Application/System/System_sys.cpp:598:5:int System_sys::Parsing_Checking::getMonthNumber(char*)	13
+../Application/System/System_sys.cpp:379:10:uint32_t System_sys::Parsing_Checking::convertToEpoch(char*)	6
+../Application/System/System_sys.cpp:426:10:uint32_t System_sys::Parsing_Checking::convertToEpoch(char*, char*, char*)	6
+../Application/System/System_sys.cpp:473:10:uint32_t System_sys::Parsing_Checking::convertToEpoch(RTC_DateTypeDef, RTC_TimeTypeDef, int8_t)	5
+../Application/System/System_sys.cpp:517:6:void System_sys::Parsing_Checking::convertEpochToSimTime(uint32_t, int, char*)	2
+../Application/System/System_sys.cpp:553:6:void System_sys::Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef*, uint32_t, int)	2
+../Application/System/System_sys.cpp:603:6:bool System_sys::Parsing_Checking::isLeapYear(int)	4
+../Application/System/System_sys.cpp:607:5:int System_sys::Parsing_Checking::daysInMonth(int, int)	4
+../Application/System/System_sys.cpp:614:5:int System_sys::Parsing_Checking::getMonthNumber(char*)	13

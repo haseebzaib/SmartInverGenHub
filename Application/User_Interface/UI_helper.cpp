@@ -21,7 +21,19 @@
 #include "img.hpp"
 
 
+enum MenuNo UIcodeStorage;
 
+
+void UI::set_UIcode(enum MenuNo UIcode)
+{
+
+	UIcodeStorage = UIcode;
+
+}
+enum MenuNo UI::get_UIcode()
+{
+  return UIcodeStorage;
+}
 
 
 void UI::common_iconsMain(u8g2_t *u8g2)
@@ -40,3 +52,9 @@ void UI::common_iconsMain(u8g2_t *u8g2)
 	u8g2_DrawXBM(u8g2,112,48,imgcont::leftrightArrow.w,imgcont::leftrightArrow.h,imgcont::leftrightArrow.img);
 
 }
+
+
+
+
+
+

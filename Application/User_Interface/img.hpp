@@ -30,6 +30,7 @@ extern const struct imgContainer Source;
 extern const struct imgContainer Battery;
 extern const struct imgContainer Alarms;
 extern const struct imgContainer SensorInfo;
+extern const struct imgContainer Settings;
 }
 
 #endif /* USER_INTERFACE_IMG_HPP_ */

@@ -112,7 +112,7 @@ void btn_irq()
 			}
 
 		} else if ((!Button_.buttonFlag)
-				&& (checkTimer(&Button_.buttonTimer, 70))) //check debounce
+				&& (checkTimer(&Button_.buttonTimer, 120))) //check debounce
 			{
 			switch (Button_.Sel_BT) {
 			case button_identification::iEnter_BT: {

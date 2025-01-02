@@ -376,7 +376,7 @@ enum Parsing_Checking::status Parsing_Checking::binarystringToUint8(char *binary
 
 }
 
-int32_t Parsing_Checking::convertToEpoch(char *simTime)
+uint32_t Parsing_Checking::convertToEpoch(char *simTime)
 {
 	 int year, month, day, hour, minute, second, timezoneOffsetQuarters;
 	    char sign;
@@ -398,7 +398,7 @@ int32_t Parsing_Checking::convertToEpoch(char *simTime)
 	    //timezoneOffsetMinutes += defaultTimezoneOffsetMinutes;
 
 	    // Convert date and time to seconds since 1970-01-01 (UTC)
-	    int32_t epoch = 0;
+	    uint32_t epoch = 0;
 
 	    // Add seconds for each complete year
 	    for (int y = 1970; y < year; y++) {
@@ -423,7 +423,7 @@ int32_t Parsing_Checking::convertToEpoch(char *simTime)
 	    return epoch;
 }
 // Convert the separate buffers to an epoch timestamp specific format
-int32_t Parsing_Checking::convertToEpoch(char *date, char *time, char *zone)
+uint32_t Parsing_Checking::convertToEpoch(char *date, char *time, char *zone)
 {
 	 int day, year, hour, minute, second, timezoneOffset;
 	    char monthStr[10];
@@ -445,7 +445,7 @@ int32_t Parsing_Checking::convertToEpoch(char *date, char *time, char *zone)
 	    if (sign == '-') timezoneOffset = -timezoneOffset;
 
 	    // Convert date and time to seconds since 1970-01-01 (UTC)
-	    int32_t epoch = 0;
+	    uint32_t epoch = 0;
 
 	    // Add seconds for each complete year
 	    for (int y = 1970; y < year; y++) {
@@ -470,7 +470,7 @@ int32_t Parsing_Checking::convertToEpoch(char *date, char *time, char *zone)
 	    return epoch;
 }
 
-int32_t Parsing_Checking::convertToEpoch(RTC_DateTypeDef sDate,RTC_TimeTypeDef sTime,int8_t zone)
+uint32_t Parsing_Checking::convertToEpoch(RTC_DateTypeDef sDate,RTC_TimeTypeDef sTime,int8_t zone)
 {
 	 int day,month ,year, hour, minute, second, timezoneOffset;
 
@@ -489,7 +489,7 @@ int32_t Parsing_Checking::convertToEpoch(RTC_DateTypeDef sDate,RTC_TimeTypeDef s
 
 
 	    // Convert date and time to seconds since 1970-01-01 (UTC)
-	    int32_t epoch = 0;
+	    uint32_t epoch = 0;
 
 	    // Add seconds for each complete year
 	    for (int y = 1970; y < year; y++) {
@@ -514,7 +514,7 @@ int32_t Parsing_Checking::convertToEpoch(RTC_DateTypeDef sDate,RTC_TimeTypeDef s
 	    return epoch;
 }
 
-void Parsing_Checking::convertEpochToSimTime(int32_t epoch,int timezone,char *recv_buf)
+void Parsing_Checking::convertEpochToSimTime(uint32_t epoch,int timezone,char *recv_buf)
 {
 
 	int TimezoneQuaters;
@@ -550,11 +550,14 @@ void Parsing_Checking::convertEpochToSimTime(int32_t epoch,int timezone,char *re
 
 }
 
-void Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,int32_t epoch,int timezone)
+void Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,uint32_t epoch,int timezone)
 {
-
+uint8_t prevYear;
 	RTC_DateTypeDef gDate;
 	RTC_TimeTypeDef gTime;
+
+	RTC_DateTypeDef gDate1;
+	RTC_TimeTypeDef gTime1;
 
 	int TimezoneQuaters;
 	int TimezoneOffsetMinutes;
@@ -573,6 +576,7 @@ void Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,int32_t epo
 
 	    // Extract date and time components
 	    gDate.Year = (timeinfo->tm_year + 1900) % 100;  // tm_year is years since 1900
+	    prevYear = gDate.Year;
 	    gDate.Month = timeinfo->tm_mon + 1;     // tm_mon is months since January (0-11)
 	    gDate.Date = timeinfo->tm_mday;
 	    gTime.Hours = timeinfo->tm_hour;
@@ -581,6 +585,18 @@ void Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,int32_t epo
 
 	    HAL_RTC_SetTime(hrtc, &gTime, RTC_FORMAT_BIN);
 	    HAL_RTC_SetDate(hrtc, &gDate, RTC_FORMAT_BIN);
+
+		HAL_RTC_GetTime(hrtc, &gTime1, RTC_FORMAT_BIN);
+		HAL_RTC_GetDate(hrtc, &gDate1, RTC_FORMAT_BIN);
+
+		if(gDate1.Year != prevYear)
+		{
+			gDate.Year = prevYear;
+			 HAL_RTC_SetDate(hrtc, &gDate, RTC_FORMAT_BIN);
+
+
+				HAL_RTC_GetDate(hrtc, &gDate1, RTC_FORMAT_BIN);
+		}
 
 }
 

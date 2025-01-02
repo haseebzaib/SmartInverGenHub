@@ -17,6 +17,16 @@
 #include "UI.hpp"
 #include "img.hpp"
 #include "button.hpp"
+#include "UI_txt.hpp"
+
+#define TotalEnterIndexes 10
+
+struct SettingMenuCodes SettingsMenuCodes[TotalSettingsSub] =
+{
+  MenuNo::SetTimeDate,
+  MenuNo::SetFuelMeas
+
+};
 
 namespace UI {
 
@@ -28,7 +38,7 @@ using UIFunc = void(*)(u8g2_t *u8g2);
 struct UIStruct {
 	enum MenuNo MenuNo;
 	UIFunc function;
-	enum MenuNo Enter[10];
+	enum MenuNo Enter[TotalEnterIndexes];
 	enum MenuNo ESC;
 	enum MenuNo DN;
 	enum MenuNo UP;
@@ -36,21 +46,88 @@ struct UIStruct {
 	enum MenuNo RGT;
 };
 
-UIStruct MenuArray[] = { { MenuNo::Power, UI::power, { MenuNo::None },
-		MenuNo::Power, MenuNo::Power, MenuNo::Power, MenuNo::fuel_temp_humd,
-		MenuNo::network }, { MenuNo::network, UI::network, { MenuNo::None },
-		MenuNo::network, MenuNo::network, MenuNo::network, MenuNo::Power,
-		MenuNo::source }, { MenuNo::source, UI::source, { MenuNo::None },
-		MenuNo::source, MenuNo::source, MenuNo::source, MenuNo::network,
-		MenuNo::Battery }, { MenuNo::Battery, UI::Battery, { MenuNo::None },
-		MenuNo::Battery, MenuNo::Battery, MenuNo::Battery, MenuNo::source,
-		MenuNo::Alarms }, { MenuNo::Alarms, UI::Alarms, { MenuNo::None },
-		MenuNo::Alarms, MenuNo::Alarms, MenuNo::Alarms, MenuNo::Battery,
-		MenuNo::fuel_temp_humd }, { MenuNo::fuel_temp_humd, UI::fuel_temp_humd,
-		{ MenuNo::None }, MenuNo::fuel_temp_humd, MenuNo::fuel_temp_humd,
-		MenuNo::fuel_temp_humd, MenuNo::Alarms, MenuNo::Power },
+UIStruct MenuArray[] = {
+	{ MenuNo::Power, UI::power, { MenuNo::Settings },MenuNo::Power, MenuNo::Power, MenuNo::Power, MenuNo::fuel_temp_humd,MenuNo::network },
+	{ MenuNo::network, UI::network, { MenuNo::Settings },MenuNo::network, MenuNo::network, MenuNo::network, MenuNo::Power,MenuNo::source },
+	{ MenuNo::source, UI::source, { MenuNo::Settings },MenuNo::source, MenuNo::source, MenuNo::source, MenuNo::network,MenuNo::Battery },
+	{ MenuNo::Battery, UI::Battery, { MenuNo::Settings },MenuNo::Battery, MenuNo::Battery, MenuNo::Battery, MenuNo::source,MenuNo::Alarms },
+	{ MenuNo::Alarms, UI::Alarms, { MenuNo::Settings },MenuNo::Alarms, MenuNo::Alarms, MenuNo::Alarms, MenuNo::Battery,MenuNo::fuel_temp_humd },
+	{ MenuNo::fuel_temp_humd, UI::fuel_temp_humd,{ MenuNo::Settings }, MenuNo::fuel_temp_humd, MenuNo::fuel_temp_humd,MenuNo::fuel_temp_humd, MenuNo::Alarms, MenuNo::Power },
+	{ MenuNo::Settings, UI::Settings, {  MenuNo::SetTimeDate,MenuNo::SetFuelMeas },MenuNo::Settings, MenuNo::Settings, MenuNo::Settings, MenuNo::Power,MenuNo::Power },
+
+	/*Sub menus*/
+	{ MenuNo::SetTimeDate, UI::SetTimeDate,{MenuNo::Settings},MenuNo::Settings,MenuNo::SetTimeDate,MenuNo::SetTimeDate, MenuNo::Settings,MenuNo::SetTimeDate },
+	{ MenuNo::SetFuelMeas, UI::SetFuelMeas,{MenuNo::SetFuelMeas},MenuNo::Settings,MenuNo::SetFuelMeas,MenuNo::SetFuelMeas, MenuNo::Settings,MenuNo::SetFuelMeas },
+
+
 
 };
+
+
+void Settings(u8g2_t *u8g2)
+{
+	enum button::btncodes btncodes;
+	int8_t sel_sub = 0;
+do {
+
+	button::resetCode(button::btncodes::cNONE);
+	do {
+		u8g2_ClearBuffer(u8g2);
+
+		u8g2_DrawXBM(u8g2, 104, 0, imgcont::Settings.w, imgcont::Settings.h,imgcont::Settings.img);
+
+		u8g2_SetFontMode(u8g2, 1);
+		u8g2_SetDrawColor(u8g2, 2);
+		u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
+
+		uint8_t strSize = std::strlen( UI_txts::Settings[sel_sub]);
+
+
+		u8g2_DrawBox(u8g2, 2, 3 + (8*sel_sub) , (strSize * 5) + 1 , 9);
+
+
+
+
+		for(int i=0; i < TotalSettingsSub;i++)
+		{
+			u8g2_DrawStr(u8g2, 3, 10 + (8*i), UI_txts::Settings[i]);
+		}
+
+
+
+
+
+
+
+
+		u8g2_SendBuffer(u8g2);
+
+		btncodes = button::get_event();
+	}while (btncodes == button::btncodes::cNONE);
+
+	if(btncodes == button::btncodes::cDWN_BT)
+	{
+		sel_sub++;
+	}
+	else if(btncodes == button::btncodes::cUP_BT)
+	{
+		sel_sub--;
+        if(sel_sub < 0)
+        {
+        	sel_sub = TotalSettingsSub - 1;
+        }
+	}
+	else if(btncodes == button::btncodes::cEnter_BT)
+	{
+		set_UIcode(SettingsMenuCodes[sel_sub].code);
+	}
+
+
+	sel_sub = sel_sub % TotalSettingsSub;
+
+}while (btncodes != button::btncodes::cRGHT_BT && btncodes != button::btncodes::cLFT_BT &&  btncodes != button::btncodes::cEnter_BT);
+
+}
 
 void fuel_temp_humd(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
@@ -84,6 +161,11 @@ void fuel_temp_humd(u8g2_t *u8g2) {
 
 	} while (btncodes == button::btncodes::cNONE);
 
+	if(btncodes == button::btncodes::cEnter_BT)
+	{
+		UI::set_UIcode(MenuNo::Settings);
+	}
+
 }
 void Alarms(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
@@ -115,6 +197,11 @@ void Alarms(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 
 	} while (btncodes == button::btncodes::cNONE);
+
+	if(btncodes == button::btncodes::cEnter_BT)
+	{
+		UI::set_UIcode(MenuNo::Settings);
+	}
 }
 void Battery(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
@@ -147,6 +234,11 @@ void Battery(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 
 	} while (btncodes == button::btncodes::cNONE);
+
+	if(btncodes == button::btncodes::cEnter_BT)
+	{
+		UI::set_UIcode(MenuNo::Settings);
+	}
 }
 void source(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
@@ -177,6 +269,11 @@ void source(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 
 	} while (btncodes == button::btncodes::cNONE);
+
+	if(btncodes == button::btncodes::cEnter_BT)
+	{
+		UI::set_UIcode(MenuNo::Settings);
+	}
 
 }
 void network(u8g2_t *u8g2) {
@@ -210,6 +307,11 @@ void network(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 
 	} while (btncodes == button::btncodes::cNONE);
+
+	if(btncodes == button::btncodes::cEnter_BT)
+	{
+		UI::set_UIcode(MenuNo::Settings);
+	}
 }
 
 void power(u8g2_t *u8g2) {
@@ -244,6 +346,11 @@ void power(u8g2_t *u8g2) {
 
 	} while (btncodes == button::btncodes::cNONE);
 
+	if(btncodes == button::btncodes::cEnter_BT)
+	{
+		UI::set_UIcode(MenuNo::Settings);
+	}
+
 }
 
 void loop(u8g2_t *u8g2) {
@@ -269,12 +376,16 @@ void loop(u8g2_t *u8g2) {
 		switch (button::get_code()) {
 		case button::btncodes::cEnter_BT: {
 			int i = 0;
-			for (i = 0;
-					i
-							< sizeof(MenuArray[index].Enter)
-									/ sizeof(MenuArray[index].Enter[0]); i++) {
+			for (i = 0; i < TotalEnterIndexes; i++) {
+
 				if (MenuArray[index].Enter[i] == MenuNo::None) {
 					CurrMenu = MenuArray[index].MenuNo; //stay in our own menu
+					break;
+				}
+
+				if (MenuArray[index].Enter[i] == UI::get_UIcode())
+				{
+					CurrMenu = MenuArray[index].Enter[i];
 					break;
 				}
 

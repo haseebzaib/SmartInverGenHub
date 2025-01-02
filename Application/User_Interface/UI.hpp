@@ -12,6 +12,9 @@
 #include "main.h"
 #include "u8g2.h"
 
+
+#define TotalSettingsSub  2
+
 enum class MenuNo {
 	Power,
 	network,
@@ -19,11 +22,20 @@ enum class MenuNo {
 	Battery,
 	Alarms,
 	fuel_temp_humd,
+	Settings,
+	SetTimeDate,
+	SetFuelMeas,
     None,
 
 
 
 };
+
+struct SettingMenuCodes {
+	enum MenuNo code;
+};
+
+extern struct SettingMenuCodes SettingsMenuCodes[TotalSettingsSub];
 
 
 namespace UI {
@@ -32,9 +44,17 @@ extern char display_buffer[255];
 
 
 /*Helper Functions*/
+void set_UIcode(enum MenuNo UIcode);
+enum MenuNo get_UIcode();
 void common_iconsMain(u8g2_t *u8g2);
 
 
+
+
+/*Settings*/
+void Settings(u8g2_t *u8g2);
+void SetTimeDate(u8g2_t *u8g2);
+void SetFuelMeas(u8g2_t *u8g2);
 
 
 /*Main functions*/

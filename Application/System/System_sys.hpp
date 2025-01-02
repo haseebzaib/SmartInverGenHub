@@ -32,13 +32,13 @@ public:
     enum status binarystringToUint8(char *binaryString,uint8_t *result);
 
 
-    int32_t convertToEpoch(char *simTime);
+    uint32_t convertToEpoch(char *simTime);
     // Convert the separate buffers to an epoch timestamp specific format
-    int32_t convertToEpoch(char *date, char *time, char *zone);
-    int32_t convertToEpoch(RTC_DateTypeDef sDate,RTC_TimeTypeDef sTime,int8_t zone);
+    uint32_t convertToEpoch(char *date, char *time, char *zone);
+    uint32_t convertToEpoch(RTC_DateTypeDef sDate,RTC_TimeTypeDef sTime,int8_t zone);
 
-    void convertEpochToSimTime(int32_t epoch,int timezone,char *recv_buf);
-    void convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,int32_t epoch,int timezone);
+    void convertEpochToSimTime(uint32_t epoch,int timezone,char *recv_buf);
+    void convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,uint32_t epoch,int timezone);
 
 
 private:

@@ -59,7 +59,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define PZEM2_U huart6
 #define PZEM3_U huart4
-#define INVERTER_U huart3
 #define PZEM1_U huart1
 #define GSM_U huart2
 #define OLEDSpi hspi2
@@ -71,12 +70,6 @@ void Error_Handler(void);
 #define GSM_USART2_TX_GPIO_Port GPIOA
 #define GSM_USART2_RX_Pin GPIO_PIN_3
 #define GSM_USART2_RX_GPIO_Port GPIOA
-#define DE_Pin GPIO_PIN_15
-#define DE_GPIO_Port GPIOE
-#define INVERTER_USART3_TX_Pin GPIO_PIN_10
-#define INVERTER_USART3_TX_GPIO_Port GPIOB
-#define INVERTER_USART3_RX_Pin GPIO_PIN_11
-#define INVERTER_USART3_RX_GPIO_Port GPIOB
 #define DISPLAY_DC_Pin GPIO_PIN_12
 #define DISPLAY_DC_GPIO_Port GPIOB
 #define DISPLAY_RES_Pin GPIO_PIN_14

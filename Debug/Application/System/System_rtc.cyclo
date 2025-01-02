@@ -1,3 +1,5 @@
 ../Application/System/System_rtc.cpp:15:1:System_rtc::stmRTC::stmRTC(RTC_HandleTypeDef*, int8_t)	1
 ../Application/System/System_rtc.cpp:24:9:uint8_t System_rtc::stmRTC::getTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, uint32_t*)	8
-../Application/System/System_rtc.cpp:72:9:uint8_t System_rtc::stmRTC::setTime(int32_t, int8_t)	2
+../Application/System/System_rtc.cpp:72:9:uint8_t System_rtc::stmRTC::getTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, uint32_t*, int8_t*)	8
+../Application/System/System_rtc.cpp:125:9:uint8_t System_rtc::stmRTC::setTime(uint32_t, int8_t)	2
+../Application/System/System_rtc.cpp:141:9:uint8_t System_rtc::stmRTC::setTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, int8_t)	2

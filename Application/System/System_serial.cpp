@@ -51,14 +51,6 @@ HAL_StatusTypeDef My_UART_Receive_Endless(UART_HandleTypeDef *huart) {
 
 		}
 
-		if (huart == &INVERTER_U) {
-
-			if(LocalInverterRxCB)
-			{
-				LocalInverterRxCB(huart,(uint8_t)uhData);
-			}
-
-		}
 
 		return HAL_OK;
 	} else {
@@ -196,14 +188,7 @@ void My_UART_IRQHandler(UART_HandleTypeDef *huart) {
 
 			}
 
-			if (huart == &INVERTER_U) {
 
-				if(LocalInverterTxCB)
-				{
-					LocalInverterTxCB(huart);
-				}
-
-			}
 	    return;
 	  }
 
