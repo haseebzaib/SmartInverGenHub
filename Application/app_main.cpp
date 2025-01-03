@@ -9,6 +9,7 @@
 #include "app_main.hpp"
 #include "Init.hpp"
 #include "rtc.h"
+#include "i2c.h"
 #include "button.hpp"
 
 
@@ -25,7 +26,8 @@ System_Rtos::freertos_queues ControlDataQueue(1,sizeof(struct ControlData_Queue)
 
 
 System_rtc::stmRTC stmRTC(&hrtc,5);
-
+sensor_liquidMeas::liquidSensor liquidSensor(&hadc1,0.0, 10.0, 3.3);
+sensor_TempHumd::AHT20 AHT20(&hi2c1, 0x38);
 
 
 const char kaHexAsc[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};

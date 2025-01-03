@@ -9,6 +9,7 @@
 #define SENSOR_SENSOR_LIQUIDMEAS_HPP_
 
 #include "main.h"
+#include "System_Rtos.hpp"
 
 namespace sensor_liquidMeas
 {
@@ -32,17 +33,20 @@ namespace sensor_liquidMeas
 			Inch = 3,
     	  };
 
-    	liquidSensor(ADC_HandleTypeDef *hadc);
-    	void Measurement_loop(enum unit unit_,float LowSpan,float fullSpan,float VoltOut,uint8_t *getlevel,float *consumption,uint32_t curEpochTime,uint32_t *startEpochtime,uint32_t *endEpochtime);
-    	enum status getLevel(enum unit unit_,float LowSpan,float fullSpan,float VoltOut,uint8_t *getlevel);
+    	liquidSensor(ADC_HandleTypeDef *hadc,float LowSpan,float FullSpan,float VoltOut);
+    	void Measurement_loop(uint8_t *getlevel,float *consumption,uint32_t curEpochTime,uint32_t *startEpochtime,uint32_t *endEpochtime);
+    	enum status getLevel(uint8_t *getlevel);
         void consumptionliters(float *consumption);
         void refuelingDetection(uint32_t curEpochTime,uint32_t *startEpochtime,uint32_t *endEpochtime);
+        void setParameters(float LowSpan,float FullSpan);
+        void getParameters(float *LowSpan,float *FullSpan);
 
 
     private:
 #define CheckError(func, returnStat, checkStat) \
   if (func != checkStat)          \
   {                            \
+	LiquidMeasSemaphore.semaphoreGive();\
     return returnStat;               \
   }
 
@@ -65,8 +69,13 @@ namespace sensor_liquidMeas
         uint32_t refueling_start_time = 0;
         uint32_t refueling_prev_time = 0;
 
+        float InternalLowSpan;
+        float InternalFullSpan;
+        float InternalVoltOut;
+
 
     	ADC_HandleTypeDef *hadc_sensor;
+    	System_Rtos::freertos_semaphore LiquidMeasSemaphore;
 
 
 

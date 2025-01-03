@@ -90,6 +90,7 @@ public:
 	freertos_semaphore();
 	void semaphoreCreate();
 	enum semaphore_stat semaphoreTake();
+	enum semaphore_stat semaphoreTake(uint32_t timeout);
 	enum semaphore_stat semaphoreGive();
 
 

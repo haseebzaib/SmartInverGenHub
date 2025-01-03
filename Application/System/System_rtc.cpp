@@ -24,7 +24,7 @@ stmRTC::stmRTC(RTC_HandleTypeDef *hrtc, int8_t timezone) :
 uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		uint32_t *timestamp) {
 	int err = 1;
-	if (rtcSemaphore.semaphoreTake()
+	if (rtcSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 		RTC_DateTypeDef Date;
 		RTC_TimeTypeDef Time;
@@ -72,7 +72,7 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		uint32_t *timestamp,int8_t *timezone) {
 	int err = 1;
-	if (rtcSemaphore.semaphoreTake()
+	if (rtcSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 
 		RTC_DateTypeDef Date;
@@ -125,7 +125,7 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 uint8_t stmRTC::setTime(uint32_t epoch,int8_t timezone) {
 
 	int err = 1;
-	if (rtcSemaphore.semaphoreTake()
+	if (rtcSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 		checking.convertEpochToSTMTime(Internal_handler,epoch,timezone);
 		zone = timezone;
@@ -141,7 +141,7 @@ uint8_t stmRTC::setTime(uint32_t epoch,int8_t timezone) {
 uint8_t stmRTC::setTime(RTC_DateTypeDef *DDate,RTC_TimeTypeDef *DTime,int8_t timezone)
 {
 	int err = 1;
-	if (rtcSemaphore.semaphoreTake()
+	if (rtcSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 	    HAL_RTC_SetTime(Internal_handler, DTime, RTC_FORMAT_BIN);
 	    HAL_RTC_SetDate(Internal_handler, DDate, RTC_FORMAT_BIN);

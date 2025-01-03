@@ -12,6 +12,8 @@
 //#include "app_main.hpp"
 #include "System/System_Rtos.hpp"
 #include "Sensor/sensor_pzem.hpp"
+#include "Sensor/sensor_liquidMeas.hpp"
+#include "Sensor/sensor_TempHumd.hpp"
 #include "System_rtc.hpp"
 
 void ModemTask(void * pvParameters);
@@ -34,7 +36,8 @@ extern System_Rtos::freertos_queues ControlDataQueue;
 
 
 extern System_rtc::stmRTC stmRTC;
-
+extern sensor_liquidMeas::liquidSensor liquidSensor;
+extern sensor_TempHumd::AHT20 AHT20;
 
 struct ModemData_Queue {
 	//char time[10];

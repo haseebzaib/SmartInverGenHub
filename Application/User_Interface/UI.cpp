@@ -56,8 +56,8 @@ UIStruct MenuArray[] = {
 	{ MenuNo::Settings, UI::Settings, {  MenuNo::SetTimeDate,MenuNo::SetFuelMeas },MenuNo::Settings, MenuNo::Settings, MenuNo::Settings, MenuNo::Power,MenuNo::Power },
 
 	/*Sub menus*/
-	{ MenuNo::SetTimeDate, UI::SetTimeDate,{MenuNo::Settings},MenuNo::Settings,MenuNo::SetTimeDate,MenuNo::SetTimeDate, MenuNo::Settings,MenuNo::SetTimeDate },
-	{ MenuNo::SetFuelMeas, UI::SetFuelMeas,{MenuNo::SetFuelMeas},MenuNo::Settings,MenuNo::SetFuelMeas,MenuNo::SetFuelMeas, MenuNo::Settings,MenuNo::SetFuelMeas },
+	{ MenuNo::SetTimeDate, UI::UI_Subs::SetTimeDate,{MenuNo::Settings},MenuNo::Settings,MenuNo::SetTimeDate,MenuNo::SetTimeDate, MenuNo::Settings,MenuNo::SetTimeDate },
+	{ MenuNo::SetFuelMeas, UI::UI_Subs::SetFuelMeas,{MenuNo::SetFuelMeas},MenuNo::Settings,MenuNo::SetFuelMeas,MenuNo::SetFuelMeas, MenuNo::Settings,MenuNo::SetFuelMeas },
 
 
 
@@ -119,7 +119,7 @@ do {
 	}
 	else if(btncodes == button::btncodes::cEnter_BT)
 	{
-		set_UIcode(SettingsMenuCodes[sel_sub].code);
+		UI::UI_helper::set_UIcode(SettingsMenuCodes[sel_sub].code);
 	}
 
 
@@ -134,7 +134,7 @@ void fuel_temp_humd(u8g2_t *u8g2) {
 	button::resetCode(button::btncodes::cNONE);
 	do {
 		u8g2_ClearBuffer(u8g2);
-		UI::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2);
 
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::SensorInfo.w, imgcont::SensorInfo.h,
 				imgcont::SensorInfo.img);
@@ -163,7 +163,7 @@ void fuel_temp_humd(u8g2_t *u8g2) {
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
-		UI::set_UIcode(MenuNo::Settings);
+		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
 
 }
@@ -173,7 +173,7 @@ void Alarms(u8g2_t *u8g2) {
 	do {
 
 		u8g2_ClearBuffer(u8g2);
-		UI::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2);
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Alarms.w, imgcont::Alarms.h,
 				imgcont::Alarms.img);
 
@@ -200,7 +200,7 @@ void Alarms(u8g2_t *u8g2) {
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
-		UI::set_UIcode(MenuNo::Settings);
+		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
 }
 void Battery(u8g2_t *u8g2) {
@@ -209,7 +209,7 @@ void Battery(u8g2_t *u8g2) {
 	do {
 
 		u8g2_ClearBuffer(u8g2);
-		UI::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2);
 
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Battery.w, imgcont::Battery.h,
 				imgcont::Battery.img);
@@ -237,7 +237,7 @@ void Battery(u8g2_t *u8g2) {
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
-		UI::set_UIcode(MenuNo::Settings);
+		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
 }
 void source(u8g2_t *u8g2) {
@@ -245,7 +245,7 @@ void source(u8g2_t *u8g2) {
 	button::resetCode(button::btncodes::cNONE);
 	do {
 		u8g2_ClearBuffer(u8g2);
-		UI::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2);
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Source.w, imgcont::Source.h,
 				imgcont::Source.img);
 
@@ -272,7 +272,7 @@ void source(u8g2_t *u8g2) {
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
-		UI::set_UIcode(MenuNo::Settings);
+		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
 
 }
@@ -282,7 +282,7 @@ void network(u8g2_t *u8g2) {
 	do {
 
 		u8g2_ClearBuffer(u8g2);
-		UI::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2);
 
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Network.w, imgcont::Network.h,
 				imgcont::Network.img);
@@ -310,7 +310,7 @@ void network(u8g2_t *u8g2) {
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
-		UI::set_UIcode(MenuNo::Settings);
+		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
 }
 
@@ -322,7 +322,7 @@ void power(u8g2_t *u8g2) {
 
 		u8g2_ClearBuffer(u8g2);
 
-		UI::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2);
 		u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 
 		u8g2_DrawXBM(u8g2, 10, 16, imgcont::Phase.w, imgcont::Phase.h,
@@ -348,7 +348,7 @@ void power(u8g2_t *u8g2) {
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
-		UI::set_UIcode(MenuNo::Settings);
+		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
 
 }
@@ -383,7 +383,7 @@ void loop(u8g2_t *u8g2) {
 					break;
 				}
 
-				if (MenuArray[index].Enter[i] == UI::get_UIcode())
+				if (MenuArray[index].Enter[i] == UI::UI_helper::get_UIcode())
 				{
 					CurrMenu = MenuArray[index].Enter[i];
 					break;

@@ -107,7 +107,7 @@ enum freertos_semaphore::semaphore_stat freertos_semaphore::semaphoreTake()
 	enum semaphore_stat stat = senaphore_nothing;
 
     if( xSemaphoreTake(xSemaphor,
-					   pdMS_TO_TICKS(1000)) == pdPASS )
+    		         portMAX_DELAY) == pdPASS )
       {
     	 return semaphore_recived;
       }
@@ -115,6 +115,21 @@ enum freertos_semaphore::semaphore_stat freertos_semaphore::semaphoreTake()
 
 	return stat;
 }
+
+enum freertos_semaphore::semaphore_stat freertos_semaphore::semaphoreTake(uint32_t timeout)
+{
+	enum semaphore_stat stat = senaphore_nothing;
+
+    if( xSemaphoreTake(xSemaphor,
+					   pdMS_TO_TICKS(timeout)) == pdPASS )
+      {
+    	 return semaphore_recived;
+      }
+
+
+	return stat;
+}
+
 
 
 enum freertos_semaphore::semaphore_stat freertos_semaphore::semaphoreGive()

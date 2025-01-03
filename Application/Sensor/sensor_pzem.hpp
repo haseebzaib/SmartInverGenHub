@@ -11,6 +11,7 @@
 
 #include "main.h"
 #include "System_serial.hpp"
+#include "System_Rtos.hpp"
 
 namespace sensor_pzem
 {
@@ -43,7 +44,7 @@ private:
 	static constexpr uint8_t buf[8] = {0xF8, 0x04, 0x00, 0x00,0x00,0x0A, 0x64, 0x64};
 	static constexpr uint8_t rst_buf[4] = {0xF8, 0x42, 0xC2, 0x41};
 	uint8_t res_buf[25];
-
+	System_Rtos::freertos_semaphore PzemSemaphore;
 
 
 

@@ -24,19 +24,19 @@
 enum MenuNo UIcodeStorage;
 
 
-void UI::set_UIcode(enum MenuNo UIcode)
+void UI::UI_helper::set_UIcode(enum MenuNo UIcode)
 {
 
 	UIcodeStorage = UIcode;
 
 }
-enum MenuNo UI::get_UIcode()
+enum MenuNo UI::UI_helper::get_UIcode()
 {
   return UIcodeStorage;
 }
 
 
-void UI::common_iconsMain(u8g2_t *u8g2)
+void UI::UI_helper::common_iconsMain(u8g2_t *u8g2)
 {
 	char time[50];
 	char date[50];
@@ -53,6 +53,15 @@ void UI::common_iconsMain(u8g2_t *u8g2)
 
 }
 
+
+void UI::UI_helper::SubMenuControlInfo(u8g2_t *u8g2)
+{
+	u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
+	u8g2_DrawStr(u8g2, 5, 40, "Up/Dn btn -> Edit");
+	u8g2_DrawStr(u8g2, 5, 48, "Rgt btn   -> Cursor");
+	u8g2_DrawStr(u8g2, 5, 56, "Lft btn   -> Exit");
+	u8g2_DrawStr(u8g2, 5, 64, "Entr btn  -> Save");
+}
 
 
 

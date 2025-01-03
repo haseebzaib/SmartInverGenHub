@@ -12,16 +12,23 @@
 namespace sensor_pzem {
 
 PZEM_004T::PZEM_004T(UART_HandleTypeDef *huart) :
-		serial_(huart) {
+		serial_(huart), PzemSemaphore() {
 	huart_ = huart;
+	PzemSemaphore.semaphoreCreate();
 }
 
 void PZEM_004T::init() {
+	if (PzemSemaphore.semaphoreTake(1000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
 	serial_.TransmitData(rst_buf, 4, 1000);
 	serial_.ReceiveData(res_buf, 25, 500);
+	PzemSemaphore.semaphoreGive();
+	}
 }
 void PZEM_004T::read(PZEM *pzemhandle) {
 
+	if (PzemSemaphore.semaphoreTake(1000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
 	serial_.TransmitData(rst_buf, 4, 1000);
 	serial_.ReceiveData(res_buf, 25, 500);
 
@@ -42,6 +49,9 @@ void PZEM_004T::read(PZEM *pzemhandle) {
 	pzemhandle->frequency = ((uint32_t)res_buf[17] << 8 | (uint32_t)res_buf[18]) / 10.0;
 	pzemhandle->pf = ((uint32_t)res_buf[19] << 8 | (uint32_t)res_buf[20]) / 100.0;
 	pzemhandle->alarms = ((uint32_t)res_buf[21] << 8 | (uint32_t)res_buf[22]);
+
+	PzemSemaphore.semaphoreGive();
+	}
 
 }
 

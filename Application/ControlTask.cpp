@@ -20,8 +20,7 @@
 RTC_DateTypeDef sDate;
 RTC_TimeTypeDef sTime;
 
-sensor_liquidMeas::liquidSensor liquidSensor(&hadc1);
-sensor_TempHumd::AHT20 AHT20(&hi2c1, 0x38);
+
 
 
 System_sys::Parsing_Checking parsing;
@@ -164,8 +163,7 @@ void ControlTask(void *pvParameters) {
 			}
 		}
 
-		liquidSensor.Measurement_loop(sensor_liquidMeas::liquidSensor::Meter,
-				0.0, 10.0, 3.3, &ControlData.fuelPer, &ControlData.fuelConsp,
+		liquidSensor.Measurement_loop( &ControlData.fuelPer, &ControlData.fuelConsp,
 				ControlData.timestamp, &ControlData.refuelingStartTime,
 				&ControlData.refuelingEndTime);
 		AHT20.measure(&ControlData.temp, &ControlData.humid);

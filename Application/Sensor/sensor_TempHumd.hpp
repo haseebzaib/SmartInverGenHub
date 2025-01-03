@@ -11,7 +11,7 @@
 
 #include "main.h"
 #include "gpio.h"
-
+#include "System/System_Rtos.hpp"
 
 
 namespace sensor_TempHumd
@@ -46,6 +46,7 @@ namespace sensor_TempHumd
 	  static constexpr uint8_t OUTPUT = 1;
       static constexpr uint8_t INPUT = 0;
       void set_gpio_mode(uint8_t pMode);
+      System_Rtos::freertos_semaphore DHTSemaphore;
 
 
   };
@@ -83,6 +84,8 @@ private:
       enum status check_Device();
 	  uint32_t temp();
       uint32_t humid();
+
+      System_Rtos::freertos_semaphore AHT20Semaphore;
 
   };
 }

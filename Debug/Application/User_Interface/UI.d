@@ -58,9 +58,13 @@ Application/User_Interface/UI.o: ../Application/User_Interface/UI.cpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_liquidMeas.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_TempHumd.hpp \
+ ../Core/Inc/gpio.h \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
- F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
  ../Core/Inc/rtc.h ../Application/User_Interface/UI.hpp \
@@ -127,9 +131,13 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_liquidMeas.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_TempHumd.hpp:
+../Core/Inc/gpio.h:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
-F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
 ../Core/Inc/rtc.h:

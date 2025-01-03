@@ -55,8 +55,10 @@ Application/ControlTask.o: ../Application/ControlTask.cpp \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Application/System/System_sys.hpp \
  ../Application/Sensor/sensor_liquidMeas.hpp \
- ../Application/Sensor/sensor_TempHumd.hpp ../Core/Inc/i2c.h \
- ../Core/Inc/rtc.h ../Application/Init.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ ../Application/Sensor/sensor_TempHumd.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ ../Core/Inc/i2c.h ../Core/Inc/rtc.h ../Application/Init.hpp \
  ../Application/Sensor/sensor_pzem.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
@@ -122,7 +124,9 @@ Application/ControlTask.o: ../Application/ControlTask.cpp \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 ../Application/System/System_sys.hpp:
 ../Application/Sensor/sensor_liquidMeas.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 ../Application/Sensor/sensor_TempHumd.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 ../Core/Inc/i2c.h:
 ../Core/Inc/rtc.h:
 ../Application/Init.hpp:

@@ -59,15 +59,20 @@ Application/User_Interface/UI_Subs.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_liquidMeas.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_TempHumd.hpp \
+ ../Core/Inc/gpio.h \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
- F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
  ../Core/Inc/rtc.h ../Application/User_Interface/UI.hpp \
  ../Application/User_Interface/img.hpp \
  ../Application/User_Interface/button.hpp \
- ../Application/User_Interface/UI_txt.hpp
+ ../Application/User_Interface/UI_txt.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_liquidMeas.hpp
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/u8g2/csrc/u8g2.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/u8g2/csrc/u8x8.h:
 ../Core/Inc/spi.h:
@@ -128,9 +133,13 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_liquidMeas.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_TempHumd.hpp:
+../Core/Inc/gpio.h:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
-F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
 ../Core/Inc/rtc.h:
@@ -138,3 +147,4 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.
 ../Application/User_Interface/img.hpp:
 ../Application/User_Interface/button.hpp:
 ../Application/User_Interface/UI_txt.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_liquidMeas.hpp:

@@ -6,17 +6,18 @@
  */
 
 #include <sensor_TempHumd.hpp>
-#include "System/System_Rtos.hpp"
+
 
 namespace sensor_TempHumd {
 
 
 
-DHT::DHT(TIM_HandleTypeDef *htim,GPIO_TypeDef *port,uint16_t pin) {
+DHT::DHT(TIM_HandleTypeDef *htim,GPIO_TypeDef *port,uint16_t pin) : DHTSemaphore() {
 
     internal_dht_.htim = htim;
     internal_dht_.port = port;
     internal_dht_.pin = pin;
+    DHTSemaphore.semaphoreCreate();
 
 }
 
@@ -44,6 +45,8 @@ void DHT::set_gpio_mode(uint8_t pMode){
 
 DHT::status DHT::read(uint8_t *temp,uint8_t *humidity){
 	enum status stat = DHT_OK;
+	if (DHTSemaphore.semaphoreTake(1000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
 
 	uint16_t mTime1 = 0, mTime2 = 0, mBit = 0;
 		uint8_t humVal = 0, tempVal = 0, parityVal = 0, genParity = 0;
@@ -171,8 +174,8 @@ DHT::status DHT::read(uint8_t *temp,uint8_t *humidity){
 		*humidity = internal_dht_.humidty;
 
 
-
-
+		DHTSemaphore.semaphoreGive();
+	}
 
 handleReturn:
   return stat;
@@ -182,23 +185,30 @@ handleReturn:
 
 
 
-AHT20::AHT20( I2C_HandleTypeDef *ui2c,uint8_t devAddr,uint32_t timeout)
+AHT20::AHT20( I2C_HandleTypeDef *ui2c,uint8_t devAddr,uint32_t timeout) : AHT20Semaphore()
 {
 	_aht20_ui2c=ui2c;
 	devAddr_=devAddr;
 	timeout_ = timeout;
+	AHT20Semaphore.semaphoreCreate();
 }
 
 void AHT20::SoftReset()
 {
+	if (AHT20Semaphore.semaphoreTake(1000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
 	if(check_Device() == AHT_OK)
 	{
 	uint8_t cmd = AHT20_SOFT_RESET;
 		HAL_I2C_Master_Transmit(_aht20_ui2c, devAddr_ << 1, &cmd, 1, timeout_);
 	}
+	AHT20Semaphore.semaphoreGive();
+	}
 }
 void AHT20::measure(uint32_t *temp_,uint32_t *humid_)
 {
+	if (AHT20Semaphore.semaphoreTake(1000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
 	uint16_t counter = 0;
 	System_Rtos::delay(50);
 	uint8_t ahtTData[3];
@@ -239,6 +249,9 @@ void AHT20::measure(uint32_t *temp_,uint32_t *humid_)
     		}
     	}
     }
+	}
+
+	AHT20Semaphore.semaphoreGive();
 	}
 }
 

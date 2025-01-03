@@ -43,19 +43,25 @@ namespace UI {
 extern char display_buffer[255];
 
 
+namespace UI_helper {
 /*Helper Functions*/
 void set_UIcode(enum MenuNo UIcode);
 enum MenuNo get_UIcode();
 void common_iconsMain(u8g2_t *u8g2);
+void SubMenuControlInfo(u8g2_t *u8g2);
 
 
+}
 
 
 /*Settings*/
 void Settings(u8g2_t *u8g2);
+
+
+namespace UI_Subs {
 void SetTimeDate(u8g2_t *u8g2);
 void SetFuelMeas(u8g2_t *u8g2);
-
+}
 
 /*Main functions*/
 void fuel_temp_humd(u8g2_t *u8g2);
