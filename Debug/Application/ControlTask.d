@@ -58,12 +58,14 @@ Application/ControlTask.o: ../Application/ControlTask.cpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  ../Application/Sensor/sensor_TempHumd.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
- ../Core/Inc/i2c.h ../Core/Inc/rtc.h ../Application/Init.hpp \
  ../Application/Sensor/sensor_pzem.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
+ ../Application/Sensor/sensor_DcHall.hpp ../Core/Inc/i2c.h \
+ ../Core/Inc/rtc.h ../Application/Init.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
- F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ ../Application/Sensor/sensor_DcVolt.hpp
 ../Application/app_main.hpp:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -127,11 +129,13 @@ Application/ControlTask.o: ../Application/ControlTask.cpp \
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 ../Application/Sensor/sensor_TempHumd.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+../Application/Sensor/sensor_pzem.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
+../Application/Sensor/sensor_DcHall.hpp:
 ../Core/Inc/i2c.h:
 ../Core/Inc/rtc.h:
 ../Application/Init.hpp:
-../Application/Sensor/sensor_pzem.hpp:
-F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+../Application/Sensor/sensor_DcVolt.hpp:

@@ -19,8 +19,6 @@ stmRTC::stmRTC(RTC_HandleTypeDef *hrtc, int8_t timezone) :
 	rtcSemaphore.semaphoreCreate();
 }
 
-
-
 uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		uint32_t *timestamp) {
 	int err = 1;
@@ -32,7 +30,7 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		HAL_RTC_GetDate(Internal_handler, &Date, RTC_FORMAT_BIN);
 
 		if (timestamp != nullptr) {
-		*timestamp = checking.convertToEpoch(Date, Time, zone);
+			*timestamp = checking.convertToEpoch(Date, Time, zone);
 
 		}
 		if (DDate != nullptr) {
@@ -46,11 +44,9 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		rtcSemaphore.semaphoreGive();
 
 		err = 0;
-	}
-	else
-	{
+	} else {
 		if (timestamp != nullptr) {
-		*timestamp = 0;
+			*timestamp = 0;
 
 		}
 		if (DDate != nullptr) {
@@ -63,14 +59,12 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 
 	}
 
-
 	return err;
-
 
 }
 
 uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
-		uint32_t *timestamp,int8_t *timezone) {
+		uint32_t *timestamp, int8_t *timezone) {
 	int err = 1;
 	if (rtcSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
@@ -80,12 +74,10 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		HAL_RTC_GetTime(Internal_handler, &Time, RTC_FORMAT_BIN);
 		HAL_RTC_GetDate(Internal_handler, &Date, RTC_FORMAT_BIN);
 
-       *timezone = zone;
+		*timezone = zone;
 
 		if (timestamp != nullptr) {
-		*timestamp = checking.convertToEpoch(Date, Time, zone);
-
-
+			*timestamp = checking.convertToEpoch(Date, Time, zone);
 
 		}
 		if (DDate != nullptr) {
@@ -99,11 +91,9 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		rtcSemaphore.semaphoreGive();
 
 		err = 0;
-	}
-	else
-	{
+	} else {
 		if (timestamp != nullptr) {
-		*timestamp = 0;
+			*timestamp = 0;
 
 		}
 		if (DDate != nullptr) {
@@ -116,35 +106,32 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 
 	}
 
-
 	return err;
-
 
 }
 
-uint8_t stmRTC::setTime(uint32_t epoch,int8_t timezone) {
+uint8_t stmRTC::setTime(uint32_t epoch, int8_t timezone) {
 
 	int err = 1;
 	if (rtcSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
-		checking.convertEpochToSTMTime(Internal_handler,epoch,timezone);
+		checking.convertEpochToSTMTime(Internal_handler, epoch, timezone);
 		zone = timezone;
 		rtcSemaphore.semaphoreGive();
 		err = 0;
 	}
 
-
 	return err;
 
 }
 
-uint8_t stmRTC::setTime(RTC_DateTypeDef *DDate,RTC_TimeTypeDef *DTime,int8_t timezone)
-{
+uint8_t stmRTC::setTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
+		int8_t timezone) {
 	int err = 1;
 	if (rtcSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
-	    HAL_RTC_SetTime(Internal_handler, DTime, RTC_FORMAT_BIN);
-	    HAL_RTC_SetDate(Internal_handler, DDate, RTC_FORMAT_BIN);
+		HAL_RTC_SetTime(Internal_handler, DTime, RTC_FORMAT_BIN);
+		HAL_RTC_SetDate(Internal_handler, DDate, RTC_FORMAT_BIN);
 		zone = timezone;
 
 		RTC_DateTypeDef Date;
@@ -156,9 +143,20 @@ uint8_t stmRTC::setTime(RTC_DateTypeDef *DDate,RTC_TimeTypeDef *DTime,int8_t tim
 		err = 0;
 	}
 
-
 	return err;
 }
 
+uint8_t stmRTC::epochToTimeString(uint32_t epoch, int8_t timezone,
+		char *Timestring) {
+	int err = 1;
+	if (rtcSemaphore.semaphoreTake(1000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
+		checking.convertEpochToTimeString(epoch, timezone, Timestring);
+		rtcSemaphore.semaphoreGive();
+		err = 0;
+	}
+
+	return err;
+}
 }
 

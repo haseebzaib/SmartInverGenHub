@@ -42,6 +42,7 @@ CPP_DEPS :=
 SUBDIRS := \
 Application \
 Application/Modem \
+Application/SOC \
 Application/Sensor \
 Application/System \
 Application/User_Interface \

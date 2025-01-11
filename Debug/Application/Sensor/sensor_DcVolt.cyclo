@@ -1,0 +1,2 @@
+../Application/Sensor/sensor_DcVolt.cpp:15:1:sensor_DcVolt::DcVolt::DcVolt(ADC_HandleTypeDef*)	1
+../Application/Sensor/sensor_DcVolt.cpp:24:16:sensor_DcVolt::DcVolt::status sensor_DcVolt::DcVolt::getVoltage(float*)	6

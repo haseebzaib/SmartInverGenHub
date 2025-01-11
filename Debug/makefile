@@ -20,6 +20,7 @@ RM := rm -rf
 -include Application/User_Interface/subdir.mk
 -include Application/System/subdir.mk
 -include Application/Sensor/subdir.mk
+-include Application/SOC/subdir.mk
 -include Application/Modem/subdir.mk
 -include Application/subdir.mk
 -include objects.mk

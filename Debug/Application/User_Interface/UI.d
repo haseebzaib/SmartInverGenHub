@@ -66,11 +66,15 @@ Application/User_Interface/UI.o: ../Application/User_Interface/UI.cpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcHall.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcVolt.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
  ../Core/Inc/rtc.h ../Application/User_Interface/UI.hpp \
  ../Application/User_Interface/img.hpp \
  ../Application/User_Interface/button.hpp \
- ../Application/User_Interface/UI_txt.hpp
+ ../Application/User_Interface/UI_txt.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcHall.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/SOC/SOC.hpp
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/u8g2/csrc/u8g2.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/u8g2/csrc/u8x8.h:
 ../Core/Inc/spi.h:
@@ -139,9 +143,13 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcHall.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcVolt.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
 ../Core/Inc/rtc.h:
 ../Application/User_Interface/UI.hpp:
 ../Application/User_Interface/img.hpp:
 ../Application/User_Interface/button.hpp:
 ../Application/User_Interface/UI_txt.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcHall.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/SOC/SOC.hpp:

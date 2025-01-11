@@ -15,29 +15,44 @@
 #include "Sensor/sensor_liquidMeas.hpp"
 #include "Sensor/sensor_TempHumd.hpp"
 #include "System_rtc.hpp"
+#include "Sensor/sensor_DcHall.hpp"
+#include "Sensor/sensor_DcVolt.hpp"
 
 void ModemTask(void * pvParameters);
 void ControlTask(void * pvParameters);
 void DisplayTask(void *pvParameters);
+void SoCTask(void *pvParameters);
 
+uint8_t getSourceState();
+uint32_t getChargeTimestamp();
+uint32_t getDischargeTimestamp();
 
 #define _StackSize_Modem 512
 #define _StackSize_Control 512
 #define _StackSize_Display 512
-
+#define _StackSize_SoC 512
 
 extern System_Rtos::freertos_Tasks ModemTaskHandler;
 extern System_Rtos::freertos_Tasks ControlTaskHandler;
 extern System_Rtos::freertos_Tasks DisplayTaskHandler;
+extern System_Rtos::freertos_Tasks SoCTaskHandler;
 
 
 extern System_Rtos::freertos_queues ModemDataQueue;
 extern System_Rtos::freertos_queues ControlDataQueue;
+extern System_Rtos::freertos_queues SoCDataQueue;
 
 
 extern System_rtc::stmRTC stmRTC;
 extern sensor_liquidMeas::liquidSensor liquidSensor;
 extern sensor_TempHumd::AHT20 AHT20;
+
+extern sensor_pzem::PZEM_004T PZEM1;
+extern sensor_pzem::PZEM_004T PZEM2;
+extern sensor_pzem::PZEM_004T PZEM3;
+
+extern sensor_DcHall::DcHall DCCurrentSensor;
+extern sensor_DcVolt::DcVolt DCVoltageMeasurement;
 
 struct ModemData_Queue {
 	//char time[10];
@@ -55,6 +70,13 @@ struct ModemData_Queue {
 	char mqttSubTopic[20];
 	uint8_t internet;
 	uint8_t mqtt_client_index;
+};
+
+struct SoCData_Queue {
+
+	float BattVolt;
+	float BattCurr;
+	float BattSoC;
 };
 
 
@@ -116,6 +138,19 @@ static constexpr char networkInfo[2][12] = {
 		"}"\
 
 
+enum class sources : uint8_t {
+	Battery = 0,
+	Generator,
+	Solar,
+};
+
+#define Total_Sources 3
+
+enum class batterystates : uint8_t {
+	BatteryCharging = 0,
+	BatteryDischarging,
+	BatteryIDLE,
+};
 
 
 struct ControlData_Queue {
@@ -137,10 +172,16 @@ struct ControlData_Queue {
 
 
 
+   float DcCurrent;
+   float DcVolt;
+   float SoC;
 
-   uint8_t sourceIdentification;
-   uint32_t sourceIdentStartTime;
-   uint32_t sourceIdentEndTime;
+
+
+
+   uint8_t SelectedSource;
+   uint32_t SelectedSourceStartTime[Total_Sources];
+   uint32_t SelectedSourceEndTime[Total_Sources];
 
    uint8_t AlarmFreq;
    uint8_t AlarmOverload;
@@ -154,8 +195,11 @@ struct ControlData_Queue {
    uint32_t refuelingEndTime;
 
    int batteryLevel;
-   uint32_t batteryChargeStartTime;
-   uint32_t batteryChargeEndTime;
+   uint8_t batterystate;
+   uint32_t batteryChargeDischargeStartTime[3];
+   uint32_t batteryChargeDischargeEndTime[3];
+
+
 
 
    uint32_t temp;

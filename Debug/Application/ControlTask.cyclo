@@ -1,3 +1,9 @@
-../Application/ControlTask.cpp:47:6:void ControlTask(void*)	6
-../Application/ControlTask.cpp:188:1:void __static_initialization_and_destruction_0(int, int)	3
-../Application/ControlTask.cpp:188:1:cpp)	1
+../Application/ControlTask.cpp:53:13:void TurnOffGenerator()	1
+../Application/ControlTask.cpp:58:13:void TurnOnGenerator()	1
+../Application/ControlTask.cpp:63:13:void SwitchingLoadLogic(ControlData_Queue*)	3
+../Application/ControlTask.cpp:90:9:uint8_t getSourceState()	1
+../Application/ControlTask.cpp:95:10:uint32_t getChargeTimestamp()	1
+../Application/ControlTask.cpp:100:10:uint32_t getDischargeTimestamp()	1
+../Application/ControlTask.cpp:106:6:void ControlTask(void*)	2
+../Application/ControlTask.cpp:171:1:void __static_initialization_and_destruction_0(int, int)	3
+../Application/ControlTask.cpp:171:1:cpp)	1

@@ -18,8 +18,16 @@
 #include "img.hpp"
 #include "button.hpp"
 #include "UI_txt.hpp"
+#include "sensor_DcHall.hpp"
+#include "SOC.hpp"
 
+#define scrollTiming 2
 #define TotalEnterIndexes 10
+
+uint8_t FuelPercent = 0;
+uint32_t temp = 0;
+uint32_t humid = 0;
+
 
 struct SettingMenuCodes SettingsMenuCodes[TotalSettingsSub] =
 {
@@ -132,6 +140,9 @@ do {
 void fuel_temp_humd(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
+	uint8_t scroll = 0;
+
+	char buffer[3][10];
 	do {
 		u8g2_ClearBuffer(u8g2);
 		UI::UI_helper::common_iconsMain(u8g2);
@@ -139,37 +150,61 @@ void fuel_temp_humd(u8g2_t *u8g2) {
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::SensorInfo.w, imgcont::SensorInfo.h,
 				imgcont::SensorInfo.img);
 
+		liquidSensor.getLevel(&FuelPercent);
+		AHT20.measure(&temp, &humid);
+
 		u8g2_SetFontMode(u8g2, 1);
 		u8g2_SetDrawColor(u8g2, 2);
 		u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 
 		u8g2_DrawBox(u8g2, 2, 17, 26, 9);
 		u8g2_DrawStr(u8g2, 3, 25, "Fuel:");
-		u8g2_DrawStr(u8g2, 5, 35, "90%");
+		std::sprintf(buffer[0],"%d%%",FuelPercent);
+		u8g2_DrawStr(u8g2, 5, 35, buffer[0]);
 
 		u8g2_DrawBox(u8g2, 2, 40, 26, 9);
 		u8g2_DrawStr(u8g2, 3, 48, "Temp:");
-		u8g2_DrawStr(u8g2, 5, 58, "90C");
+		std::sprintf(buffer[1],"%ldC",temp);
+		u8g2_DrawStr(u8g2, 5, 58, buffer[1]);
 
 		u8g2_DrawBox(u8g2, 86, 17, 31, 9);
 		u8g2_DrawStr(u8g2, 88, 25, "Humid:");
-		u8g2_DrawStr(u8g2, 88, 35, "50%");
+		std::sprintf(buffer[2],"%ld%%",humid);
+		u8g2_DrawStr(u8g2, 88, 35, buffer[2]);
 
 		u8g2_SendBuffer(u8g2);
 
 		btncodes = button::get_eventTimed(1000);
+		if(btncodes == button::btncodes::cNONE )
+		  {
+			scroll++;
+		  }
+		else
+		{
+			scroll = 0;
+		}
 
-	} while (btncodes == button::btncodes::cNONE);
+
+	} while (btncodes == button::btncodes::cNONE && scroll < scrollTiming);
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
 		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
 
+	if(scroll >= scrollTiming)
+	{
+
+
+		button::resetCode( button::btncodes::cRGHT_BT);
+	}
+
+
 }
 void Alarms(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
+	uint8_t scroll = 0;
 	do {
 
 		u8g2_ClearBuffer(u8g2);
@@ -195,20 +230,73 @@ void Alarms(u8g2_t *u8g2) {
 
 		u8g2_SendBuffer(u8g2);
 		btncodes = button::get_eventTimed(1000);
+		if(btncodes == button::btncodes::cNONE )
+		  {
+			scroll++;
+		  }
+		else
+		{
+			scroll = 0;
+		}
 
-	} while (btncodes == button::btncodes::cNONE);
+
+	} while (btncodes == button::btncodes::cNONE && scroll < scrollTiming);
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
 		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
+
+	if(scroll >= scrollTiming)
+	{
+
+
+		button::resetCode( button::btncodes::cRGHT_BT);
+	}
+
 }
 void Battery(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
+	uint8_t scroll = 0;
 	do {
+		float soc;
+		float curr;
+		uint32_t startTime = getChargeTimestamp();
+		uint32_t endTime = getDischargeTimestamp();
+		char StringStartTime[20];
+		char StringEndTime[20];
+
+		if(startTime == 0)
+		{
+           std::sprintf(StringStartTime,"Null");
+		}
+		else
+		{
+			stmRTC.epochToTimeString(startTime, +5, StringStartTime);
+		}
+
+		if(endTime == 0)
+		{
+			  std::sprintf(StringEndTime,"Null");
+		}
+		else
+		{
+			stmRTC.epochToTimeString(startTime, +5, StringEndTime);
+		}
+
+		DCCurrentSensor.getCurrent(&curr);
+
 
 		u8g2_ClearBuffer(u8g2);
+
+		soc = SOC::getSoCVal();
+
+		char currentA[10];
+
+		std::sprintf(currentA,"%.01f%%/%.02f",soc,curr);
+
+
 		UI::UI_helper::common_iconsMain(u8g2);
 
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Battery.w, imgcont::Battery.h,
@@ -220,29 +308,48 @@ void Battery(u8g2_t *u8g2) {
 
 		u8g2_DrawBox(u8g2, 2, 17, 41, 9);
 		u8g2_DrawStr(u8g2, 3, 25, "Percent:");
-		u8g2_DrawStr(u8g2, 15, 35, "98%");
+		u8g2_DrawStr(u8g2, 1, 35, currentA);
 
 		u8g2_DrawBox(u8g2, 2, 40, 46, 9);
 		u8g2_DrawStr(u8g2, 3, 48, "ChrgTime:");
-		u8g2_DrawStr(u8g2, 5, 58, "01:25:08");
+		u8g2_DrawStr(u8g2, 5, 58, StringStartTime);
 
 		u8g2_DrawBox(u8g2, 81, 17, 51, 9);
 		u8g2_DrawStr(u8g2, 82, 25, "DchrgTime:");
-		u8g2_DrawStr(u8g2, 82, 35, "02:25:08");
+		u8g2_DrawStr(u8g2, 82, 35, StringEndTime);
 
 		u8g2_SendBuffer(u8g2);
 		btncodes = button::get_eventTimed(1000);
 
-	} while (btncodes == button::btncodes::cNONE);
+		if(btncodes == button::btncodes::cNONE )
+		  {
+			//scroll++;
+		  }
+		else
+		{
+			scroll = 0;
+		}
+
+
+	} while (btncodes == button::btncodes::cNONE && scroll < scrollTiming);
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
 		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
+
+	if(scroll >= scrollTiming)
+	{
+
+
+		button::resetCode( button::btncodes::cRGHT_BT);
+	}
+
 }
 void source(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
+	uint8_t scroll = 0;
 	do {
 		u8g2_ClearBuffer(u8g2);
 		UI::UI_helper::common_iconsMain(u8g2);
@@ -267,18 +374,35 @@ void source(u8g2_t *u8g2) {
 
 		u8g2_SendBuffer(u8g2);
 		btncodes = button::get_eventTimed(1000);
+		if(btncodes == button::btncodes::cNONE )
+		  {
+			scroll++;
+		  }
+		else
+		{
+			scroll = 0;
+		}
 
-	} while (btncodes == button::btncodes::cNONE);
+
+	} while (btncodes == button::btncodes::cNONE && scroll < scrollTiming);
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
 		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
 
+	if(scroll >= scrollTiming)
+	{
+
+
+		button::resetCode( button::btncodes::cRGHT_BT);
+	}
+
 }
 void network(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
+	uint8_t scroll = 0;
 	do {
 
 		u8g2_ClearBuffer(u8g2);
@@ -305,12 +429,27 @@ void network(u8g2_t *u8g2) {
 
 		u8g2_SendBuffer(u8g2);
 		btncodes = button::get_eventTimed(1000);
+		if(btncodes == button::btncodes::cNONE )
+		  {
+			scroll++;
+		  }
+		else
+		{
+			scroll = 0;
+		}
 
-	} while (btncodes == button::btncodes::cNONE);
+	} while (btncodes == button::btncodes::cNONE && scroll < scrollTiming);
 
 	if(btncodes == button::btncodes::cEnter_BT)
 	{
 		UI::UI_helper::set_UIcode(MenuNo::Settings);
+	}
+
+	if(scroll >= scrollTiming)
+	{
+
+
+		button::resetCode( button::btncodes::cRGHT_BT);
 	}
 }
 
@@ -318,45 +457,85 @@ void power(u8g2_t *u8g2) {
 
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
+	uint8_t scroll = 0;
+	sensor_pzem::PZEM_004T::PZEM PZEM1_Data;
+	sensor_pzem::PZEM_004T::PZEM PZEM2_Data;
+	sensor_pzem::PZEM_004T::PZEM PZEM3_Data;
+
 	do {
 
 		u8g2_ClearBuffer(u8g2);
+
+		PZEM1.read(&PZEM1_Data);
+		PZEM2.read(&PZEM2_Data);
+		PZEM3.read(&PZEM3_Data);
+
+        char V_1[10];
+        char I_1[10];
+        char V_2[10];
+        char I_2[10];
+        char V_3[10];
+        char I_3[10];
+
+        std::sprintf(V_1,"%.1f",PZEM1_Data.voltage);
+        std::sprintf(I_1,"%.1f",PZEM1_Data.current);
+        std::sprintf(V_2,"%.1f",PZEM2_Data.power);
+        std::sprintf(I_2,"%.1f",PZEM2_Data.current);
+        std::sprintf(V_3,"%.1f",PZEM3_Data.voltage);
+        std::sprintf(I_3,"%.1f",PZEM3_Data.current);
+
 
 		UI::UI_helper::common_iconsMain(u8g2);
 		u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 
 		u8g2_DrawXBM(u8g2, 10, 16, imgcont::Phase.w, imgcont::Phase.h,
 				imgcont::Phase.img);
-		u8g2_DrawStr(u8g2, 5, 38, "220.0V");
-		u8g2_DrawStr(u8g2, 5, 46, "020.6A");
+		u8g2_DrawStr(u8g2, 5, 38, V_1);
+		u8g2_DrawStr(u8g2, 5, 46, I_1);
 
 		u8g2_DrawXBM(u8g2, 54, 10, imgcont::Phase.w, imgcont::Phase.h,
 				imgcont::Phase.img);
-		u8g2_DrawStr(u8g2, 50, 32, "220.0V");
-		u8g2_DrawStr(u8g2, 50, 40, "020.6A");
+		u8g2_DrawStr(u8g2, 50, 32, V_2);
+		u8g2_DrawStr(u8g2, 50, 40, I_2);
 
 		u8g2_DrawXBM(u8g2, 100, 16, imgcont::Phase.w, imgcont::Phase.h,
 				imgcont::Phase.img);
-		u8g2_DrawStr(u8g2, 96, 38, "220.0V");
-		u8g2_DrawStr(u8g2, 96, 46, "020.6A");
+		u8g2_DrawStr(u8g2, 96, 38, V_3);
+		u8g2_DrawStr(u8g2, 96, 46, I_3);
 
 		u8g2_SendBuffer(u8g2);
 
 		btncodes = button::get_eventTimed(1000);
+		if(btncodes == button::btncodes::cNONE )
+		  {
+			scroll++;
+		  }
+		else
+		{
+			scroll = 0;
+		}
 
-	} while (btncodes == button::btncodes::cNONE);
+	} while (btncodes == button::btncodes::cNONE && scroll < scrollTiming);
 
-	if(btncodes == button::btncodes::cEnter_BT)
+	if(btncodes == button::btncodes::cEnter_BT )
 	{
 		UI::UI_helper::set_UIcode(MenuNo::Settings);
 	}
+
+	if(scroll >= scrollTiming)
+	{
+
+
+		button::resetCode( button::btncodes::cRGHT_BT);
+	}
+
 
 }
 
 void loop(u8g2_t *u8g2) {
 	uint16_t index;
 	if (CurrMenu == MenuNo::None) {
-		CurrMenu = MenuNo::Power;
+		CurrMenu =  MenuNo::Battery;
 	}
 
 	for (index = 0; index < (sizeof(MenuArray) / sizeof(MenuArray[0]));

@@ -11,11 +11,13 @@
 #include "rtc.h"
 #include "i2c.h"
 #include "button.hpp"
-
+#include "usart.h"
+#include "adc.h"
 
 System_Rtos::freertos_Tasks ModemTaskHandler(ModemTask,"Modem",_StackSize_Modem, (void*) 1,24);
 System_Rtos::freertos_Tasks ControlTaskHandler(ControlTask,"Control",_StackSize_Control, (void*) 1,24);
 System_Rtos::freertos_Tasks DisplayTaskHandler(DisplayTask,"Display",_StackSize_Display, (void*) 1,24);
+System_Rtos::freertos_Tasks SoCTaskHandler(SoCTask,"SoC",_StackSize_SoC, (void*) 1,24);
 
 
 uint8_t queuebuffer[1*sizeof(struct ModemData_Queue)];
@@ -24,10 +26,20 @@ System_Rtos::freertos_queues ModemDataQueue(1,sizeof(struct ModemData_Queue),	qu
 uint8_t queuebuffer_1[1*sizeof(struct ControlData_Queue)];
 System_Rtos::freertos_queues ControlDataQueue(1,sizeof(struct ControlData_Queue),	queuebuffer_1);
 
+uint8_t queuebuffer_2[1*sizeof(struct SoCData_Queue)];
+System_Rtos::freertos_queues SoCDataQueue(1,sizeof(struct SoCData_Queue),	queuebuffer_2);
+
 
 System_rtc::stmRTC stmRTC(&hrtc,5);
 sensor_liquidMeas::liquidSensor liquidSensor(&hadc1,0.0, 10.0, 3.3);
 sensor_TempHumd::AHT20 AHT20(&hi2c1, 0x38);
+
+sensor_pzem::PZEM_004T PZEM1(&PZEM1_U);
+sensor_pzem::PZEM_004T PZEM2(&PZEM2_U);
+sensor_pzem::PZEM_004T PZEM3(&PZEM3_U);
+
+sensor_DcHall::DcHall DCCurrentSensor(&hadc2);
+sensor_DcVolt::DcVolt DCVoltageMeasurement(&hadc3);
 
 
 const char kaHexAsc[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
@@ -71,9 +83,11 @@ void app_mainCpp()
 	ModemTaskHandler.createTask();
     ControlTaskHandler.createTask();
     DisplayTaskHandler.createTask();
+    SoCTaskHandler.createTask();
 
     ModemDataQueue.queueCreate();
     ControlDataQueue.queueCreate();
+    SoCDataQueue.queueCreate();
 
 
 

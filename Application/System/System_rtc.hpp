@@ -24,6 +24,8 @@ public:
     uint8_t setTime(uint32_t epoch,int8_t timezone);
     uint8_t setTime(RTC_DateTypeDef *DDate,RTC_TimeTypeDef *DTime,int8_t timezone);
 
+    uint8_t epochToTimeString(uint32_t epoch,int8_t timezone,char *Timestring);
+
 private:
     int8_t zone;
     RTC_HandleTypeDef *Internal_handler;

@@ -1,0 +1,2 @@
+../Application/Sensor/sensor_DcHall.cpp:20:1:sensor_DcHall::DcHall::DcHall(ADC_HandleTypeDef*)	1
+../Application/Sensor/sensor_DcHall.cpp:31:16:sensor_DcHall::DcHall::status sensor_DcHall::DcHall::getCurrent(float*)	6

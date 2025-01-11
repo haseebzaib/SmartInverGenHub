@@ -1,5 +1,6 @@
 ../Application/System/System_rtc.cpp:15:1:System_rtc::stmRTC::stmRTC(RTC_HandleTypeDef*, int8_t)	24	static
-../Application/System/System_rtc.cpp:24:9:uint8_t System_rtc::stmRTC::getTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, uint32_t*)	80	static
-../Application/System/System_rtc.cpp:72:9:uint8_t System_rtc::stmRTC::getTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, uint32_t*, int8_t*)	80	static
-../Application/System/System_rtc.cpp:125:9:uint8_t System_rtc::stmRTC::setTime(uint32_t, int8_t)	32	static
-../Application/System/System_rtc.cpp:141:9:uint8_t System_rtc::stmRTC::setTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, int8_t)	56	static
+../Application/System/System_rtc.cpp:22:9:uint8_t System_rtc::stmRTC::getTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, uint32_t*)	80	static
+../Application/System/System_rtc.cpp:66:9:uint8_t System_rtc::stmRTC::getTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, uint32_t*, int8_t*)	80	static
+../Application/System/System_rtc.cpp:113:9:uint8_t System_rtc::stmRTC::setTime(uint32_t, int8_t)	32	static
+../Application/System/System_rtc.cpp:128:9:uint8_t System_rtc::stmRTC::setTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, int8_t)	56	static
+../Application/System/System_rtc.cpp:149:9:uint8_t System_rtc::stmRTC::epochToTimeString(uint32_t, int8_t, char*)	32	static

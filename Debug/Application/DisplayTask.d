@@ -66,6 +66,8 @@ Application/DisplayTask.o: ../Application/DisplayTask.cpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ ../Application/Sensor/sensor_DcHall.hpp \
+ ../Application/Sensor/sensor_DcVolt.hpp \
  ../Application/System/System_sys.hpp ../Core/Inc/rtc.h \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/User_Interface/UI.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/User_Interface/img.hpp \
@@ -141,6 +143,8 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+../Application/Sensor/sensor_DcHall.hpp:
+../Application/Sensor/sensor_DcVolt.hpp:
 ../Application/System/System_sys.hpp:
 ../Core/Inc/rtc.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/User_Interface/UI.hpp:

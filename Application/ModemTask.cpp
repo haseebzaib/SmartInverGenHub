@@ -235,14 +235,14 @@ void ModemTask(void *pvParameters) {
 						 ,ControlData.P_3
 						 ,ControlData.Energy
 						 ,ControlData.Freq
-						 ,ControlData.sourceIdentification
+						 ,ControlData.SelectedSource
 						 ,ControlData.fuelPer
 						 ,ControlData.fuelConsp
 						 ,ControlData.refuelingStartTime
 						 ,ControlData.refuelingEndTime
 						 ,ControlData.batteryLevel
-						 ,ControlData.batteryChargeStartTime
-						 ,ControlData.batteryChargeEndTime
+						 ,ControlData.batteryChargeDischargeStartTime[0]
+						 ,ControlData.batteryChargeDischargeEndTime[0]
 						 ,ControlData.temp
 						 ,ControlData.humid);
 				//simA7672.mqttPubData(ModemData.mqtt_client_index,ModemData.mqttPubTopic,reinterpret_cast<char *>(simA7672.Txbuffer),std::strlen(reinterpret_cast<char *>(simA7672.Txbuffer)));
@@ -263,7 +263,7 @@ void ModemTask(void *pvParameters) {
 
 
 
-
+		System_Rtos::delay(1000);
 	}
 
 }

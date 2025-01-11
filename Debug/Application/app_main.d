@@ -63,7 +63,9 @@ Application/app_main.o: ../Application/app_main.cpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
- ../Core/Inc/rtc.h ../Core/Inc/i2c.h \
+ ../Application/Sensor/sensor_DcHall.hpp \
+ ../Application/Sensor/sensor_DcVolt.hpp ../Core/Inc/rtc.h \
+ ../Core/Inc/i2c.h \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/User_Interface/button.hpp
 ../Application/app_main.hpp:
 ../Core/Inc/main.h:
@@ -133,6 +135,8 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+../Application/Sensor/sensor_DcHall.hpp:
+../Application/Sensor/sensor_DcVolt.hpp:
 ../Core/Inc/rtc.h:
 ../Core/Inc/i2c.h:
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/User_Interface/button.hpp:

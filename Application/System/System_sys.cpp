@@ -600,6 +600,41 @@ uint8_t prevYear;
 
 }
 
+void Parsing_Checking::convertEpochToTimeString(uint32_t epoch,int timezone,char *Timestring)
+{
+	uint8_t prevYear;
+
+		int TimezoneQuaters;
+		int TimezoneOffsetMinutes;
+
+		TimezoneQuaters = timezone*4;
+		TimezoneOffsetMinutes = TimezoneQuaters*15;
+
+
+		int hour;
+		int min;
+		int sec;
+
+
+		 // Adjust epoch time by adding the default timezone offset to convert UTC to local time
+		    epoch += TimezoneOffsetMinutes * SECONDS_IN_MINUTE;
+
+		    // Convert adjusted epoch time to a UTC tm structure
+		    time_t rawTime = epoch;
+		    struct tm* timeinfo = gmtime(&rawTime);  // gmtime gives us the time in UTC
+
+		    // Extract date and time components
+
+		    hour = timeinfo->tm_hour;
+		    min = timeinfo->tm_min;
+		    sec = timeinfo->tm_sec;
+
+		    std::sprintf(Timestring,"%02d:%02d:%02d", hour, sec);
+
+
+
+}
+
 bool Parsing_Checking::isLeapYear(int year)
 {
 	  return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);

@@ -39,6 +39,7 @@ public:
 
     void convertEpochToSimTime(uint32_t epoch,int timezone,char *recv_buf);
     void convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,uint32_t epoch,int timezone);
+    void convertEpochToTimeString(uint32_t epoch,int timezone,char *Timestring);
 
 
 private:

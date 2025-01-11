@@ -62,8 +62,8 @@ void Error_Handler(void);
 #define PZEM1_U huart1
 #define GSM_U huart2
 #define OLEDSpi hspi2
-#define ADC1_0_LevelSensor_Pin GPIO_PIN_0
-#define ADC1_0_LevelSensor_GPIO_Port GPIOA
+#define RelayCont_Pin GPIO_PIN_3
+#define RelayCont_GPIO_Port GPIOC
 #define alive_led_Pin GPIO_PIN_1
 #define alive_led_GPIO_Port GPIOA
 #define GSM_USART2_TX_Pin GPIO_PIN_2
@@ -76,8 +76,6 @@ void Error_Handler(void);
 #define DISPLAY_RES_GPIO_Port GPIOB
 #define Relay_cont_Pin GPIO_PIN_8
 #define Relay_cont_GPIO_Port GPIOD
-#define DISPLAY_CS_Pin GPIO_PIN_9
-#define DISPLAY_CS_GPIO_Port GPIOD
 #define PZEM2_USART6_TX_Pin GPIO_PIN_6
 #define PZEM2_USART6_TX_GPIO_Port GPIOC
 #define PZEM2_USART6_RX_Pin GPIO_PIN_7
@@ -100,6 +98,8 @@ void Error_Handler(void);
 #define BTN_RGT_GPIO_Port GPIOD
 #define BTN_LFT_Pin GPIO_PIN_5
 #define BTN_LFT_GPIO_Port GPIOD
+#define DISPLAY_CS_Pin GPIO_PIN_5
+#define DISPLAY_CS_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

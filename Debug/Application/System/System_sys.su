@@ -12,6 +12,7 @@ C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Application/System/System_sys.cpp:473:10:uint32_t System_sys::Parsing_Checking::convertToEpoch(RTC_DateTypeDef, RTC_TimeTypeDef, int8_t)	56	static
 ../Application/System/System_sys.cpp:517:6:void System_sys::Parsing_Checking::convertEpochToSimTime(uint32_t, int, char*)	104	static
 ../Application/System/System_sys.cpp:553:6:void System_sys::Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef*, uint32_t, int)	104	static
-../Application/System/System_sys.cpp:603:6:bool System_sys::Parsing_Checking::isLeapYear(int)	16	static
-../Application/System/System_sys.cpp:607:5:int System_sys::Parsing_Checking::daysInMonth(int, int)	24	static
-../Application/System/System_sys.cpp:614:5:int System_sys::Parsing_Checking::getMonthNumber(char*)	16	static
+../Application/System/System_sys.cpp:603:6:void System_sys::Parsing_Checking::convertEpochToTimeString(uint32_t, int, char*)	64	static
+../Application/System/System_sys.cpp:638:6:bool System_sys::Parsing_Checking::isLeapYear(int)	16	static
+../Application/System/System_sys.cpp:642:5:int System_sys::Parsing_Checking::daysInMonth(int, int)	24	static
+../Application/System/System_sys.cpp:649:5:int System_sys::Parsing_Checking::getMonthNumber(char*)	16	static
