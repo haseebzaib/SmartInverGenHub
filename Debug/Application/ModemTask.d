@@ -67,7 +67,8 @@ Application/ModemTask.o: ../Application/ModemTask.cpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
  F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
  ../Application/Sensor/sensor_DcHall.hpp \
- ../Application/Sensor/sensor_DcVolt.hpp
+ ../Application/Sensor/sensor_DcVolt.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp
 ../Application/app_main.hpp:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -142,3 +143,4 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
 ../Application/Sensor/sensor_DcHall.hpp:
 ../Application/Sensor/sensor_DcVolt.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp:

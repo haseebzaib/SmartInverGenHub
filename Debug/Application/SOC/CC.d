@@ -35,7 +35,37 @@ Application/SOC/CC.o: ../Application/SOC/CC.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Init.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
+ ../Core/Inc/FreeRTOSConfig.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_liquidMeas.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_TempHumd.hpp \
+ ../Core/Inc/gpio.h ../Core/Inc/main.h \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcHall.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcVolt.hpp \
+ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp
 F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/SOC/SOC.hpp:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -74,3 +104,34 @@ F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/SOC/SOC.hpp:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Init.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
+../Core/Inc/FreeRTOSConfig.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h:
+../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_serial.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_liquidMeas.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_TempHumd.hpp:
+../Core/Inc/gpio.h:
+../Core/Inc/main.h:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_rtc.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_sys.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/System/System_Rtos.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcHall.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_DcVolt.hpp:
+F:/haseeb/liquidMeasuringProject/SmartInverGenHub/Application/Sensor/sensor_pzem.hpp:

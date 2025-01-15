@@ -34,6 +34,7 @@ public:
 	PZEM_004T(UART_HandleTypeDef *huart);
 	void init();
 	void read(PZEM *pzemhandle);
+	void read(PZEM *pzemhandle,uint32_t timeout);
 
 
 

@@ -15,6 +15,8 @@
 
 
 Modem::simA7672 simA7672(&GSM_U);
+
+struct ModemData_Queue ModemData = { 0 };
 //System_sys::Parsing_Checking parsing;
 
 struct ModemData_TaskUsage {
@@ -30,12 +32,36 @@ enum routine {
 
 char command_buffer[255] = {0};
 
+char *getModemNetwork()
+{
+  return ModemData.networkStat;
+}
+char *getSignalQuality()
+{
+  return ModemData.quality;
+}
+char *getModemData()
+{
+	char data[20];
+
+	if(ModemData.internet == 1)
+	{
+       std::strcpy(data, "Conn");
+	}
+	else
+	{
+		 std::strcpy(data, "DisCon");
+	}
+
+	return data;
+
+}
 
 void ModemTask(void *pvParameters) {
 
 	simA7672.init();
 
-	struct ModemData_Queue ModemData = { 0 };
+
 
 	struct ControlData_Queue ControlData = {0};
 

@@ -30,12 +30,12 @@ DcHall::DcHall(ADC_HandleTypeDef *hadc) : DcHallSemaphore()
 
 DcHall::status DcHall::getCurrent(float *DcCurrent)
 {
-	const uint32_t samples = 1000;
+
 	enum status stat = DcHall_OK;
 	//uint32_t adcaverage[samples] = {0};
 	uint32_t adcValue = 0;
 
-	if (DcHallSemaphore.semaphoreTake(1000)
+	if (DcHallSemaphore.semaphoreTake(4000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 		if(hadc_sensor == NULL)
 		{

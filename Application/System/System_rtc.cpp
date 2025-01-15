@@ -22,7 +22,7 @@ stmRTC::stmRTC(RTC_HandleTypeDef *hrtc, int8_t timezone) :
 uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		uint32_t *timestamp) {
 	int err = 1;
-	if (rtcSemaphore.semaphoreTake(1000)
+	if (rtcSemaphore.semaphoreTake(4000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 		RTC_DateTypeDef Date;
 		RTC_TimeTypeDef Time;
@@ -153,10 +153,16 @@ uint8_t stmRTC::epochToTimeString(uint32_t epoch, int8_t timezone,
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 		checking.convertEpochToTimeString(epoch, timezone, Timestring);
 		rtcSemaphore.semaphoreGive();
+
 		err = 0;
 	}
 
 	return err;
+}
+
+void stmRTC::setTimezone(int8_t timezone)
+{
+	zone = timezone;
 }
 }
 

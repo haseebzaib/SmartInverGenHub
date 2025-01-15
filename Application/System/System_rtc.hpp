@@ -23,7 +23,7 @@ public:
     uint8_t getTime(RTC_DateTypeDef *DDate,RTC_TimeTypeDef *DTime,uint32_t *timestamp, int8_t *timezone);
     uint8_t setTime(uint32_t epoch,int8_t timezone);
     uint8_t setTime(RTC_DateTypeDef *DDate,RTC_TimeTypeDef *DTime,int8_t timezone);
-
+    void setTimezone(int8_t timezone);
     uint8_t epochToTimeString(uint32_t epoch,int8_t timezone,char *Timestring);
 
 private:

@@ -201,6 +201,8 @@ void UI::UI_Subs::SetTimeDate(u8g2_t *u8g2) {
 		case button::btncodes::cEnter_BT: {
 
 			stmRTC.setTime(&DDate, &DTime, timezone);
+			flash_data_.zone = timezone;
+			SaveData();
 
 			break;
 		}
@@ -360,7 +362,9 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 		case button::btncodes::cEnter_BT: {
 
 			liquidSensor.setParameters(zeroSpan, fullSpan);
-
+			flash_data_.fullSpan = fullSpan;
+			flash_data_.zeroSpan = zeroSpan;
+			SaveData();
 			break;
 		}
 

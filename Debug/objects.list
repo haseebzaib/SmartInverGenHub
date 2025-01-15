@@ -1,7 +1,6 @@
 "./Application/ControlTask.o"
 "./Application/DisplayTask.o"
 "./Application/ModemTask.o"
-"./Application/SoCTask.o"
 "./Application/app_main.o"
 "./Application/Modem/Modem.o"
 "./Application/SOC/CC.o"

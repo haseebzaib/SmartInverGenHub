@@ -4,3 +4,4 @@
 ../Application/System/System_rtc.cpp:113:9:uint8_t System_rtc::stmRTC::setTime(uint32_t, int8_t)	2
 ../Application/System/System_rtc.cpp:128:9:uint8_t System_rtc::stmRTC::setTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, int8_t)	2
 ../Application/System/System_rtc.cpp:149:9:uint8_t System_rtc::stmRTC::epochToTimeString(uint32_t, int8_t, char*)	2
+../Application/System/System_rtc.cpp:163:6:void System_rtc::stmRTC::setTimezone(int8_t)	1

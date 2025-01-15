@@ -262,28 +262,19 @@ void Battery(u8g2_t *u8g2) {
 	do {
 		float soc;
 		float curr;
-		uint32_t startTime = getChargeTimestamp();
-		uint32_t endTime = getDischargeTimestamp();
+
 		char StringStartTime[20];
 		char StringEndTime[20];
 
-		if(startTime == 0)
-		{
-           std::sprintf(StringStartTime,"Null");
-		}
-		else
-		{
-			stmRTC.epochToTimeString(startTime, +5, StringStartTime);
-		}
+		RTC_TimeTypeDef DTimeCharging_;
+		RTC_TimeTypeDef DTimeDischarging_;
 
-		if(endTime == 0)
-		{
-			  std::sprintf(StringEndTime,"Null");
-		}
-		else
-		{
-			stmRTC.epochToTimeString(startTime, +5, StringEndTime);
-		}
+		getChargeTimestamp(&DTimeCharging_);
+		getDischargeTimestamp(&DTimeDischarging_);
+
+		std::sprintf(StringStartTime, "%02d:%02d:%02d", DTimeCharging_.Hours, DTimeCharging_.Minutes,DTimeCharging_.Seconds);
+
+		std::sprintf(StringEndTime, "%02d:%02d:%02d", DTimeDischarging_.Hours, DTimeDischarging_.Minutes,DTimeDischarging_.Seconds);
 
 		DCCurrentSensor.getCurrent(&curr);
 
@@ -323,7 +314,7 @@ void Battery(u8g2_t *u8g2) {
 
 		if(btncodes == button::btncodes::cNONE )
 		  {
-			//scroll++;
+			scroll++;
 		  }
 		else
 		{
@@ -351,10 +342,33 @@ void source(u8g2_t *u8g2) {
 	button::resetCode(button::btncodes::cNONE);
 	uint8_t scroll = 0;
 	do {
+
+		uint8_t source;
 		u8g2_ClearBuffer(u8g2);
 		UI::UI_helper::common_iconsMain(u8g2);
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Source.w, imgcont::Source.h,
 				imgcont::Source.img);
+
+		source = getSourceState();
+		char selec_Source[3][20];
+		if(source == 0)
+		{
+		    std::strcpy(selec_Source[0], "Active");
+		    std::strcpy(selec_Source[1], "Idle");
+		    std::strcpy(selec_Source[2], "Standby");
+		}
+		else if(source == 1)
+		{
+		    std::strcpy(selec_Source[0], "Charging");
+		    std::strcpy(selec_Source[1], "Active");
+		    std::strcpy(selec_Source[2], "Standby");
+		}
+		else if(source == 2)
+		{
+		    std::strcpy(selec_Source[0], "Charging");
+		    std::strcpy(selec_Source[1], "Idle");
+		    std::strcpy(selec_Source[2], "Active");
+		}
 
 		u8g2_SetFontMode(u8g2, 1);
 		u8g2_SetDrawColor(u8g2, 2);
@@ -362,15 +376,15 @@ void source(u8g2_t *u8g2) {
 
 		u8g2_DrawBox(u8g2, 2, 17, 41, 9);
 		u8g2_DrawStr(u8g2, 3, 25, "Battery:");
-		u8g2_DrawStr(u8g2, 2, 35, "Active");  //Off
+		u8g2_DrawStr(u8g2, 2, 35, selec_Source[0]);  //Off
 
 		u8g2_DrawBox(u8g2, 2, 40, 51, 9);
 		u8g2_DrawStr(u8g2, 3, 48, "Generator:");
-		u8g2_DrawStr(u8g2, 5, 58, "Idle"); //running
+		u8g2_DrawStr(u8g2, 5, 58, selec_Source[1]); //running
 
 		u8g2_DrawBox(u8g2, 84, 17, 31, 9);
 		u8g2_DrawStr(u8g2, 85, 25, "Solar:");
-		u8g2_DrawStr(u8g2, 82, 35, "Standby"); //Online
+		u8g2_DrawStr(u8g2, 82, 35,selec_Source[2]); //Online
 
 		u8g2_SendBuffer(u8g2);
 		btncodes = button::get_eventTimed(1000);
@@ -411,21 +425,30 @@ void network(u8g2_t *u8g2) {
 		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Network.w, imgcont::Network.h,
 				imgcont::Network.img);
 
-		u8g2_SetFontMode(u8g2, 1);
+		char buf[3][20] = {
+				" ",
+				" ",
+				" "
+		};
+	    std::strcpy(buf[0], getModemNetwork());
+		std::strcpy(buf[1], getSignalQuality());
+	    std::strcpy(buf[2], getModemData());
+
+	    u8g2_SetFontMode(u8g2, 1);
 		u8g2_SetDrawColor(u8g2, 2);
 		u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 
 		u8g2_DrawBox(u8g2, 2, 17, 41, 9);
 		u8g2_DrawStr(u8g2, 3, 25, "Network:");
-		u8g2_DrawStr(u8g2, 2, 35, "Connected");
+		u8g2_DrawStr(u8g2, 2, 35, buf[0]);
 
 		u8g2_DrawBox(u8g2, 2, 40, 46, 9);
 		u8g2_DrawStr(u8g2, 3, 48, "Signal-Q:");
-		u8g2_DrawStr(u8g2, 5, 58, "-50dBm");
+		u8g2_DrawStr(u8g2, 5, 58, buf[1]);
 
 		u8g2_DrawBox(u8g2, 84, 17, 26, 9);
 		u8g2_DrawStr(u8g2, 85, 25, "Data:");
-		u8g2_DrawStr(u8g2, 83, 35, "Discon");
+		u8g2_DrawStr(u8g2, 83, 35, buf[2]);
 
 		u8g2_SendBuffer(u8g2);
 		btncodes = button::get_eventTimed(1000);
@@ -458,17 +481,18 @@ void power(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
 	uint8_t scroll = 0;
-	sensor_pzem::PZEM_004T::PZEM PZEM1_Data;
-	sensor_pzem::PZEM_004T::PZEM PZEM2_Data;
-	sensor_pzem::PZEM_004T::PZEM PZEM3_Data;
+	sensor_pzem::PZEM_004T::PZEM PZEM1_Data = {0};
+	sensor_pzem::PZEM_004T::PZEM PZEM2_Data=  {0};
+	sensor_pzem::PZEM_004T::PZEM PZEM3_Data=  {0};
 
 	do {
 
 		u8g2_ClearBuffer(u8g2);
 
-		PZEM1.read(&PZEM1_Data);
-		PZEM2.read(&PZEM2_Data);
-		PZEM3.read(&PZEM3_Data);
+
+		PZEM1_Data = getACData1();
+		PZEM2_Data = getACData2();
+		PZEM3_Data = getACData3();
 
         char V_1[10];
         char I_1[10];
@@ -535,7 +559,7 @@ void power(u8g2_t *u8g2) {
 void loop(u8g2_t *u8g2) {
 	uint16_t index;
 	if (CurrMenu == MenuNo::None) {
-		CurrMenu =  MenuNo::Battery;
+		CurrMenu =   MenuNo::Power;//MenuNo::Battery;
 	}
 
 	for (index = 0; index < (sizeof(MenuArray) / sizeof(MenuArray[0]));

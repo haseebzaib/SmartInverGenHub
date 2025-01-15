@@ -27,7 +27,7 @@ DcVolt::status DcVolt::getVoltage(float *DcVolt)
 	enum status stat = DcVolt_OK;
 	uint32_t adcValue = 0;
 
-	if (DcVoltSemaphore.semaphoreTake(1000)
+	if (DcVoltSemaphore.semaphoreTake(4000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 
 		if(hadc_sensor == NULL)

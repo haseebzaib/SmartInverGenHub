@@ -12,6 +12,8 @@
 #include "Sensor/sensor_TempHumd.hpp"
 #include "Sensor/sensor_pzem.hpp"
 #include "Sensor/sensor_DcHall.hpp"
+#include "sensor_DcVolt.hpp"
+#include "SOC/SOC.hpp"
 #include "i2c.h"
 #include "rtc.h"
 #include "Init.hpp"
@@ -19,6 +21,10 @@
 #include "cstring"
 #include "cstdlib"
 #include "gpio.h"
+#include "math.h"
+
+float prev_SOC;
+float Left_SOC;
 
 RTC_DateTypeDef sDate;
 RTC_TimeTypeDef sTime;
@@ -49,6 +55,20 @@ uint8_t sourceStatus;
 uint32_t DisplayChargeStartTime = 0;
 uint32_t DisplayChargeEndTime = 0;
 
+sensor_pzem::PZEM_004T::PZEM PZEM1_Data = {0};
+sensor_pzem::PZEM_004T::PZEM PZEM2_Data = {0};
+sensor_pzem::PZEM_004T::PZEM PZEM3_Data = {0};
+
+RTC_DateTypeDef DDate;
+RTC_TimeTypeDef DTime;
+
+RTC_TimeTypeDef DTimeCharging_;
+RTC_TimeTypeDef DTimeDischarging_;
+
+char ChargingTime[20] = "Null";
+char DischargingTime[20] = "Null";
+
+uint8_t flag = 0;
 
 static void TurnOffGenerator()
 {
@@ -66,19 +86,23 @@ static void SwitchingLoadLogic(struct ControlData_Queue *ControlData)
 
 //also track charging time here then
 
-	if(ControlData->SoC <= SOC_LOW)
+
+
+	if(ControlData->SoC <= SOC_LOW && (ControlData->SelectedSource ==  static_cast<uint8_t>(sources::Battery)))
 	{
 		TurnOnGenerator();
 		ControlData->SelectedSource = static_cast<uint8_t>(sources::Generator);
 		ControlData->batteryChargeDischargeStartTime[0] = ControlData->timestamp;
 		DisplayChargeStartTime = ControlData->batteryChargeDischargeStartTime[0];
+		std::memcpy((RTC_TimeTypeDef *)&DTimeCharging_,(RTC_TimeTypeDef *)&DTime,sizeof(RTC_TimeTypeDef));
 	}
-	else if(ControlData->SoC <= SOC_HIGH)
+	else if(ControlData->SoC >= SOC_HIGH && (ControlData->SelectedSource == static_cast<uint8_t>(sources::Generator)))
 	{
 		TurnOffGenerator();
 		ControlData->SelectedSource = static_cast<uint8_t>(sources::Battery);
 		ControlData->batteryChargeDischargeEndTime[0] = ControlData->timestamp;
 		DisplayChargeEndTime = ControlData->batteryChargeDischargeEndTime[0];
+		std::memcpy((RTC_TimeTypeDef *)&DTimeDischarging_,(RTC_TimeTypeDef *)&DTime,sizeof(RTC_TimeTypeDef));
 	}
 
 
@@ -92,14 +116,26 @@ uint8_t getSourceState()
 	return sourceStatus;
 }
 
-uint32_t getChargeTimestamp()
+void getChargeTimestamp(RTC_TimeTypeDef *DTimeCharging)
 {
-   return DisplayChargeStartTime;
+	std::memcpy((RTC_TimeTypeDef *)DTimeCharging,(RTC_TimeTypeDef *)&DTimeCharging_,sizeof(RTC_TimeTypeDef));
+}
+void getDischargeTimestamp(RTC_TimeTypeDef *DTimeDischarging)
+{
+	std::memcpy((RTC_TimeTypeDef *)DTimeDischarging,(RTC_TimeTypeDef *)&DTimeDischarging_,sizeof(RTC_TimeTypeDef));
 }
 
-uint32_t getDischargeTimestamp()
+sensor_pzem::PZEM_004T::PZEM getACData1()
 {
-	  return DisplayChargeEndTime;
+	return PZEM1_Data;
+}
+sensor_pzem::PZEM_004T::PZEM getACData2()
+{
+	return PZEM1_Data;
+}
+sensor_pzem::PZEM_004T::PZEM getACData3()
+{
+	return PZEM1_Data;
 }
 
 
@@ -109,24 +145,28 @@ void ControlTask(void *pvParameters) {
 
 	struct ControlData_Queue ControlData = { 0 };
 
-	struct SoCData_Queue SoCData = { 0 };
-
 	std::strcpy(ControlData.uniqueID, UniqueID::GetUid());
 
 	ControlData.SelectedSource = static_cast<uint8_t>(sources::Battery);
 
 	sourceStatus = ControlData.SelectedSource;
-	sensor_pzem::PZEM_004T::PZEM PZEM1_Data;
-	sensor_pzem::PZEM_004T::PZEM PZEM2_Data;
-	sensor_pzem::PZEM_004T::PZEM PZEM3_Data;
+
+
 
 	TurnOffGenerator();
 
+	getSaveData();
 
+	SOC::CC_Init(flash_data_.SOC, 1);
+
+	liquidSensor.setParameters(flash_data_.zeroSpan, flash_data_.fullSpan);
+	stmRTC.setTimezone(flash_data_.zone);
+
+	prev_SOC = flash_data_.SOC;
 
 	while (1) {
 
-		stmRTC.getTime(nullptr, nullptr, &ControlData.timestamp);
+		stmRTC.getTime(&DDate, &DTime, &ControlData.timestamp);
 
 		liquidSensor.Measurement_loop(&ControlData.fuelPer,
 				&ControlData.fuelConsp, ControlData.timestamp,
@@ -149,23 +189,29 @@ void ControlTask(void *pvParameters) {
 
 
 
-		ControlDataQueue.queueSend(reinterpret_cast<void*>(&ControlData));
+		DCCurrentSensor.getCurrent(&ControlData.DcCurrent);
+		DCVoltageMeasurement.getVoltage(&ControlData.DcVolt);
 
-		if(SoCDataQueue.queueReceive((void *)&SoCData) == SoCDataQueue.queues_recived)
-			{
-             /*Do something here when you want to receive something*/
-			ControlData.DcVolt = SoCData.BattVolt;
-			ControlData.DcCurrent = SoCData.BattCurr;
-			ControlData.SoC = SoCData.BattSoC;
-			}
+		SOC::CC_Loop(&ControlData.SoC,ControlData.DcCurrent,ControlData.DcVolt);
+
+
+		Left_SOC = fabsf(ControlData.SoC - prev_SOC);
+
+		if(Left_SOC > 5) //if SOC greater than this percent, we basically saving eey 5per reduction or increment of SOC
+		{
+			prev_SOC = ControlData.SoC;
+			flash_data_.SOC =  ControlData.SoC;
+			SaveData();
+		}
 
 
 		SwitchingLoadLogic(&ControlData);
 		sourceStatus = ControlData.SelectedSource;
 
+		ControlDataQueue.queueSend(reinterpret_cast<void*>(&ControlData));
 
 		HAL_GPIO_TogglePin(alive_led_GPIO_Port, alive_led_Pin);
-		System_Rtos::delay(2000);
+		System_Rtos::delay(100);
 	}
 
 }

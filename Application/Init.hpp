@@ -17,30 +17,43 @@
 #include "System_rtc.hpp"
 #include "Sensor/sensor_DcHall.hpp"
 #include "Sensor/sensor_DcVolt.hpp"
+#include "sensor_pzem.hpp"
+
+#define PACKED __attribute__((packed))
 
 void ModemTask(void * pvParameters);
 void ControlTask(void * pvParameters);
 void DisplayTask(void *pvParameters);
 void SoCTask(void *pvParameters);
+void SaveData();
+
 
 uint8_t getSourceState();
-uint32_t getChargeTimestamp();
-uint32_t getDischargeTimestamp();
+void getChargeTimestamp(RTC_TimeTypeDef *DTimeCharging);
+void getDischargeTimestamp(RTC_TimeTypeDef *DTimeDischarging);
 
-#define _StackSize_Modem 512
-#define _StackSize_Control 512
-#define _StackSize_Display 512
-#define _StackSize_SoC 512
+sensor_pzem::PZEM_004T::PZEM getACData1();
+sensor_pzem::PZEM_004T::PZEM getACData2();
+sensor_pzem::PZEM_004T::PZEM getACData3();
+
+char *getModemNetwork();
+char *getSignalQuality();
+char *getModemData();
+
+#define _StackSize_Modem 1024
+#define _StackSize_Control 1024
+#define _StackSize_Display 1024
+
 
 extern System_Rtos::freertos_Tasks ModemTaskHandler;
 extern System_Rtos::freertos_Tasks ControlTaskHandler;
 extern System_Rtos::freertos_Tasks DisplayTaskHandler;
-extern System_Rtos::freertos_Tasks SoCTaskHandler;
+//extern System_Rtos::freertos_Tasks SoCTaskHandler;
 
 
 extern System_Rtos::freertos_queues ModemDataQueue;
 extern System_Rtos::freertos_queues ControlDataQueue;
-extern System_Rtos::freertos_queues SoCDataQueue;
+//extern System_Rtos::freertos_queues SoCDataQueue;
 
 
 extern System_rtc::stmRTC stmRTC;
@@ -72,12 +85,26 @@ struct ModemData_Queue {
 	uint8_t mqtt_client_index;
 };
 
-struct SoCData_Queue {
+//struct SoCData_Queue {
+//
+//	float BattVolt;
+//	float BattCurr;
+//	float BattSoC;
+//};
 
-	float BattVolt;
-	float BattCurr;
-	float BattSoC;
+struct PACKED flash_data {
+	int8_t zone;
+	uint16_t validPattern;
+    float zeroSpan;
+    float fullSpan;
+	float SOC;
+
+
 };
+
+extern struct flash_data flash_data_;
+
+void getSaveData();
 
 
 static constexpr char networkInfo[2][12] = {
@@ -106,14 +133,14 @@ static constexpr char networkInfo[2][12] = {
 		    "},"\
 		    "\"source\":{"\
 		        "\"sourceIdentification\":\"%d\","\
-		        "\"startTime\":\"1731929299\","\
-		        "\"endTime\":\"1731929299\""\
+		        "\"startTime\":\"Null\","\
+		        "\"endTime\":\"Null\""\
 		    "},"\
 		    "\"alarms\":{"\
-		        "\"frequency\":\"0\","\
-		        "\"overload\":\"1\","\
-		        "\"phaseLoss\":\"0\","\
-		        "\"fuelTampering\":\"1\""\
+		        "\"frequency\":\"Null\","\
+		        "\"overload\":\"Null\","\
+		        "\"phaseLoss\":\"Null\","\
+		        "\"fuelTampering\":\"Null\""\
 		    "},"\
 		    "\"fuel\":{"\
 		        "\"fuelLevel\":\"%d\","\

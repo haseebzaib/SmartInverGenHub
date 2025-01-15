@@ -8,21 +8,18 @@ CPP_SRCS += \
 ../Application/ControlTask.cpp \
 ../Application/DisplayTask.cpp \
 ../Application/ModemTask.cpp \
-../Application/SoCTask.cpp \
 ../Application/app_main.cpp 
 
 OBJS += \
 ./Application/ControlTask.o \
 ./Application/DisplayTask.o \
 ./Application/ModemTask.o \
-./Application/SoCTask.o \
 ./Application/app_main.o 
 
 CPP_DEPS += \
 ./Application/ControlTask.d \
 ./Application/DisplayTask.d \
 ./Application/ModemTask.d \
-./Application/SoCTask.d \
 ./Application/app_main.d 
 
 
@@ -33,7 +30,7 @@ Application/%.o Application/%.su Application/%.cyclo: ../Application/%.cpp Appli
 clean: clean-Application
 
 clean-Application:
-	-$(RM) ./Application/ControlTask.cyclo ./Application/ControlTask.d ./Application/ControlTask.o ./Application/ControlTask.su ./Application/DisplayTask.cyclo ./Application/DisplayTask.d ./Application/DisplayTask.o ./Application/DisplayTask.su ./Application/ModemTask.cyclo ./Application/ModemTask.d ./Application/ModemTask.o ./Application/ModemTask.su ./Application/SoCTask.cyclo ./Application/SoCTask.d ./Application/SoCTask.o ./Application/SoCTask.su ./Application/app_main.cyclo ./Application/app_main.d ./Application/app_main.o ./Application/app_main.su
+	-$(RM) ./Application/ControlTask.cyclo ./Application/ControlTask.d ./Application/ControlTask.o ./Application/ControlTask.su ./Application/DisplayTask.cyclo ./Application/DisplayTask.d ./Application/DisplayTask.o ./Application/DisplayTask.su ./Application/ModemTask.cyclo ./Application/ModemTask.d ./Application/ModemTask.o ./Application/ModemTask.su ./Application/app_main.cyclo ./Application/app_main.d ./Application/app_main.o ./Application/app_main.su
 
 .PHONY: clean-Application
 

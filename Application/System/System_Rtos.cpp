@@ -32,6 +32,8 @@ const configSTACK_DEPTH_TYPE usStackDepth_, void *const pvParameters_,
 void freertos_Tasks::createTask() {
 	xTaskCreate(pxTask, pcName, usStackDepth, pvParameters, uxPriority,
 			&taskHandle);
+
+
 }
 
 

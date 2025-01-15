@@ -70,6 +70,16 @@ void Error_Handler(void);
 #define GSM_USART2_TX_GPIO_Port GPIOA
 #define GSM_USART2_RX_Pin GPIO_PIN_3
 #define GSM_USART2_RX_GPIO_Port GPIOA
+#define BTN_LFT_Pin GPIO_PIN_6
+#define BTN_LFT_GPIO_Port GPIOA
+#define BTN_RGT_Pin GPIO_PIN_0
+#define BTN_RGT_GPIO_Port GPIOB
+#define BTN_DWN_Pin GPIO_PIN_7
+#define BTN_DWN_GPIO_Port GPIOE
+#define BTN_ENTR_Pin GPIO_PIN_9
+#define BTN_ENTR_GPIO_Port GPIOE
+#define BTN_UP_Pin GPIO_PIN_11
+#define BTN_UP_GPIO_Port GPIOE
 #define DISPLAY_DC_Pin GPIO_PIN_12
 #define DISPLAY_DC_GPIO_Port GPIOB
 #define DISPLAY_RES_Pin GPIO_PIN_14
@@ -88,16 +98,6 @@ void Error_Handler(void);
 #define PZEM3_UART4_TX_GPIO_Port GPIOC
 #define PZEM3_UART4_RX_Pin GPIO_PIN_11
 #define PZEM3_UART4_RX_GPIO_Port GPIOC
-#define BTN_UP_Pin GPIO_PIN_1
-#define BTN_UP_GPIO_Port GPIOD
-#define BTN_ENTR_Pin GPIO_PIN_2
-#define BTN_ENTR_GPIO_Port GPIOD
-#define BTN_DWN_Pin GPIO_PIN_3
-#define BTN_DWN_GPIO_Port GPIOD
-#define BTN_RGT_Pin GPIO_PIN_4
-#define BTN_RGT_GPIO_Port GPIOD
-#define BTN_LFT_Pin GPIO_PIN_5
-#define BTN_LFT_GPIO_Port GPIOD
 #define DISPLAY_CS_Pin GPIO_PIN_5
 #define DISPLAY_CS_GPIO_Port GPIOB
 

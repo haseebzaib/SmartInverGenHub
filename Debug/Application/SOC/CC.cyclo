@@ -1,3 +1,5 @@
-../Application/SOC/CC.cpp:25:9:uint8_t SOC::getSoCVal()	1
-../Application/SOC/CC.cpp:34:6:void SOC::CC_Loop(float*, float, float)	3
-../Application/SOC/CC.cpp:65:6:void SOC::CC_Init(float, float)	1
+../Application/SOC/CC.cpp:66:9:uint8_t SOC::getSoCVal()	1
+../Application/SOC/CC.cpp:73:14:float SOC::SoCFromVoltage_48V(float)	6
+../Application/SOC/CC.cpp:104:6:void SOC::CheckCurrentStability(float, uint32_t)	5
+../Application/SOC/CC.cpp:146:6:void SOC::CC_Loop(float*, float, float)	4
+../Application/SOC/CC.cpp:186:6:void SOC::CC_Init(float, float)	1
