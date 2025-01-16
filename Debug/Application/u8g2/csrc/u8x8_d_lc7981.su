@@ -1,5 +1,0 @@
-../Application/u8g2/csrc/u8x8_d_lc7981.c:70:16:reverse_byte	16	static
-../Application/u8g2/csrc/u8x8_d_lc7981.c:84:16:u8x8_d_lc7981_common	40	static
-../Application/u8g2/csrc/u8x8_d_lc7981.c:232:9:u8x8_d_lc7981_160x80	24	static
-../Application/u8g2/csrc/u8x8_d_lc7981.c:304:9:u8x8_d_lc7981_160x160	24	static
-../Application/u8g2/csrc/u8x8_d_lc7981.c:379:9:u8x8_d_lc7981_240x128	24	static

@@ -1,2 +1,0 @@
-../Application/User_Interface/UI_Subs.cpp:38:6:void UI::UI_Subs::SetTimeDate(u8g2_t*)	42
-../Application/User_Interface/UI_Subs.cpp:250:6:void UI::UI_Subs::SetFuelMeas(u8g2_t*)	23

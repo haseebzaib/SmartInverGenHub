@@ -1,4 +1,0 @@
-../Application/u8g2/csrc/u8x8_d_st75256.c:110:16:u8x8_d_st75256_256x128_generic	40	static
-../Application/u8g2/csrc/u8x8_d_st75256.c:287:9:u8x8_d_st75256_jlx256128	24	static
-../Application/u8g2/csrc/u8x8_d_st75256.c:421:9:u8x8_d_st75256_jlx25664	24	static
-../Application/u8g2/csrc/u8x8_d_st75256.c:578:9:u8x8_d_st75256_jlx172104	32	static

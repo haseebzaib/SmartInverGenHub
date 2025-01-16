@@ -1,7 +1,0 @@
-../Application/Sensor/sensor_liquidMeas.cpp:15:1:sensor_liquidMeas::liquidSensor::liquidSensor(ADC_HandleTypeDef*, float, float, float)	32	static
-../Application/Sensor/sensor_liquidMeas.cpp:25:6:void sensor_liquidMeas::liquidSensor::Measurement_loop(uint8_t*, float*, uint32_t, uint32_t*, uint32_t*)	24	static
-../Application/Sensor/sensor_liquidMeas.cpp:32:22:sensor_liquidMeas::liquidSensor::status sensor_liquidMeas::liquidSensor::getLevel(uint8_t*)	96	static
-../Application/Sensor/sensor_liquidMeas.cpp:81:6:void sensor_liquidMeas::liquidSensor::consumptionliters(float*)	24	static
-../Application/Sensor/sensor_liquidMeas.cpp:109:6:void sensor_liquidMeas::liquidSensor::refuelingDetection(uint32_t, uint32_t*, uint32_t*)	24	static
-../Application/Sensor/sensor_liquidMeas.cpp:161:6:void sensor_liquidMeas::liquidSensor::setParameters(float, float)	24	static
-../Application/Sensor/sensor_liquidMeas.cpp:171:6:void sensor_liquidMeas::liquidSensor::getParameters(float*, float*)	24	static

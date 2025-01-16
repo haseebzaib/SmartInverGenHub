@@ -1,7 +1,0 @@
-../Application/System/System_rtc.cpp:15:1:System_rtc::stmRTC::stmRTC(RTC_HandleTypeDef*, int8_t)	1
-../Application/System/System_rtc.cpp:22:9:uint8_t System_rtc::stmRTC::getTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, uint32_t*)	8
-../Application/System/System_rtc.cpp:66:9:uint8_t System_rtc::stmRTC::getTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, uint32_t*, int8_t*)	8
-../Application/System/System_rtc.cpp:113:9:uint8_t System_rtc::stmRTC::setTime(uint32_t, int8_t)	2
-../Application/System/System_rtc.cpp:128:9:uint8_t System_rtc::stmRTC::setTime(RTC_DateTypeDef*, RTC_TimeTypeDef*, int8_t)	2
-../Application/System/System_rtc.cpp:149:9:uint8_t System_rtc::stmRTC::epochToTimeString(uint32_t, int8_t, char*)	2
-../Application/System/System_rtc.cpp:163:6:void System_rtc::stmRTC::setTimezone(int8_t)	1

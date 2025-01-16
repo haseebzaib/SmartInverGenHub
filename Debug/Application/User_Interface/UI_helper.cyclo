@@ -1,4 +1,0 @@
-../Application/User_Interface/UI_helper.cpp:27:6:void UI::UI_helper::set_UIcode(MenuNo)	1
-../Application/User_Interface/UI_helper.cpp:33:13:MenuNo UI::UI_helper::get_UIcode()	1
-../Application/User_Interface/UI_helper.cpp:39:6:void UI::UI_helper::common_iconsMain(u8g2_t*)	1
-../Application/User_Interface/UI_helper.cpp:57:6:void UI::UI_helper::SubMenuControlInfo(u8g2_t*)	1
