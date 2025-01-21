@@ -21,6 +21,9 @@
 #include "sensor_DcHall.hpp"
 #include "SOC.hpp"
 
+
+#define SCROLLING
+
 #define scrollTiming 2
 #define TotalEnterIndexes 10
 
@@ -177,7 +180,9 @@ void fuel_temp_humd(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 		if(btncodes == button::btncodes::cNONE )
 		  {
+#ifdef SCROLLING
 			scroll++;
+#endif
 		  }
 		else
 		{
@@ -232,7 +237,9 @@ void Alarms(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 		if(btncodes == button::btncodes::cNONE )
 		  {
+#ifdef SCROLLING
 			scroll++;
+#endif
 		  }
 		else
 		{
@@ -314,7 +321,9 @@ void Battery(u8g2_t *u8g2) {
 
 		if(btncodes == button::btncodes::cNONE )
 		  {
+#ifdef SCROLLING
 			scroll++;
+#endif
 		  }
 		else
 		{
@@ -390,7 +399,9 @@ void source(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 		if(btncodes == button::btncodes::cNONE )
 		  {
+#ifdef SCROLLING
 			scroll++;
+#endif
 		  }
 		else
 		{
@@ -454,7 +465,9 @@ void network(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 		if(btncodes == button::btncodes::cNONE )
 		  {
+#ifdef SCROLLING
 			scroll++;
+#endif
 		  }
 		else
 		{
@@ -502,11 +515,11 @@ void power(u8g2_t *u8g2) {
         char I_3[10];
 
         std::sprintf(V_1,"%.1f",PZEM1_Data.voltage);
-        std::sprintf(I_1,"%.1f",PZEM1_Data.current);
-        std::sprintf(V_2,"%.1f",PZEM2_Data.power);
-        std::sprintf(I_2,"%.1f",PZEM2_Data.current);
+        std::sprintf(I_1,"%.1f",PZEM1_Data.current/10);
+        std::sprintf(V_2,"%.1f",PZEM2_Data.voltage);
+        std::sprintf(I_2,"%.1f",PZEM2_Data.current/10);
         std::sprintf(V_3,"%.1f",PZEM3_Data.voltage);
-        std::sprintf(I_3,"%.1f",PZEM3_Data.current);
+        std::sprintf(I_3,"%.1f",PZEM3_Data.current/10);
 
 
 		UI::UI_helper::common_iconsMain(u8g2);
@@ -532,7 +545,9 @@ void power(u8g2_t *u8g2) {
 		btncodes = button::get_eventTimed(1000);
 		if(btncodes == button::btncodes::cNONE )
 		  {
+#ifdef SCROLLING
 			scroll++;
+#endif
 		  }
 		else
 		{

@@ -131,11 +131,11 @@ sensor_pzem::PZEM_004T::PZEM getACData1()
 }
 sensor_pzem::PZEM_004T::PZEM getACData2()
 {
-	return PZEM1_Data;
+	return PZEM2_Data;
 }
 sensor_pzem::PZEM_004T::PZEM getACData3()
 {
-	return PZEM1_Data;
+	return PZEM3_Data;
 }
 
 
@@ -168,6 +168,8 @@ void ControlTask(void *pvParameters) {
 
 		stmRTC.getTime(&DDate, &DTime, &ControlData.timestamp);
 
+		AHT20.measure(&ControlData.temp, &ControlData.humid);
+
 		liquidSensor.Measurement_loop(&ControlData.fuelPer,
 				&ControlData.fuelConsp, ControlData.timestamp,
 				&ControlData.refuelingStartTime, &ControlData.refuelingEndTime);
@@ -177,15 +179,15 @@ void ControlTask(void *pvParameters) {
 		PZEM3.read(&PZEM3_Data);
 
 		ControlData.V_1 = PZEM1_Data.voltage;
-		ControlData.I_1 = PZEM1_Data.current;
-		ControlData.P_1 = PZEM1_Data.power;
+		ControlData.I_1 = PZEM1_Data.current/10;
+		ControlData.P_1 = PZEM1_Data.power/10;
 		ControlData.V_2 = PZEM2_Data.voltage;
-		ControlData.I_2 = PZEM2_Data.current;
-		ControlData.P_2 = PZEM2_Data.power;
+		ControlData.I_2 = PZEM2_Data.current/10;
+		ControlData.P_2 = PZEM2_Data.power/10;
 		ControlData.V_3 = PZEM3_Data.voltage;
-		ControlData.I_3 = PZEM3_Data.current;
-		ControlData.P_3 = PZEM3_Data.power;
-		ControlData.Freq = PZEM1_Data.frequency;
+		ControlData.I_3 = PZEM3_Data.current/10;
+		ControlData.P_3 = PZEM3_Data.power/10;
+		ControlData.Freq = (PZEM1_Data.frequency + PZEM2_Data.frequency + PZEM3_Data.frequency) / 3;
 
 
 

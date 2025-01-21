@@ -77,7 +77,7 @@ struct ModemData_Queue {
 	char networkStat[15];
 	char networkStatpdp[15];
 	char quality[10];
-	char apn[20];
+	char apn[40];
 	char serverAddr[100];
 	char mqttPubTopic[20];
 	char mqttSubTopic[20];

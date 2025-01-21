@@ -130,7 +130,7 @@ enum simA7672::status simA7672::setTimeDate(char *TimeDate) {
 enum simA7672::status simA7672::setAPN(char *apn) {
 
 	status stat = simA7672_OK;
-	char buf[50] = { 0 };
+	char buf[150] = { 0 };
 
 	std::sprintf(buf, "AT+CGDCONT=1,\"ip\",\"%s\"\r\n", apn);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),

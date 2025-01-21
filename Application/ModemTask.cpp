@@ -16,6 +16,10 @@
 
 Modem::simA7672 simA7672(&GSM_U);
 
+uint32_t currentTime = 0;
+uint32_t prevTime = 0;
+uint32_t setTime = 60000; //60 seconds
+
 struct ModemData_Queue ModemData = { 0 };
 //System_sys::Parsing_Checking parsing;
 
@@ -42,18 +46,18 @@ char *getSignalQuality()
 }
 char *getModemData()
 {
-	char data[20];
+	static char Modemdata[20];
 
 	if(ModemData.internet == 1)
 	{
-       std::strcpy(data, "Conn");
+       std::strcpy(Modemdata, "Conn");
 	}
 	else
 	{
-		 std::strcpy(data, "DisCon");
+		 std::strcpy(Modemdata, "DisCon");
 	}
 
-	return data;
+	return ( Modemdata);
 
 }
 
@@ -75,7 +79,7 @@ void ModemTask(void *pvParameters) {
 
 
 	std::strcpy(ModemData.serverAddr, "tcp://apfp7i6y92d6b-ats.iot.us-east-1.amazonaws.com:8883");
-	std::strcpy(ModemData.apn, "zonginternet");
+	std::strcpy(ModemData.apn, "jazzconnect.mobilinkworld.com");
 	std::strcpy(ModemData.mqttSubTopic, "TEST1");
 	std::strcpy(ModemData.mqttPubTopic, "devicedata");
 
@@ -271,7 +275,15 @@ void ModemTask(void *pvParameters) {
 						 ,ControlData.batteryChargeDischargeEndTime[0]
 						 ,ControlData.temp
 						 ,ControlData.humid);
-				//simA7672.mqttPubData(ModemData.mqtt_client_index,ModemData.mqttPubTopic,reinterpret_cast<char *>(simA7672.Txbuffer),std::strlen(reinterpret_cast<char *>(simA7672.Txbuffer)));
+
+				currentTime = HAL_GetTick();
+				if(currentTime - prevTime > setTime)
+				{
+					simA7672.mqttPubData(ModemData.mqtt_client_index,ModemData.mqttPubTopic,reinterpret_cast<char *>(simA7672.Txbuffer),std::strlen(reinterpret_cast<char *>(simA7672.Txbuffer)));
+					prevTime = currentTime;
+				}
+
+
 				if(simA7672.mqttsubTopicAndRead(ModemData.mqtt_client_index, ModemData.mqttSubTopic, command_buffer,255) == Modem::simA7672::mqtt_msgrecv)
 				{
                       /*take flag to do something*/
