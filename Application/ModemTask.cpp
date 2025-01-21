@@ -270,7 +270,7 @@ void ModemTask(void *pvParameters) {
 						 ,ControlData.fuelConsp
 						 ,ControlData.refuelingStartTime
 						 ,ControlData.refuelingEndTime
-						 ,ControlData.batteryLevel
+						 ,ControlData.SoC
 						 ,ControlData.batteryChargeDischargeStartTime[0]
 						 ,ControlData.batteryChargeDischargeEndTime[0]
 						 ,ControlData.temp

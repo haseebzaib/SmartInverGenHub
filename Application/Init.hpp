@@ -149,7 +149,7 @@ static constexpr char networkInfo[2][12] = {
 		        "\"refuelingEndTime\":\"%ld\""\
 		    "},"\
 		    "\"battery\":{"\
-		        "\"batteryLevel\":\"%d\","\
+		        "\"batteryLevel\":\"%.2f\","\
 		        "\"batteryChargeStartTime\":\"%ld\","\
 		        "\"batteryChargeEndTime\":\"%ld\""\
 		    "},"\
