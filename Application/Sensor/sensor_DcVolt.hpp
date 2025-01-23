@@ -40,7 +40,7 @@ private:
 	  static constexpr float Vref = 3.3f;
 	  static constexpr float Resolution = 4096.0f;
 	  static constexpr float offset_system = -0.130f;
-	  static constexpr float ratio = 15.42; //r1+r2/r2 598.82k/365k
+	  static constexpr float ratio = 17.96; //r1+r2/r2 593k/33k
 	  ADC_HandleTypeDef *hadc_sensor;
 	  System_Rtos::freertos_semaphore DcVoltSemaphore;
 
