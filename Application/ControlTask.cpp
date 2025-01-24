@@ -72,12 +72,12 @@ uint8_t flag = 0;
 
 static void TurnOffGenerator()
 {
-	  HAL_GPIO_WritePin(RelayCont_GPIO_Port, RelayCont_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(Relay_cont_GPIO_Port, Relay_cont_Pin, GPIO_PIN_RESET);
 }
 
 static void TurnOnGenerator()
 {
-	  HAL_GPIO_WritePin(RelayCont_GPIO_Port, RelayCont_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(Relay_cont_GPIO_Port, Relay_cont_Pin, GPIO_PIN_SET);
 }
 
 static void SwitchingLoadLogic(struct ControlData_Queue *ControlData)
@@ -165,6 +165,9 @@ void ControlTask(void *pvParameters) {
 	prev_SOC = flash_data_.SOC;
 
 	while (1) {
+
+
+		//  HAL_GPIO_TogglePin(Relay_cont_GPIO_Port, Relay_cont_Pin);
 
 		stmRTC.getTime(&DDate, &DTime, &ControlData.timestamp);
 

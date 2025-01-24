@@ -32,7 +32,7 @@ void PZEM_004T::read(PZEM *pzemhandle) {
 	if (PzemSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 	serial_.TransmitData(rst_buf, 4, 1000);
-	serial_.ReceiveData(res_buf, 25, 500);
+	serial_.ReceiveData(res_buf, 25, 1000);
 
 
 	System_Rtos::delay(1000);
