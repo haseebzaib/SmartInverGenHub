@@ -361,7 +361,8 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 
 	char headings[50];
-	char buffer[50];
+	char buffer[20];
+	char buffer2[20];
 
 	uint8_t cursor = 0;
 	uint8_t cursorPos = 0;
@@ -381,13 +382,18 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			soc = SOC::getSoCVal();
 			currentoffset = DCCurrentSensor.getOffset();
 
-
 			std::sprintf(headings, "   SOC | CurrentOffset");
 			u8g2_DrawStr(u8g2, 5, 10, headings);
-			std::sprintf(buffer, "%04.1f | %04.4f", soc, currentoffset);
-			u8g2_DrawStr(u8g2, 25, 20, buffer);
 
-			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
+			std::sprintf(buffer, "%04.1f", soc);
+            std::sprintf(buffer2,"%04.4f",currentoffset);
+
+
+			u8g2_DrawStr(u8g2, 25, 20, buffer);
+			u8g2_DrawStr(u8g2, 25, 40, buffer2);
+
+//			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
+//			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
 
 
 			UI::UI_helper::SubMenuControlInfo(u8g2);
