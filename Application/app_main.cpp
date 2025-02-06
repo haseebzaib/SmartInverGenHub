@@ -160,10 +160,11 @@ void getSaveData() {
 	if(pFlashData->validPattern != 0xFEED)
 	{
 		flash_data_.validPattern =  0xFEED;
-		flash_data_.zeroSpan     =  0;
-		flash_data_.fullSpan     =  5;
-		flash_data_.SOC          =  100;
+		flash_data_.zeroSpan     =  0.0;
+		flash_data_.fullSpan     =  5.0;
+		flash_data_.SOC          =  100.0;
 		flash_data_.zone         =  +5;
+		flash_data_.currentOffset = 0.002f;
 	}
 	else
 	{

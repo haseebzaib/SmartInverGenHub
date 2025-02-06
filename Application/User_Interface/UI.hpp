@@ -59,8 +59,11 @@ void Settings(u8g2_t *u8g2);
 
 
 namespace UI_Subs {
+
 void SetTimeDate(u8g2_t *u8g2);
 void SetFuelMeas(u8g2_t *u8g2);
+void SetSoCnDCurr(u8g2_t *u8g2);
+
 }
 
 /*Main functions*/

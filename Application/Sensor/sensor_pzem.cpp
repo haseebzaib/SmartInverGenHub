@@ -31,14 +31,19 @@ void PZEM_004T::read(PZEM *pzemhandle) {
 
 	if (PzemSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
+
 	serial_.TransmitData(rst_buf, 4, 1000);
 	serial_.ReceiveData(res_buf, 25, 1000);
-
 
 	System_Rtos::delay(1000);
 
 	serial_.TransmitData(buf, 8, 1000);
-	serial_.ReceiveData(res_buf, 25, 1000);
+	if(serial_.ReceiveData(res_buf, 25, 1000) != 0)
+	{
+		memset(pzemhandle,0,sizeof(PZEM));
+		goto end;
+	}
+
 
 
 	pzemhandle->voltage = ((uint32_t)res_buf[3] << 8 | (uint32_t)res_buf[4]) / 10.0;
@@ -52,6 +57,7 @@ void PZEM_004T::read(PZEM *pzemhandle) {
 	pzemhandle->pf = ((uint32_t)res_buf[19] << 8 | (uint32_t)res_buf[20]) / 100.0;
 	pzemhandle->alarms = ((uint32_t)res_buf[21] << 8 | (uint32_t)res_buf[22]);
 
+end:
 	PzemSemaphore.semaphoreGive();
 	}
 	else

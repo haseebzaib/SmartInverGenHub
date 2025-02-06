@@ -32,9 +32,9 @@ uint8_t getSourceState();
 void getChargeTimestamp(RTC_TimeTypeDef *DTimeCharging);
 void getDischargeTimestamp(RTC_TimeTypeDef *DTimeDischarging);
 
-sensor_pzem::PZEM_004T::PZEM getACData1();
-sensor_pzem::PZEM_004T::PZEM getACData2();
-sensor_pzem::PZEM_004T::PZEM getACData3();
+void getACData1(float *voltage,float *current,float *power);
+void getACData2(float *voltage,float *current,float *power);
+void getACData3(float *voltage,float *current,float *power);
 
 char *getModemNetwork();
 char *getSignalQuality();
@@ -97,9 +97,8 @@ struct PACKED flash_data {
 	uint16_t validPattern;
     float zeroSpan;
     float fullSpan;
+    float currentOffset;
 	float SOC;
-
-
 };
 
 extern struct flash_data flash_data_;

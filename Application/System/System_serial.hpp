@@ -40,7 +40,7 @@ namespace System_serial {
 class serial {
 public:
 	serial(UART_HandleTypeDef *huart);
-	void ReceiveData(uint8_t *data,uint16_t size,uint32_t timeout);
+	uint8_t ReceiveData(uint8_t *data,uint16_t size,uint32_t timeout);
     void TransmitData(const uint8_t *data,uint16_t size,uint32_t timeout = 1000);
     void RxintEn(uint8_t *buf,uint16_t size);
     void TxintEn(uint8_t *buf,uint16_t size);

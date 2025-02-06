@@ -283,7 +283,9 @@ void Battery(u8g2_t *u8g2) {
 
 		std::sprintf(StringEndTime, "%02d:%02d:%02d", DTimeDischarging_.Hours, DTimeDischarging_.Minutes,DTimeDischarging_.Seconds);
 
-		DCCurrentSensor.getCurrent(&curr);
+		curr = DCCurrentSensor.getCurrent();
+
+
 
 
 		u8g2_ClearBuffer(u8g2);
@@ -494,18 +496,28 @@ void power(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
 	uint8_t scroll = 0;
-	sensor_pzem::PZEM_004T::PZEM PZEM1_Data = {0};
-	sensor_pzem::PZEM_004T::PZEM PZEM2_Data=  {0};
-	sensor_pzem::PZEM_004T::PZEM PZEM3_Data=  {0};
+
+
+	float V1=0;
+	float I1=0;
+	float P1=0;
+
+	float V2=0;
+	float I2=0;
+	float P2=0;
+
+	float V3=0;
+	float I3=0;
+	float P3=0;
 
 	do {
 
 		u8g2_ClearBuffer(u8g2);
 
 
-		PZEM1_Data = getACData1();
-		PZEM2_Data = getACData2();
-		PZEM3_Data = getACData3();
+		getACData1(&V1,&I1,&P1);
+		getACData2(&V2,&I2,&P2);
+		getACData3(&V3,&I3,&P3);
 
         char V_1[10];
         char I_1[10];
@@ -514,12 +526,12 @@ void power(u8g2_t *u8g2) {
         char V_3[10];
         char I_3[10];
 
-        std::sprintf(V_1,"%.1f",PZEM1_Data.voltage);
-        std::sprintf(I_1,"%.1f",PZEM1_Data.current/10);
-        std::sprintf(V_2,"%.1f",PZEM2_Data.voltage);
-        std::sprintf(I_2,"%.1f",PZEM2_Data.current/10);
-        std::sprintf(V_3,"%.1f",PZEM3_Data.voltage);
-        std::sprintf(I_3,"%.1f",PZEM3_Data.current/10);
+        std::sprintf(V_1,"%.1f",V1);
+        std::sprintf(I_1,"%.1f",I1);
+        std::sprintf(V_2,"%.1f",V2);
+        std::sprintf(I_2,"%.1f",I2);
+        std::sprintf(V_3,"%.1f",V3);
+        std::sprintf(I_3,"%.1f",I3);
 
 
 		UI::UI_helper::common_iconsMain(u8g2);

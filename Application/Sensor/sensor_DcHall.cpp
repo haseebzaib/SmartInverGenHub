@@ -22,11 +22,27 @@ DcHall::DcHall(ADC_HandleTypeDef *hadc) : DcHallSemaphore()
 
 	hadc_sensor = hadc;
 	DcHallSemaphore.semaphoreCreate();
-	  float RawCurrent = 0.0;
-		   float emaCurrent= 0.0;
+	RawCurrent = 0.0;
+	emaCurrent = 0.0;
+	GetCurrent = 0.0;
+	offset_system = 0.002f;
 
 }
 
+float DcHall::getOffset()
+{
+  return offset_system;
+}
+
+void  DcHall::setOffset(float offset)
+{
+	offset_system = offset;
+}
+
+float DcHall::getCurrent()
+{
+	return GetCurrent;
+}
 
 DcHall::status DcHall::getCurrent(float *DcCurrent)
 {
@@ -59,6 +75,8 @@ DcHall::status DcHall::getCurrent(float *DcCurrent)
 	    RawCurrent = voltageOffset / sensitivity;  // I = dV / sensitivity
 
 //	    /emaCurrent = alpha * RawCurrent + (1.0f - alpha) * emaCurrent;
+
+	    GetCurrent = RawCurrent;
 	    *DcCurrent = RawCurrent;
 
 		DcHallSemaphore.semaphoreGive();

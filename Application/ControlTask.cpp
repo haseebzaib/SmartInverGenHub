@@ -22,15 +22,13 @@
 #include "cstdlib"
 #include "gpio.h"
 #include "math.h"
+#include "iwdg.h"
 
 float prev_SOC;
 float Left_SOC;
-
 RTC_DateTypeDef sDate;
 RTC_TimeTypeDef sTime;
-
 System_sys::Parsing_Checking parsing;
-
 uint32_t timestamp;
 char time[20];
 char date[20];
@@ -43,31 +41,20 @@ uint8_t batt_charging_status;
 // Adjust these as needed:
 static constexpr float SOC_LOW  = 20.0f;  // Turn generator ON if SoC < 20%
 static constexpr float SOC_HIGH  = 95.0f; // If battery SoC > 85%, we might turn generator OFF
-
-
-
 uint8_t batt_chargetimekeeping_Flag = 0;
-
 char batTime[20];
-
 uint8_t sourceStatus;
-
 uint32_t DisplayChargeStartTime = 0;
 uint32_t DisplayChargeEndTime = 0;
-
 sensor_pzem::PZEM_004T::PZEM PZEM1_Data = {0};
 sensor_pzem::PZEM_004T::PZEM PZEM2_Data = {0};
 sensor_pzem::PZEM_004T::PZEM PZEM3_Data = {0};
-
 RTC_DateTypeDef DDate;
 RTC_TimeTypeDef DTime;
-
 RTC_TimeTypeDef DTimeCharging_;
 RTC_TimeTypeDef DTimeDischarging_;
-
 char ChargingTime[20] = "Null";
 char DischargingTime[20] = "Null";
-
 uint8_t flag = 0;
 
 static void TurnOffGenerator()
@@ -105,10 +92,6 @@ static void SwitchingLoadLogic(struct ControlData_Queue *ControlData)
 		std::memcpy((RTC_TimeTypeDef *)&DTimeDischarging_,(RTC_TimeTypeDef *)&DTime,sizeof(RTC_TimeTypeDef));
 	}
 
-
-
-
-
 }
 
 uint8_t getSourceState()
@@ -127,15 +110,36 @@ void getDischargeTimestamp(RTC_TimeTypeDef *DTimeDischarging)
 
 sensor_pzem::PZEM_004T::PZEM getACData1()
 {
-	return PZEM1_Data;
+	return (PZEM1_Data);
 }
 sensor_pzem::PZEM_004T::PZEM getACData2()
 {
-	return PZEM2_Data;
+	return (PZEM2_Data);
 }
 sensor_pzem::PZEM_004T::PZEM getACData3()
 {
-	return PZEM3_Data;
+	return (PZEM3_Data);
+}
+
+
+void getACData1(float *voltage,float *current,float *power)
+{
+	*voltage = PZEM1_Data.voltage;
+    *current = (PZEM1_Data.current/10)*2;
+    *power   = (PZEM1_Data.power/10)*2;
+}
+void getACData2(float *voltage,float *current,float *power)
+{
+	*voltage = PZEM2_Data.voltage;
+    *current = (PZEM2_Data.current/10)*2;
+    *power   = (PZEM2_Data.power/10)*2;
+}
+void getACData3(float *voltage,float *current,float *power)
+{
+	*voltage = PZEM3_Data.voltage;
+    *current = (PZEM3_Data.current/10)*2;
+    *power   = (PZEM3_Data.power/10)*2;
+
 }
 
 
@@ -157,22 +161,24 @@ void ControlTask(void *pvParameters) {
 
 	getSaveData();
 
+
+
 	SOC::CC_Init(flash_data_.SOC, 1);
+	DCCurrentSensor.setOffset(flash_data_.currentOffset);
 
 	liquidSensor.setParameters(flash_data_.zeroSpan, flash_data_.fullSpan);
 	stmRTC.setTimezone(flash_data_.zone);
 
 	prev_SOC = flash_data_.SOC;
 
+	stmRTC.getTime(&DDate, &DTime, &ControlData.timestamp);
+	ControlData.batteryChargeDischargeEndTime[0] = ControlData.timestamp;
+    HAL_IWDG_Refresh(&hiwdg); //20second
+
 	while (1) {
-
-
-		//  HAL_GPIO_TogglePin(Relay_cont_GPIO_Port, Relay_cont_Pin);
-
+		HAL_IWDG_Refresh(&hiwdg); //20second
 		stmRTC.getTime(&DDate, &DTime, &ControlData.timestamp);
-
 		AHT20.measure(&ControlData.temp, &ControlData.humid);
-
 		liquidSensor.Measurement_loop(&ControlData.fuelPer,
 				&ControlData.fuelConsp, ControlData.timestamp,
 				&ControlData.refuelingStartTime, &ControlData.refuelingEndTime);
@@ -181,15 +187,10 @@ void ControlTask(void *pvParameters) {
 		PZEM2.read(&PZEM2_Data);
 		PZEM3.read(&PZEM3_Data);
 
-		ControlData.V_1 = PZEM1_Data.voltage;
-		ControlData.I_1 = PZEM1_Data.current/10;
-		ControlData.P_1 = PZEM1_Data.power/10;
-		ControlData.V_2 = PZEM2_Data.voltage;
-		ControlData.I_2 = PZEM2_Data.current/10;
-		ControlData.P_2 = PZEM2_Data.power/10;
-		ControlData.V_3 = PZEM3_Data.voltage;
-		ControlData.I_3 = PZEM3_Data.current/10;
-		ControlData.P_3 = PZEM3_Data.power/10;
+		getACData1(&ControlData.V_1,&ControlData.I_1,&ControlData.P_1);
+		getACData2(&ControlData.V_2,&ControlData.I_2,&ControlData.P_2);
+		getACData3(&ControlData.V_3,&ControlData.I_3 ,&ControlData.P_3);
+
 		ControlData.Freq = (PZEM1_Data.frequency + PZEM2_Data.frequency + PZEM3_Data.frequency) / 3;
 
 
@@ -209,14 +210,12 @@ void ControlTask(void *pvParameters) {
 			SaveData();
 		}
 
-
 		SwitchingLoadLogic(&ControlData);
 		sourceStatus = ControlData.SelectedSource;
-
 		ControlDataQueue.queueSend(reinterpret_cast<void*>(&ControlData));
-
 		HAL_GPIO_TogglePin(alive_led_GPIO_Port, alive_led_Pin);
 		System_Rtos::delay(100);
+        HAL_IWDG_Refresh(&hiwdg); //20second
 	}
 
 }

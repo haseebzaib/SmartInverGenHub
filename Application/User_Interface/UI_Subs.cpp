@@ -19,21 +19,15 @@
 #include "button.hpp"
 #include "UI_txt.hpp"
 #include "Sensor/sensor_liquidMeas.hpp"
+#include "Sensor/sensor_DcHall.hpp"
+#include "SOC/SOC.hpp"
 
 uint32_t epochTimePos[10] = { 1000000000, 100000000, 10000000, 1000000, 100000,
 		10000, 1000, 100, 10, 1, };
 
 int8_t datetime[14] = { 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1 };
 
-
-float SpanSetting[6] = {
-		10.0,
-		01.0,
-		0.1,
-		10.0,
-		01.0,
-		0.1,
-};
+float SpanSetting[6] = { 10.0, 01.0, 0.1, 10.0, 01.0, 0.1, };
 
 void UI::UI_Subs::SetTimeDate(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
@@ -276,8 +270,6 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 
 			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
 
-
-
 			UI::UI_helper::SubMenuControlInfo(u8g2);
 			u8g2_SendBuffer(u8g2);
 			btncodes = button::get_event();
@@ -287,27 +279,18 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 
 		case button::btncodes::cRGHT_BT: {
 			cursor++;
-			if(cursor == 2)
-			{
+			if (cursor == 2) {
 				cursorPos = 3;
-			}
-			else if(cursor == 3)
-			{
+			} else if (cursor == 3) {
 				cursorPos = 7;
-			}
-			else if(cursor > 3)
-			{
+			} else if (cursor > 3) {
 
-				if(cursor > 4)
-				{
+				if (cursor > 4) {
 					cursorPos = cursorPos + 2;
-				}
-				else
-				{
+				} else {
 					cursorPos = cursorPos + 1;
 				}
-			}
-			else {
+			} else {
 
 				cursorPos = cursor;
 			}
@@ -316,20 +299,15 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 		}
 
 		case button::btncodes::cDWN_BT: {
-			if(cursor < 3)
-			{
+			if (cursor < 3) {
 				zeroSpan = zeroSpan - SpanSetting[cursor];
-				if(zeroSpan < 0)
-				{
+				if (zeroSpan < 0) {
 					zeroSpan = 0.0;
 				}
-			}
-			else if(cursor >=3 )
-			{
+			} else if (cursor >= 3) {
 				fullSpan = fullSpan - SpanSetting[cursor];
 
-				if(fullSpan < 0)
-				{
+				if (fullSpan < 0) {
 					fullSpan = 0.0;
 				}
 			}
@@ -338,20 +316,15 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 		}
 
 		case button::btncodes::cUP_BT: {
-			if(cursor < 3)
-			{
+			if (cursor < 3) {
 				zeroSpan = zeroSpan + SpanSetting[cursor];
 
-				if(zeroSpan > 99)
-				{
+				if (zeroSpan > 99) {
 					zeroSpan = 99.0;
 				}
-			}
-			else if(cursor >=3 )
-			{
+			} else if (cursor >= 3) {
 				fullSpan = fullSpan + SpanSetting[cursor];
-				if(fullSpan > 99)
-				{
+				if (fullSpan > 99) {
 					fullSpan = 99.0;
 				}
 			}
@@ -371,11 +344,89 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 		}
 
 		cursor = cursor % 6;
-		if(cursorPos > 10)
-		{
+		if (cursorPos > 10) {
 			cursorPos = 0;
 		}
 	} while (btncodes != button::btncodes::cEnter_BT
 			&& btncodes != button::btncodes::cLFT_BT);
 
 }
+
+void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
+	enum button::btncodes btncodes;
+	float zeroSpan = 00.0;
+	float fullSpan = 00.0;
+
+
+	char headings[50];
+	char buffer[50];
+
+	uint8_t cursor = 0;
+	uint8_t cursorPos = 0;
+
+	float soc;
+	float currentoffset;
+
+	do {
+		button::resetCode(button::btncodes::cNONE);
+		do {
+
+			u8g2_ClearBuffer(u8g2);
+			u8g2_SetFontMode(u8g2, 1);
+			u8g2_SetDrawColor(u8g2, 2);
+			u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
+
+			soc = SOC::getSoCVal();
+			currentoffset = DCCurrentSensor.getOffset();
+
+
+			std::sprintf(headings, "SOC | CurrentOffset");
+			u8g2_DrawStr(u8g2, 5, 10, headings);
+			std::sprintf(buffer, "%04.1f | %04.4f", soc, currentoffset);
+			u8g2_DrawStr(u8g2, 25, 20, buffer);
+
+			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
+
+
+			UI::UI_helper::SubMenuControlInfo(u8g2);
+			u8g2_SendBuffer(u8g2);
+			btncodes = button::get_event();
+
+		} while (btncodes == button::btncodes::cNONE);
+
+		switch (btncodes) {
+
+		case button::btncodes::cRGHT_BT: {
+
+			break;
+		}
+
+		case button::btncodes::cDWN_BT: {
+
+			break;
+		}
+
+		case button::btncodes::cUP_BT: {
+
+			break;
+		}
+
+		case button::btncodes::cEnter_BT: {
+
+			/**
+			DCCurrentSensor.setOffset(currentoffset);
+			SOC::CC_Init(soc, 1);
+			flash_data_.currentOffset = currentoffset;
+			flash_data_.SOC = soc;
+			SaveData();
+			**/
+
+			break;
+		}
+
+		}
+
+	} while (btncodes != button::btncodes::cEnter_BT
+			&& btncodes != button::btncodes::cLFT_BT);
+}
+

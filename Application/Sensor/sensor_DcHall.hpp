@@ -28,6 +28,9 @@ public:
 
 	DcHall(ADC_HandleTypeDef *hadc);
 
+    float getOffset();
+	void  setOffset(float offset);
+	float getCurrent();
 	enum status getCurrent(float *DcCurrent); //in Ampere
 
 
@@ -39,15 +42,17 @@ private:
 	DcHallSemaphore.semaphoreGive();\
     return returnStat;               \
   }
-	  const uint32_t samples = 1000;
+	  static constexpr uint32_t samples = 1000;
 	  static constexpr float Vref = 3.3f;
 	  static constexpr float Resolution = 4096.0f;
 	  static constexpr float midpoint = 1.650f;
 	  static constexpr float sensitivity = 0.0048f; //midpoint / current = 1.65V / 300A = 5.5mV/A
-	  static constexpr float offset_system = 0.002f;
-	   float RawCurrent;
-	   float emaCurrent ;
-	   static constexpr float alpha = 0.3f;
+	  static constexpr float alpha = 0.3f;
+	  float offset_system;
+	  float RawCurrent;
+	  float GetCurrent;
+	  float emaCurrent ;
+
 
 
 	ADC_HandleTypeDef *hadc_sensor;

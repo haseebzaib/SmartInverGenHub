@@ -216,10 +216,11 @@ serial::serial(UART_HandleTypeDef *huart) {
 	Internal_UartHandler = huart;
 }
 
-void serial::ReceiveData(uint8_t *data,uint16_t size,uint32_t timeout)
+uint8_t serial::ReceiveData(uint8_t *data,uint16_t size,uint32_t timeout)
 {
 
-	HAL_UART_Receive(Internal_UartHandler, data, size, timeout);
+
+	return (uint8_t)HAL_UART_Receive(Internal_UartHandler, data, size, timeout);
 
 }
 
