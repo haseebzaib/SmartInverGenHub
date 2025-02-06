@@ -371,6 +371,8 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 	do {
 		button::resetCode(button::btncodes::cNONE);
+		soc = SOC::getSoCVal();
+		currentoffset = DCCurrentSensor.getOffset();
 		do {
 
 			u8g2_ClearBuffer(u8g2);
@@ -378,8 +380,7 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			u8g2_SetDrawColor(u8g2, 2);
 			u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 
-			soc = SOC::getSoCVal();
-			currentoffset = DCCurrentSensor.getOffset();
+
 
 			std::sprintf(headings, "   SOC | CurrentOffset");
 			u8g2_DrawStr(u8g2, 5, 10, headings);
@@ -396,7 +397,7 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			if (cursor <= 0) {
 				u8g2_DrawBox(u8g2, 25, 12, (strSize * 5) + 1, 9);
 			} else {
-				u8g2_DrawBox(u8g2, 65, 12, (strSize * 5) + 3, 9);
+				u8g2_DrawBox(u8g2, 65, 12, (strSize1 * 5) + 1, 9);
 			}
 
 			UI::UI_helper::SubMenuControlInfo(u8g2);
