@@ -68,7 +68,7 @@ DcHall::status DcHall::getCurrent(float *DcCurrent)
 
 	    adcValue = adcValue/samples;
 
-	    float voltage = ((adcValue / Resolution) * Vref)- offset_system ;
+	    float voltage = ((adcValue / Resolution) * Vref) - offset_system ;
 
 
 	    float voltageOffset = voltage - midpoint;   // relative to midpoint
