@@ -29,6 +29,8 @@ int8_t datetime[14] = { 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1 };
 
 float SpanSetting[6] = { 10.0, 01.0, 0.1, 10.0, 01.0, 0.1, };
 
+float Setting[6] = { 10.0, 01.0, 0.1, 10.0, 01.0, 0.1, };
+
 void UI::UI_Subs::SetTimeDate(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	char epochtimeStr[50];
@@ -397,6 +399,22 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 		switch (btncodes) {
 
 		case button::btncodes::cRGHT_BT: {
+			cursor++;
+			if (cursor == 2) {
+				cursorPos = 3;
+			} else if (cursor == 3) {
+				cursorPos = 7;
+			} else if (cursor > 3) {
+
+				if (cursor > 4) {
+					cursorPos = cursorPos + 2;
+				} else {
+					cursorPos = cursorPos + 1;
+				}
+			} else {
+
+				cursorPos = cursor;
+			}
 
 			break;
 		}
