@@ -390,7 +390,7 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 
 			u8g2_DrawStr(u8g2, 25, 20, buffer);
-			u8g2_DrawStr(u8g2, 50, 20, buffer2);
+			u8g2_DrawStr(u8g2, 65, 20, buffer2);
 
 //			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
 //			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
