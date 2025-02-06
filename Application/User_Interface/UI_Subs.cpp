@@ -369,10 +369,12 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 	float soc;
 	float currentoffset;
 
+	soc = SOC::getSoCVal();
+	currentoffset = DCCurrentSensor.getOffset();
+
 	do {
 		button::resetCode(button::btncodes::cNONE);
-		soc = SOC::getSoCVal();
-		currentoffset = DCCurrentSensor.getOffset();
+
 		do {
 
 			u8g2_ClearBuffer(u8g2);
