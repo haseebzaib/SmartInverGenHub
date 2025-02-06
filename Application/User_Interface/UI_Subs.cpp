@@ -420,6 +420,12 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 		case button::btncodes::cDWN_BT: {
 			if (cursor <= 0) {
 				soc = soc - 0.1;
+
+				if(soc < 0)
+				{
+					soc = 0.0;
+
+				}
 			} else {
 
 				currentoffset = currentoffset - 0.001;
@@ -432,6 +438,10 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 			if (cursor <= 0) {
 				soc = soc + 0.1;
+				if(soc > 100)
+				{
+				  soc = 100.0;
+				}
 			} else {
 
 				currentoffset = currentoffset + 0.001;
