@@ -35,7 +35,8 @@ uint32_t humid = 0;
 struct SettingMenuCodes SettingsMenuCodes[TotalSettingsSub] =
 {
   MenuNo::SetTimeDate,
-  MenuNo::SetFuelMeas
+  MenuNo::SetFuelMeas,
+  MenuNo::SetSoCnDCurr,
 
 };
 
@@ -69,6 +70,7 @@ UIStruct MenuArray[] = {
 	/*Sub menus*/
 	{ MenuNo::SetTimeDate, UI::UI_Subs::SetTimeDate,{MenuNo::Settings},MenuNo::Settings,MenuNo::SetTimeDate,MenuNo::SetTimeDate, MenuNo::Settings,MenuNo::SetTimeDate },
 	{ MenuNo::SetFuelMeas, UI::UI_Subs::SetFuelMeas,{MenuNo::SetFuelMeas},MenuNo::Settings,MenuNo::SetFuelMeas,MenuNo::SetFuelMeas, MenuNo::Settings,MenuNo::SetFuelMeas },
+	{ MenuNo::SetSoCnDCurr, UI::UI_Subs::SetSoCnDCurr,{MenuNo::SetSoCnDCurr},MenuNo::Settings,MenuNo::SetSoCnDCurr,MenuNo::SetSoCnDCurr, MenuNo::Settings,MenuNo::SetSoCnDCurr },
 
 
 
@@ -91,7 +93,7 @@ do {
 		u8g2_SetDrawColor(u8g2, 2);
 		u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 
-		uint8_t strSize = std::strlen( UI_txts::Settings[sel_sub]);
+		uint8_t strSize = std::strlen(UI_txts::Settings[sel_sub]);
 
 
 		u8g2_DrawBox(u8g2, 2, 3 + (8*sel_sub) , (strSize * 5) + 1 , 9);
@@ -589,15 +591,14 @@ void loop(u8g2_t *u8g2) {
 		CurrMenu =   MenuNo::Power;//MenuNo::Battery;
 	}
 
-	for (index = 0; index < (sizeof(MenuArray) / sizeof(MenuArray[0]));
-			index++) {
+	for (index = 0; index < (uint16_t)MenuNo::TotalMenus; index++) {
 		if (CurrMenu == MenuArray[index].MenuNo) // check if this menu is found ?
 				{
 			break;
 		}
 	}
 
-	if (index < (sizeof(MenuArray) / sizeof(MenuArray[0]))) {
+	if (index < (uint16_t)MenuNo::TotalMenus) {
 		std::memset(UI::display_buffer, 0, sizeof(UI::display_buffer));
 		MenuArray[index].function(u8g2);
 

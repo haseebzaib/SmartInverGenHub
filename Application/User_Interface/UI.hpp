@@ -13,7 +13,7 @@
 #include "u8g2.h"
 
 
-#define TotalSettingsSub  2
+#define TotalSettingsSub  3
 
 enum class MenuNo {
 	Power,
@@ -25,10 +25,9 @@ enum class MenuNo {
 	Settings,
 	SetTimeDate,
 	SetFuelMeas,
-    None,
-
-
-
+	SetSoCnDCurr,
+    TotalMenus,
+	None,
 };
 
 struct SettingMenuCodes {

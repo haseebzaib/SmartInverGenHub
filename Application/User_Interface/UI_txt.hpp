@@ -16,6 +16,7 @@ namespace UI_txts {
 static constexpr char Settings[TotalSettingsSub][20] = {
        "1. Set Time/Date.",
 	   "2. Set FuelMeas.",
+	   "3. Set SoC/Offset.",
 };
 
 
