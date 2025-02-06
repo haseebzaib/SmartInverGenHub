@@ -65,7 +65,7 @@ UIStruct MenuArray[] = {
 	{ MenuNo::Battery, UI::Battery, { MenuNo::Settings },MenuNo::Battery, MenuNo::Battery, MenuNo::Battery, MenuNo::source,MenuNo::Alarms },
 	{ MenuNo::Alarms, UI::Alarms, { MenuNo::Settings },MenuNo::Alarms, MenuNo::Alarms, MenuNo::Alarms, MenuNo::Battery,MenuNo::fuel_temp_humd },
 	{ MenuNo::fuel_temp_humd, UI::fuel_temp_humd,{ MenuNo::Settings }, MenuNo::fuel_temp_humd, MenuNo::fuel_temp_humd,MenuNo::fuel_temp_humd, MenuNo::Alarms, MenuNo::Power },
-	{ MenuNo::Settings, UI::Settings, {  MenuNo::SetTimeDate,MenuNo::SetFuelMeas },MenuNo::Settings, MenuNo::Settings, MenuNo::Settings, MenuNo::Power,MenuNo::Power },
+	{ MenuNo::Settings, UI::Settings, {  MenuNo::SetTimeDate,MenuNo::SetFuelMeas, MenuNo::SetSoCnDCurr },MenuNo::Settings, MenuNo::Settings, MenuNo::Settings, MenuNo::Power,MenuNo::Power },
 
 	/*Sub menus*/
 	{ MenuNo::SetTimeDate, UI::UI_Subs::SetTimeDate,{MenuNo::Settings},MenuNo::Settings,MenuNo::SetTimeDate,MenuNo::SetTimeDate, MenuNo::Settings,MenuNo::SetTimeDate },
@@ -591,7 +591,7 @@ void loop(u8g2_t *u8g2) {
 		CurrMenu =   MenuNo::Power;//MenuNo::Battery;
 	}
 
-	for (index = 0; index < (uint16_t)MenuNo::TotalMenus; index++) {
+	for (index = 0; index <= (uint16_t)MenuNo::TotalMenus; index++) {
 		if (CurrMenu == MenuArray[index].MenuNo) // check if this menu is found ?
 				{
 			break;
