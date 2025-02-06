@@ -392,8 +392,21 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			u8g2_DrawStr(u8g2, 25, 20, buffer);
 			u8g2_DrawStr(u8g2, 65, 20, buffer2);
 
-//			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
-//			u8g2_DrawBox(u8g2, 25 + (5 * (cursorPos)), 12, 5, 9);
+
+
+			uint8_t strSize  = std::strlen(buffer);
+			uint8_t strSize1 = std::strlen(buffer2);
+
+
+			if(cursor <= 0)
+			{
+				u8g2_DrawBox(u8g2, 25, 12,strSize ,9);
+			}
+			else {
+				u8g2_DrawBox(u8g2, 65, 12 ,strSize1 ,9);
+			}
+
+
 
 
 			UI::UI_helper::SubMenuControlInfo(u8g2);
@@ -406,21 +419,21 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 		case button::btncodes::cRGHT_BT: {
 			cursor++;
-			if (cursor == 2) {
-				cursorPos = 3;
-			} else if (cursor == 3) {
-				cursorPos = 7;
-			} else if (cursor > 3) {
-
-				if (cursor > 4) {
-					cursorPos = cursorPos + 2;
-				} else {
-					cursorPos = cursorPos + 1;
-				}
-			} else {
-
-				cursorPos = cursor;
-			}
+//			if (cursor == 2) {
+//				cursorPos = 3;
+//			} else if (cursor == 3) {
+//				cursorPos = 7;
+//			} else if (cursor > 3) {
+//
+//				if (cursor > 4) {
+//					cursorPos = cursorPos + 2;
+//				} else {
+//					cursorPos = cursorPos + 1;
+//				}
+//			} else {
+//
+//				cursorPos = cursor;
+//			}
 
 			break;
 		}
