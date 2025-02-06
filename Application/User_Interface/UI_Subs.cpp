@@ -380,7 +380,7 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			currentoffset = DCCurrentSensor.getOffset();
 
 
-			std::sprintf(headings, "SOC | CurrentOffset");
+			std::sprintf(headings, "   SOC | CurrentOffset");
 			u8g2_DrawStr(u8g2, 5, 10, headings);
 			std::sprintf(buffer, "%04.1f | %04.4f", soc, currentoffset);
 			u8g2_DrawStr(u8g2, 25, 20, buffer);
