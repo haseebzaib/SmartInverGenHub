@@ -400,10 +400,10 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 			if(cursor <= 0)
 			{
-				u8g2_DrawBox(u8g2, 25, 12,strSize ,9);
+				u8g2_DrawBox(u8g2, 25, 12,(strSize*5)+1 ,9);
 			}
 			else {
-				u8g2_DrawBox(u8g2, 65, 12 ,strSize1 ,9);
+				u8g2_DrawBox(u8g2, 65, 12 ,(strSize*5)+1 ,9);
 			}
 
 
@@ -434,6 +434,12 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 //
 //				cursorPos = cursor;
 //			}
+
+			if(cursor > 1)
+			{
+				cursor = 0;
+			}
+
 
 			break;
 		}
