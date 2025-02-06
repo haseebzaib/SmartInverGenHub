@@ -359,7 +359,6 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 	float zeroSpan = 00.0;
 	float fullSpan = 00.0;
 
-
 	char headings[50];
 	char buffer[20];
 	char buffer2[20];
@@ -386,28 +385,19 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			u8g2_DrawStr(u8g2, 5, 10, headings);
 
 			std::sprintf(buffer, "%04.1f", soc);
-            std::sprintf(buffer2,"%04.4f",currentoffset);
-
+			std::sprintf(buffer2, "%04.3f", currentoffset);
 
 			u8g2_DrawStr(u8g2, 25, 20, buffer);
 			u8g2_DrawStr(u8g2, 65, 20, buffer2);
 
-
-
-			uint8_t strSize  = std::strlen(buffer);
+			uint8_t strSize = std::strlen(buffer);
 			uint8_t strSize1 = std::strlen(buffer2);
 
-
-			if(cursor <= 0)
-			{
-				u8g2_DrawBox(u8g2, 25, 12,(strSize*5)+1 ,9);
+			if (cursor <= 0) {
+				u8g2_DrawBox(u8g2, 25, 12, (strSize * 5) + 1, 9);
+			} else {
+				u8g2_DrawBox(u8g2, 65, 12, (strSize * 5) + 3, 9);
 			}
-			else {
-				u8g2_DrawBox(u8g2, 65, 12 ,(strSize*5)+1 ,9);
-			}
-
-
-
 
 			UI::UI_helper::SubMenuControlInfo(u8g2);
 			u8g2_SendBuffer(u8g2);
@@ -419,50 +409,47 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 		case button::btncodes::cRGHT_BT: {
 			cursor++;
-//			if (cursor == 2) {
-//				cursorPos = 3;
-//			} else if (cursor == 3) {
-//				cursorPos = 7;
-//			} else if (cursor > 3) {
-//
-//				if (cursor > 4) {
-//					cursorPos = cursorPos + 2;
-//				} else {
-//					cursorPos = cursorPos + 1;
-//				}
-//			} else {
-//
-//				cursorPos = cursor;
-//			}
 
-			if(cursor > 1)
-			{
+			if (cursor > 1) {
 				cursor = 0;
 			}
-
 
 			break;
 		}
 
 		case button::btncodes::cDWN_BT: {
+			if (cursor <= 0) {
+				soc = soc - 0.1;
+			} else {
 
+				currentoffset = currentoffset - 0.001;
+
+			}
 			break;
 		}
 
 		case button::btncodes::cUP_BT: {
+
+			if (cursor <= 0) {
+				soc = soc + 0.1;
+			} else {
+
+				currentoffset = currentoffset + 0.001;
+
+			}
 
 			break;
 		}
 
 		case button::btncodes::cEnter_BT: {
 
-			/**
-			DCCurrentSensor.setOffset(currentoffset);
-			SOC::CC_Init(soc, 1);
-			flash_data_.currentOffset = currentoffset;
-			flash_data_.SOC = soc;
-			SaveData();
-			**/
+
+			 DCCurrentSensor.setOffset(currentoffset);
+			 SOC::CC_Init(soc, 1);
+			 flash_data_.currentOffset = currentoffset;
+			 flash_data_.SOC = soc;
+			 SaveData();
+
 
 			break;
 		}
