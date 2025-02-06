@@ -173,6 +173,7 @@ void ControlTask(void *pvParameters) {
 
 	stmRTC.getTime(&DDate, &DTime, &ControlData.timestamp);
 	ControlData.batteryChargeDischargeEndTime[0] = ControlData.timestamp;
+	std::memcpy((RTC_TimeTypeDef *)&DTimeDischarging_,(RTC_TimeTypeDef *)&DTime,sizeof(RTC_TimeTypeDef));
     HAL_IWDG_Refresh(&hiwdg); //20second
 
 	while (1) {
