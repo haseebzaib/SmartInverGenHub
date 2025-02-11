@@ -382,8 +382,6 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			u8g2_SetDrawColor(u8g2, 2);
 			u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 
-
-
 			std::sprintf(headings, "   SOC | CurrentOffset");
 			u8g2_DrawStr(u8g2, 5, 10, headings);
 
@@ -424,8 +422,7 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			if (cursor <= 0) {
 				soc = soc - 0.1;
 
-				if(soc < 0)
-				{
+				if (soc < 0) {
 					soc = 0.0;
 
 				}
@@ -441,9 +438,8 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 			if (cursor <= 0) {
 				soc = soc + 0.1;
-				if(soc > 100)
-				{
-				  soc = 100.0;
+				if (soc > 100) {
+					soc = 100.0;
 				}
 			} else {
 
@@ -456,13 +452,11 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 		case button::btncodes::cEnter_BT: {
 
-
-			 DCCurrentSensor.setOffset(currentoffset);
-			 SOC::CC_Init(soc, 1);
-			 flash_data_.currentOffset = currentoffset;
-			 flash_data_.SOC = soc;
-			 SaveData();
-
+			DCCurrentSensor.setOffset(currentoffset);
+			SOC::CC_Init(soc, 1);
+			flash_data_.currentOffset = currentoffset;
+			flash_data_.SOC = soc;
+			SaveData();
 
 			break;
 		}
@@ -473,3 +467,118 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			&& btncodes != button::btncodes::cLFT_BT);
 }
 
+void UI::UI_Subs::SetAutoManual(u8g2_t *u8g2) {
+
+	enum button::btncodes btncodes;
+
+	char headings[50];
+	char buffer[20];
+
+
+	uint8_t cursor = 0;
+
+	uint8_t Auto_ManualSelector = flash_data_.Auto_Manual;
+	uint8_t ManualSourceSelectorOpt = ManualSourceSelector;
+	uint8_t ManualSourceSelectorDecidorOpt = ManualSourceSelectorDecider;
+
+	do {
+		button::resetCode(button::btncodes::cNONE);
+
+		do {
+
+			u8g2_ClearBuffer(u8g2);
+			u8g2_SetFontMode(u8g2, 1);
+			u8g2_SetDrawColor(u8g2, 2);
+			u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
+
+			if (Auto_ManualSelector == 0) {
+				std::sprintf(headings, "Auto Mode: ON");
+				u8g2_DrawStr(u8g2, 5, 10, headings);
+				uint8_t strSize = std::strlen(headings);
+				u8g2_DrawBox(u8g2, 5, 2, (strSize * 5) + 1, 9);
+
+			} else {
+				std::sprintf(headings, "Manual Mode: ON");
+				u8g2_DrawStr(u8g2, 5, 10, headings);
+
+
+				std::sprintf(buffer, "Generator: %s", ManualSourceSelectorOpt  == 0 ? "OFF" : "ON");
+				u8g2_DrawStr(u8g2, 5, 20, buffer);
+
+				uint8_t strSize = std::strlen(headings);
+				uint8_t strSize1 = std::strlen(buffer);
+				if(cursor <=0)
+				{
+					u8g2_DrawBox(u8g2, 5, 2, (strSize * 5) + 1, 9);
+				}
+				else
+				{
+					u8g2_DrawBox(u8g2, 5, 12, (strSize1 * 5) + 1, 9);
+				}
+
+			}
+
+			UI::UI_helper::SubMenuControlInfo(u8g2);
+			u8g2_SendBuffer(u8g2);
+			btncodes = button::get_event();
+
+		} while (btncodes == button::btncodes::cNONE);
+
+		switch (btncodes) {
+		case button::btncodes::cRGHT_BT: {
+			if (Auto_ManualSelector != 0) {
+				cursor++;
+				cursor = cursor % 2;
+			}
+
+			break;
+		}
+
+		case button::btncodes::cDWN_BT: {
+			if (Auto_ManualSelector == 0) {
+
+				Auto_ManualSelector = 1;
+			} else {
+
+				if (cursor == 0) {
+					Auto_ManualSelector = 0;
+				} else if (cursor == 1) {
+					ManualSourceSelectorOpt = 0;
+					ManualSourceSelectorDecidorOpt = 0;
+				}
+
+			}
+			break;
+		}
+
+		case button::btncodes::cUP_BT: {
+
+			if (Auto_ManualSelector == 0) {
+				Auto_ManualSelector = 1;
+
+			} else {
+				if (cursor == 0) {
+					Auto_ManualSelector = 0;
+				} else if (cursor == 1) {
+					ManualSourceSelectorOpt = 1;
+					ManualSourceSelectorDecidorOpt = 1;
+				}
+
+			}
+
+			break;
+		}
+
+		case button::btncodes::cEnter_BT: {
+
+			flash_data_.Auto_Manual =  Auto_ManualSelector;
+			ManualSourceSelector =  ManualSourceSelectorOpt;
+			ManualSourceSelectorDecider = ManualSourceSelectorDecidorOpt;
+			SaveData();
+			break;
+		}
+
+		}
+	} while (btncodes != button::btncodes::cEnter_BT
+			&& btncodes != button::btncodes::cLFT_BT);
+}

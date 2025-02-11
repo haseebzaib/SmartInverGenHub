@@ -13,7 +13,7 @@
 #include "u8g2.h"
 
 
-#define TotalSettingsSub  3
+
 
 enum class MenuNo {
 	Power,
@@ -23,12 +23,19 @@ enum class MenuNo {
 	Alarms,
 	fuel_temp_humd,
 	Settings,
+
+	SubMenusStart,
+    //Sub menu section
 	SetTimeDate,
 	SetFuelMeas,
 	SetSoCnDCurr,
-    TotalMenus,
+	SetAutoManual,
+
+	TotalMenus,
 	None,
 };
+
+#define TotalSettingsSub  (uint16_t)((uint16_t)MenuNo::TotalMenus - (uint16_t)MenuNo::SubMenusStart - 1)
 
 struct SettingMenuCodes {
 	enum MenuNo code;
@@ -62,7 +69,7 @@ namespace UI_Subs {
 void SetTimeDate(u8g2_t *u8g2);
 void SetFuelMeas(u8g2_t *u8g2);
 void SetSoCnDCurr(u8g2_t *u8g2);
-
+void SetAutoManual(u8g2_t *u8g2);
 }
 
 /*Main functions*/

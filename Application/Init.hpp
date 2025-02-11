@@ -67,6 +67,9 @@ extern sensor_pzem::PZEM_004T PZEM3;
 extern sensor_DcHall::DcHall DCCurrentSensor;
 extern sensor_DcVolt::DcVolt DCVoltageMeasurement;
 
+extern uint8_t ManualSourceSelector;
+extern uint8_t ManualSourceSelectorDecider ;
+
 struct ModemData_Queue {
 	//char time[10];
 	//char date[10];
@@ -95,6 +98,8 @@ struct ModemData_Queue {
 struct PACKED flash_data {
 	int8_t zone;
 	uint16_t validPattern;
+	uint8_t selectedSource;
+	uint8_t Auto_Manual; //0 - Auto   1 - Manual
     float zeroSpan;
     float fullSpan;
     float currentOffset;

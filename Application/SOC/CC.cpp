@@ -22,9 +22,9 @@ static uint32_t previousTime = 0;  // global or static variable
 
 
 static const float REST_CURRENT_THRESHOLD_A = 1.0f;
-static const float REST_CURRENT_THRESHOLD_B = 2.0f;
+static const float REST_CURRENT_THRESHOLD_B = 5.0f;
 // Time (ms) to remain under threshold before we consider the battery "at rest"
-static const uint32_t REST_TIME_REQUIRED_MS = 20000; // 20 seconds to be at safe side
+static const uint32_t REST_TIME_REQUIRED_MS = 10000; // 10 seconds to be at safe side
 
 
 static bool   g_isStable   = false;
@@ -126,7 +126,7 @@ void CheckCurrentStability(float currentA, uint32_t nowMs)
 	                 float socFromVolt = SoCFromVoltage_48V(SoCBattVoltage);
 
 	                 // Weighted blend to avoid abrupt jumps
-	                 float alpha = 0.90f; // 95% coulomb counting, 5% voltage correction
+	                 float alpha = 0.99f; // 99% coulomb counting, 1% voltage correction
 	                 float correctedSoC = alpha * g_SoC + (1.0f - alpha) * socFromVolt;
 
 	                 // Apply correction
@@ -171,10 +171,12 @@ void CC_Loop(float *SoC,float BattCurrent, float BattVoltage)
 	    	 g_SoC = 0.0f;
 	     }
 
-	    // if(BattCurrent > -2.0f)
-	    // {
-	     CheckCurrentStability(BattCurrent,currentTime);
-	    // }
+	     if(BattCurrent < 1.0f)
+	     {
+	    	 //Turn off for now not working as expected
+	    // CheckCurrentStability(BattCurrent,currentTime);
+
+	     }
 
 
 

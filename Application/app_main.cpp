@@ -165,6 +165,8 @@ void getSaveData() {
 		flash_data_.SOC          =  100.0;
 		flash_data_.zone         =  +5;
 		flash_data_.currentOffset = 0.002f;
+		flash_data_.selectedSource = 0;
+		flash_data_.Auto_Manual = 0;
 	}
 	else
 	{

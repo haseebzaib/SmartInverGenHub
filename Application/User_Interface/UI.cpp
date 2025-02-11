@@ -22,7 +22,7 @@
 #include "SOC.hpp"
 
 
-#define SCROLLING
+//#define SCROLLING
 
 #define scrollTiming 2
 #define TotalEnterIndexes 10
@@ -37,7 +37,7 @@ struct SettingMenuCodes SettingsMenuCodes[TotalSettingsSub] =
   MenuNo::SetTimeDate,
   MenuNo::SetFuelMeas,
   MenuNo::SetSoCnDCurr,
-
+  MenuNo::SetAutoManual,
 };
 
 namespace UI {
@@ -58,20 +58,20 @@ struct UIStruct {
 	enum MenuNo RGT;
 };
 
-UIStruct MenuArray[] = {
+UIStruct MenuArray[(uint16_t)(MenuNo::TotalMenus)] = {
 	{ MenuNo::Power, UI::power, { MenuNo::Settings },MenuNo::Power, MenuNo::Power, MenuNo::Power, MenuNo::fuel_temp_humd,MenuNo::network },
 	{ MenuNo::network, UI::network, { MenuNo::Settings },MenuNo::network, MenuNo::network, MenuNo::network, MenuNo::Power,MenuNo::source },
 	{ MenuNo::source, UI::source, { MenuNo::Settings },MenuNo::source, MenuNo::source, MenuNo::source, MenuNo::network,MenuNo::Battery },
 	{ MenuNo::Battery, UI::Battery, { MenuNo::Settings },MenuNo::Battery, MenuNo::Battery, MenuNo::Battery, MenuNo::source,MenuNo::Alarms },
 	{ MenuNo::Alarms, UI::Alarms, { MenuNo::Settings },MenuNo::Alarms, MenuNo::Alarms, MenuNo::Alarms, MenuNo::Battery,MenuNo::fuel_temp_humd },
 	{ MenuNo::fuel_temp_humd, UI::fuel_temp_humd,{ MenuNo::Settings }, MenuNo::fuel_temp_humd, MenuNo::fuel_temp_humd,MenuNo::fuel_temp_humd, MenuNo::Alarms, MenuNo::Power },
-	{ MenuNo::Settings, UI::Settings, {  MenuNo::SetTimeDate,MenuNo::SetFuelMeas, MenuNo::SetSoCnDCurr },MenuNo::Settings, MenuNo::Settings, MenuNo::Settings, MenuNo::Power,MenuNo::Power },
+	{ MenuNo::Settings, UI::Settings, {  MenuNo::SetTimeDate,MenuNo::SetFuelMeas, MenuNo::SetSoCnDCurr, MenuNo::SetAutoManual },MenuNo::Settings, MenuNo::Settings, MenuNo::Settings, MenuNo::Power,MenuNo::Power },
 
 	/*Sub menus*/
 	{ MenuNo::SetTimeDate, UI::UI_Subs::SetTimeDate,{MenuNo::Settings},MenuNo::Settings,MenuNo::SetTimeDate,MenuNo::SetTimeDate, MenuNo::Settings,MenuNo::SetTimeDate },
 	{ MenuNo::SetFuelMeas, UI::UI_Subs::SetFuelMeas,{MenuNo::SetFuelMeas},MenuNo::Settings,MenuNo::SetFuelMeas,MenuNo::SetFuelMeas, MenuNo::Settings,MenuNo::SetFuelMeas },
 	{ MenuNo::SetSoCnDCurr, UI::UI_Subs::SetSoCnDCurr,{MenuNo::SetSoCnDCurr},MenuNo::Settings,MenuNo::SetSoCnDCurr,MenuNo::SetSoCnDCurr, MenuNo::Settings,MenuNo::SetSoCnDCurr },
-
+	{ MenuNo::SetAutoManual, UI::UI_Subs::SetAutoManual,{MenuNo::SetAutoManual},MenuNo::Settings,MenuNo::SetAutoManual,MenuNo::SetAutoManual, MenuNo::Settings,MenuNo::SetAutoManual },
 
 
 };
@@ -271,9 +271,11 @@ void Battery(u8g2_t *u8g2) {
 	do {
 		float soc;
 		float curr;
+		float DcVolt;
 
 		char StringStartTime[20];
 		char StringEndTime[20];
+		char voltageMeasure[10];
 
 		RTC_TimeTypeDef DTimeCharging_;
 		RTC_TimeTypeDef DTimeDischarging_;
@@ -286,7 +288,7 @@ void Battery(u8g2_t *u8g2) {
 		std::sprintf(StringEndTime, "%02d:%02d:%02d", DTimeDischarging_.Hours, DTimeDischarging_.Minutes,DTimeDischarging_.Seconds);
 
 		curr = DCCurrentSensor.getCurrent();
-
+		DCVoltageMeasurement.getVoltage(&DcVolt);
 
 
 
@@ -297,7 +299,7 @@ void Battery(u8g2_t *u8g2) {
 		char currentA[10];
 
 		std::sprintf(currentA,"%.01f%%/%.02f",soc,curr);
-
+		std::sprintf(voltageMeasure,"%.02f",DcVolt);
 
 		UI::UI_helper::common_iconsMain(u8g2);
 
@@ -319,6 +321,9 @@ void Battery(u8g2_t *u8g2) {
 		u8g2_DrawBox(u8g2, 81, 17, 51, 9);
 		u8g2_DrawStr(u8g2, 82, 25, "DchrgTime:");
 		u8g2_DrawStr(u8g2, 82, 35, StringEndTime);
+
+
+		u8g2_DrawStr(u8g2, 82, 58, voltageMeasure);
 
 		u8g2_SendBuffer(u8g2);
 		btncodes = button::get_eventTimed(1000);
