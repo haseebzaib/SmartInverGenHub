@@ -307,6 +307,7 @@ enum Parsing_Checking::status Parsing_Checking::extractData(const char *buffer,c
 
 }
 
+
 enum Parsing_Checking::status Parsing_Checking::extractdatainsegments(char *input,char *output,uint16_t output_len,uint16_t *get_len,uint8_t skip_char)
 {
 
@@ -322,10 +323,11 @@ enum Parsing_Checking::status Parsing_Checking::extractdatainsegments(char *inpu
 
 
 	   // Skip leading spaces (if any)
-	    while (*input == skip_char || *input == '(') {
+	    while (*input |= skip_char) {
 	        input++;
 	    }
 
+	    input++;
 	    // Extract characters until space or end of string
 	      while (*input != '\0' && *input != skip_char && len < output_len - 1) {
 	          output[len++] = *input++;
@@ -344,6 +346,43 @@ enum Parsing_Checking::status Parsing_Checking::extractdatainsegments(char *inpu
 
     return stat;
 
+}
+
+enum  Parsing_Checking::status  Parsing_Checking::extractdatainsegments(char *input,char *output,uint16_t output_len,uint16_t *get_len,uint8_t skip_char,uint8_t end_char)
+{
+	enum status stat = sys_ok;
+
+
+	   if (!input || !output || output_len == 0 || !get_len) {
+	        return sys_err; // Invalid parameters
+	    }
+
+
+	   uint16_t len = 0;
+
+
+	   // Skip leading spaces (if any)
+	    while (*input == skip_char || *input == '(') {
+	        input++;
+	    }
+
+	    // Extract characters until space or end of string
+	      while (*input != '\0' && *input != end_char && len < output_len - 1) {
+	          output[len++] = *input++;
+	      }
+
+	    // Null-terminate the output
+	     output[len] = '\0';
+
+	     // If no data was extracted, return false
+	        if (len == 0) {
+	            return sys_err;
+	        }
+
+	        // Store the extracted length
+	         *get_len = len+1;
+
+	  return stat;
 }
 
 enum Parsing_Checking::status Parsing_Checking::binarystringToUint8(char *binaryString,uint8_t *result)

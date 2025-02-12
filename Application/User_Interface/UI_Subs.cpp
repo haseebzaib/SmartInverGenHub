@@ -356,8 +356,7 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 
 void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
-	float zeroSpan = 00.0;
-	float fullSpan = 00.0;
+
 
 	char headings[50];
 	char buffer[20];

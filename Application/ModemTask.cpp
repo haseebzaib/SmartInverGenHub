@@ -12,9 +12,14 @@
 #include "Init.hpp"
 #include "cstdio"
 #include "cstring"
-
+#include "System_rtc.hpp"
+#include "Sensor/sensor_liquidMeas.hpp"
+#include "Sensor/sensor_DcHall.hpp"
+#include "SOC/SOC.hpp"
 
 Modem::simA7672 simA7672(&GSM_U);
+
+static System_sys::Parsing_Checking parsing;
 
 uint32_t currentTime = 0;
 uint32_t prevTime = 0;
@@ -35,6 +40,176 @@ enum routine {
 
 
 char command_buffer[255] = {0};
+char send_command_buffer[255] = {0};
+uint8_t ModemDataReceived = 0;
+
+#define totalModemCmds 7
+
+using GSMCMDCallback = void (*)();
+
+struct GSMCMDList {
+
+	char cmd[20];
+	GSMCMDCallback Callback;
+
+};
+
+
+
+static void send_ACK_NACK(uint8_t ACK_NACK)
+{
+simA7672.mqttPubData(ModemData.mqtt_client_index,ModemData.mqttSubTopic,ACK_NACK == 1 ? const_cast<char *>("NACK") : const_cast<char *>("ACK"),ACK_NACK == 1 ? 4 : 3);
+}
+
+static void send_data(char *Data, uint16_t size)
+{
+	simA7672.mqttPubData(ModemData.mqtt_client_index,ModemData.mqttSubTopic,Data,size);
+}
+
+
+
+static void Modem_setTimedate()
+{
+	char outbuf1[20];
+	char outbuf2[20];
+	uint16_t outlen1 = 0;
+	uint16_t outlen2 = 0;
+	uint32_t extractedEpoch = 0;
+	int8_t extractedTimezone = 0;
+	parsing.extractdatainsegments(command_buffer,outbuf1,20,&outlen1,':','|');
+	parsing.extractdatainsegments(command_buffer,outbuf2,20,&outlen2,'|','\0');
+	extractedEpoch = std::atoi(outbuf1);
+	extractedTimezone = std::atoi(outbuf2);
+	flash_data_.zone = extractedTimezone;
+	send_ACK_NACK(stmRTC.setTime(extractedEpoch, extractedTimezone));
+}
+
+static void Modem_setFuelMeasurement()
+{
+	char outbuf1[20];
+	char outbuf2[20];
+	uint16_t outlen1 = 0;
+	uint16_t outlen2 = 0;
+	float zeroSpan = 00.0;
+	float fullSpan = 00.0;
+	parsing.extractdatainsegments(command_buffer,outbuf1,20,&outlen1,':','|');
+	parsing.extractdatainsegments(command_buffer,outbuf2,20,&outlen2,'|','\0');
+	zeroSpan = std::atof(outbuf1);
+	fullSpan = std::atof(outbuf2);
+	liquidSensor.setParameters(zeroSpan, fullSpan);
+	flash_data_.fullSpan = fullSpan;
+	flash_data_.zeroSpan = zeroSpan;
+	SaveData();
+	send_ACK_NACK(0);
+}
+
+static void Modem_setSoCnDCur()
+{
+	char outbuf1[20];
+	char outbuf2[20];
+	uint16_t outlen1 = 0;
+	uint16_t outlen2 = 0;
+	float soc = 0.0;
+	float currentoffset = 0.0;
+	parsing.extractdatainsegments(command_buffer,outbuf1,20,&outlen1,':','|');
+	parsing.extractdatainsegments(command_buffer,outbuf2,20,&outlen2,'|','\0');
+	soc = std::atof(outbuf1);
+	currentoffset = std::atof(outbuf2);
+	DCCurrentSensor.setOffset(currentoffset);
+	SOC::CC_Init(soc, 1);
+	flash_data_.currentOffset = currentoffset;
+	flash_data_.SOC = soc;
+	SaveData();
+	send_ACK_NACK(0);
+}
+
+static void Modem_setAutoManualMode()
+{
+	char outbuf1[20];
+	uint16_t outlen1 = 0;
+	uint8_t Auto_ManualSelector;
+	parsing.extractdatainsegments(command_buffer,outbuf1,20,&outlen1,':','\0');
+	Auto_ManualSelector = std::atoi(outbuf1);
+	flash_data_.Auto_Manual =  Auto_ManualSelector;
+	SaveData();
+	send_ACK_NACK(0);
+}
+
+static void Modem_setGenerator()
+{
+	char outbuf1[20];
+	uint16_t outlen1 = 0;
+	uint8_t ManualSourceSelectorOpt;
+
+
+	if(flash_data_.Auto_Manual == 1)
+	{
+		parsing.extractdatainsegments(command_buffer,outbuf1,20,&outlen1,':','\0');
+		ManualSourceSelectorOpt = std::atoi(outbuf1);
+		ManualSourceSelector =  ManualSourceSelectorOpt;
+		ManualSourceSelectorDecider = ManualSourceSelectorOpt;
+		send_ACK_NACK(1);
+	}
+	else
+	{
+		send_ACK_NACK(1);
+	}
+
+}
+
+static void Modem_getSoCnDCur()
+{
+
+	char data[20];
+	sprintf(data, "%f|%f",SOC::getSoCVal(),DCCurrentSensor.getOffset());
+	send_data(data,std::strlen(data));
+
+}
+
+static void Modem_getSystemMode()
+{
+
+	char data[10];
+	sprintf(data, "%d",flash_data_.Auto_Manual);
+	send_data(data,std::strlen(data));
+
+}
+
+
+
+static struct GSMCMDList GSMCMDList_[totalModemCmds] = {
+		{"setTimedate:",Modem_setTimedate },     //format setTimedate:epoch|timezone    Reply:ACK/NACK
+		{"setFuelMeasurement:",Modem_setFuelMeasurement },//format setFuelMeasurement:zerospan|fullspan  Reply:ACK/NACK
+		{"setSoCnDCur:", Modem_setSoCnDCur},  //format setSoCnDCur:SOC|CurrentOffset    Reply:ACK/NACK
+		{"setAutoManualMode:", Modem_setAutoManualMode}, //format setAutoManualMode:(0 - Auto   1 - Manual) Reply:ACK/NACK
+		{"setGenerator:",Modem_setGenerator }, //format setGenerator: (0 - GeneratorOff   1 - GeneratorOn)  Reply:ACK/NACK
+		{"getSoCnDCur",Modem_getSoCnDCur },   //format getSoCnDCur     Reply: SoC|CurrentOffset
+		{"getSystemMode", Modem_getSystemMode }, //format getSystemMode   Reply: Auto/Manual   0 - Auto   1 - Manual
+};
+
+
+static void ModemCMDReceived()
+{
+	memset(send_command_buffer,0,255);
+
+
+	for(int i=0; i< totalModemCmds; i++)
+	{
+
+		if(std::strstr(command_buffer, GSMCMDList_[i].cmd))
+		{
+			GSMCMDList_[i].Callback();
+			break;
+		}
+
+	}
+
+
+	ModemDataReceived = 0;
+	memset(command_buffer,0,255);
+}
+
+
 
 char *getModemNetwork()
 {
@@ -44,6 +219,9 @@ char *getSignalQuality()
 {
   return ModemData.quality;
 }
+
+
+
 char *getModemData()
 {
 	static char Modemdata[20];
@@ -60,6 +238,15 @@ char *getModemData()
 	return ( Modemdata);
 
 }
+
+
+
+
+
+
+
+
+
 
 void ModemTask(void *pvParameters) {
 
@@ -80,7 +267,7 @@ void ModemTask(void *pvParameters) {
 
 	std::strcpy(ModemData.serverAddr, "tcp://apfp7i6y92d6b-ats.iot.us-east-1.amazonaws.com:8883");
 	std::strcpy(ModemData.apn, "jazzconnect.mobilinkworld.com");
-	std::strcpy(ModemData.mqttSubTopic, "TEST1");
+	std::strcpy(ModemData.mqttSubTopic, "devicereceive");
 	std::strcpy(ModemData.mqttPubTopic, "devicedata");
 
 
@@ -287,6 +474,7 @@ void ModemTask(void *pvParameters) {
 				if(simA7672.mqttsubTopicAndRead(ModemData.mqtt_client_index, ModemData.mqttSubTopic, command_buffer,255) == Modem::simA7672::mqtt_msgrecv)
 				{
                       /*take flag to do something*/
+					ModemDataReceived = 1;
 				}
 				simA7672.mqttunsubTopic(ModemData.mqtt_client_index,  ModemData.mqttSubTopic);
 			}
@@ -300,8 +488,14 @@ void ModemTask(void *pvParameters) {
 		}
 
 
+		if(ModemDataReceived == 1)
+		{
+			ModemCMDReceived();
+		}
 
-		System_Rtos::delay(1000);
+
+
+		System_Rtos::delay(500);
 	}
 
 }

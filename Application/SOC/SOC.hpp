@@ -17,7 +17,7 @@
 namespace SOC {
 
 
-uint8_t getSoCVal();
+float getSoCVal();
 void CC_Loop(float *SoC,float BattCurrent, float BattVoltage);
 void CC_Init(float BattSoC,float IntervalSec);
 

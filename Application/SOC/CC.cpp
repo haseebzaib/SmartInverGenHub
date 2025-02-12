@@ -63,7 +63,7 @@ static float socPoints[] = {
 
 
 
-uint8_t getSoCVal()
+float getSoCVal()
 {
 	return g_SoC;
 }

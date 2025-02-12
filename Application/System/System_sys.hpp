@@ -29,7 +29,9 @@ public:
     enum status parseSkipCharnDTillEndChar(char *buffer, uint16_t bufferLen,char *CheckString,uint8_t skipChar,uint8_t endChar,char *databuf);
     enum status extractData(const char *buffer,const char *cmd,char midchar,char endchar,char *outputbuf,uint16_t outputSize);
     enum status extractdatainsegments(char *input,char *output,uint16_t output_len,uint16_t *get_len,uint8_t skip_char);
+    enum status extractdatainsegments(char *input,char *output,uint16_t output_len,uint16_t *get_len,uint8_t skip_char,uint8_t end_char);
     enum status binarystringToUint8(char *binaryString,uint8_t *result);
+
 
 
     uint32_t convertToEpoch(char *simTime);
