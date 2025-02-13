@@ -474,6 +474,8 @@ void ModemTask(void *pvParameters) {
 				if(simA7672.mqttsubTopicAndRead(ModemData.mqtt_client_index, ModemData.mqttSubTopic, command_buffer,255) == Modem::simA7672::mqtt_msgrecv)
 				{
                       /*take flag to do something*/
+
+
 					ModemDataReceived = 1;
 				}
 				simA7672.mqttunsubTopic(ModemData.mqtt_client_index,  ModemData.mqttSubTopic);

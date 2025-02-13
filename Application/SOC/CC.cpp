@@ -33,17 +33,20 @@ static uint32_t g_stableStartMs = 0;
 
 // -------- Voltage->SoC Table (for 48V LiFePO4) --------
 static float voltagePoints[] = {
-    40.0f, // 0%
-    48.0f, // 10%
-    51.2f, // 20%
-    51.5f, // 30%
-    52.0f, // 40%
-    52.2f, // 50%
-    52.3f, // 60%
-    52.8f, // 70%
-    53.1f, // 80%
-    53.6f, // 90%
-    54.4f  // 100% (rest)
+    48.0f, // 0%
+    49.0f, // 10%
+    50.5f, // 20%
+    51.2f, // 30%
+    51.5f, // 40%
+    51.7f, // 50%
+    51.8f, // 60%
+    52.0f, // 70%
+    52.2f, // 80%
+    52.3f, // 90%
+    53.3f  // 100% (rest)
+
+
+
 };
 static float socPoints[] = {
      0.0f,  // matches 40.0V
@@ -126,7 +129,7 @@ void CheckCurrentStability(float currentA, uint32_t nowMs)
 	                 float socFromVolt = SoCFromVoltage_48V(SoCBattVoltage);
 
 	                 // Weighted blend to avoid abrupt jumps
-	                 float alpha = 0.99f; // 99% coulomb counting, 1% voltage correction
+	                 float alpha = 0.90f; // 90% coulomb counting, 10% voltage correction
 	                 float correctedSoC = alpha * g_SoC + (1.0f - alpha) * socFromVolt;
 
 	                 // Apply correction
@@ -174,8 +177,7 @@ void CC_Loop(float *SoC,float BattCurrent, float BattVoltage)
 	     if(BattCurrent < 1.0f)
 	     {
 	    	 //Turn off for now not working as expected
-	    // CheckCurrentStability(BattCurrent,currentTime);
-
+	      CheckCurrentStability(BattCurrent,currentTime);
 	     }
 
 

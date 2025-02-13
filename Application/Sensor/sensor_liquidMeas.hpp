@@ -54,7 +54,7 @@ namespace sensor_liquidMeas
         static constexpr float Vref = 3.3;
         static constexpr float min_cur = 4.0;
         static constexpr float max_cur = 20.0;
-        static constexpr float max_liters = 500;
+        static constexpr float max_liters = 5000;
         static constexpr int32_t refueling_threshold = 5;
         static constexpr uint32_t refuel_stabilize_time = 5000;
 

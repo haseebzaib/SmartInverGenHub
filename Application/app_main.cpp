@@ -44,11 +44,9 @@ System_Rtos::freertos_semaphore FlashSemaphore;
 System_rtc::stmRTC stmRTC(&hrtc, 5);
 sensor_liquidMeas::liquidSensor liquidSensor(&hadc1, 0.0, 10.0, 3.3);
 sensor_TempHumd::AHT20 AHT20(&hi2c1, 0x38);
-
 sensor_pzem::PZEM_004T PZEM1(&PZEM1_U);
 sensor_pzem::PZEM_004T PZEM2(&PZEM2_U);
 sensor_pzem::PZEM_004T PZEM3(&PZEM3_U);
-
 sensor_DcHall::DcHall DCCurrentSensor(&hadc2);
 sensor_DcVolt::DcVolt DCVoltageMeasurement(&hadc3);
 
