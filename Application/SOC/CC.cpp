@@ -177,7 +177,7 @@ void CC_Loop(float *SoC,float BattCurrent, float BattVoltage)
 	     if(BattCurrent < 1.0f)
 	     {
 	    	 //Turn off for now not working as expected
-	      CheckCurrentStability(BattCurrent,currentTime);
+	     // CheckCurrentStability(BattCurrent,currentTime);
 	     }
 
 
