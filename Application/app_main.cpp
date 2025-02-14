@@ -42,7 +42,7 @@ System_Rtos::freertos_queues ControlDataQueue(1,
 System_Rtos::freertos_semaphore FlashSemaphore;
 
 System_rtc::stmRTC stmRTC(&hrtc, 5);
-sensor_liquidMeas::liquidSensor liquidSensor(&hadc1, 0.0, 10.0, 3.3);
+sensor_liquidMeas::liquidSensor liquidSensor(&hadc1, 0.0, 5.0, 3.3);
 sensor_TempHumd::AHT20 AHT20(&hi2c1, 0x38);
 sensor_pzem::PZEM_004T PZEM1(&PZEM1_U);
 sensor_pzem::PZEM_004T PZEM2(&PZEM2_U);
