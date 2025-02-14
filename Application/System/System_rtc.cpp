@@ -24,8 +24,7 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 	int err = 1;
 	if (rtcSemaphore.semaphoreTake(4000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
-		RTC_DateTypeDef Date;
-		RTC_TimeTypeDef Time;
+
 		HAL_RTC_GetTime(Internal_handler, &Time, RTC_FORMAT_BIN);
 		HAL_RTC_GetDate(Internal_handler, &Date, RTC_FORMAT_BIN);
 
@@ -34,11 +33,11 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 
 		}
 		if (DDate != nullptr) {
-			std::memcpy(DDate, &Date, sizeof(RTC_DateTypeDef));
+			std::memcpy((RTC_DateTypeDef *)DDate, (RTC_DateTypeDef *)&Date, sizeof(RTC_DateTypeDef));
 		}
 
 		if (DTime != nullptr) {
-			std::memcpy(DTime, &Time, sizeof(RTC_TimeTypeDef));
+			std::memcpy((RTC_TimeTypeDef *)DTime, (RTC_TimeTypeDef *)&Time, sizeof(RTC_TimeTypeDef));
 		}
 
 		rtcSemaphore.semaphoreGive();
@@ -50,11 +49,11 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 
 		}
 		if (DDate != nullptr) {
-			std::memcpy(DDate, 0, sizeof(RTC_DateTypeDef));
+			std::memset(DDate, 0, sizeof(RTC_DateTypeDef));
 		}
 
 		if (DTime != nullptr) {
-			std::memcpy(DTime, 0, sizeof(RTC_TimeTypeDef));
+			std::memset(DTime, 0, sizeof(RTC_TimeTypeDef));
 		}
 
 	}
@@ -69,8 +68,6 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 	if (rtcSemaphore.semaphoreTake(1000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 
-		RTC_DateTypeDef Date;
-		RTC_TimeTypeDef Time;
 		HAL_RTC_GetTime(Internal_handler, &Time, RTC_FORMAT_BIN);
 		HAL_RTC_GetDate(Internal_handler, &Date, RTC_FORMAT_BIN);
 
@@ -81,11 +78,11 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 
 		}
 		if (DDate != nullptr) {
-			std::memcpy(DDate, &Date, sizeof(RTC_DateTypeDef));
+			std::memcpy((RTC_DateTypeDef *)DDate, (RTC_DateTypeDef *)&Date, sizeof(RTC_DateTypeDef));
 		}
 
 		if (DTime != nullptr) {
-			std::memcpy(DTime, &Time, sizeof(RTC_TimeTypeDef));
+			std::memcpy((RTC_TimeTypeDef *)DTime, (RTC_TimeTypeDef *)&Time, sizeof(RTC_TimeTypeDef));
 		}
 
 		rtcSemaphore.semaphoreGive();
@@ -97,11 +94,11 @@ uint8_t stmRTC::getTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 
 		}
 		if (DDate != nullptr) {
-			std::memcpy(DDate, 0, sizeof(RTC_DateTypeDef));
+			std::memset(DDate, 0, sizeof(RTC_DateTypeDef));
 		}
 
 		if (DTime != nullptr) {
-			std::memcpy(DTime, 0, sizeof(RTC_TimeTypeDef));
+			std::memset(DTime, 0, sizeof(RTC_TimeTypeDef));
 		}
 
 	}
@@ -134,8 +131,6 @@ uint8_t stmRTC::setTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		HAL_RTC_SetDate(Internal_handler, DDate, RTC_FORMAT_BIN);
 		zone = timezone;
 
-		RTC_DateTypeDef Date;
-		RTC_TimeTypeDef Time;
 		HAL_RTC_GetTime(Internal_handler, &Time, RTC_FORMAT_BIN);
 		HAL_RTC_GetDate(Internal_handler, &Date, RTC_FORMAT_BIN);
 

@@ -21,7 +21,8 @@
 #include "rtc.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "stdio.h"
+#include "string.h"
 /* USER CODE END 0 */
 
 RTC_HandleTypeDef hrtc;
@@ -31,14 +32,15 @@ void MX_RTC_Init(void)
 {
 
   /* USER CODE BEGIN RTC_Init 0 */
-
+	memset(&hrtc,0,sizeof(RTC_HandleTypeDef));
+#ifdef nix
   /* USER CODE END RTC_Init 0 */
 
   RTC_TimeTypeDef sTime = {0};
   RTC_DateTypeDef sDate = {0};
 
   /* USER CODE BEGIN RTC_Init 1 */
-
+#endif
   /* USER CODE END RTC_Init 1 */
 
   /** Initialize RTC Only

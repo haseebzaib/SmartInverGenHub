@@ -24,38 +24,28 @@
 #include "math.h"
 #include "iwdg.h"
 
-float prev_SOC;
-float Left_SOC;
-RTC_DateTypeDef sDate;
-RTC_TimeTypeDef sTime;
-System_sys::Parsing_Checking parsing;
-uint32_t timestamp;
-char time[20];
-char date[20];
-char timezone[5];
-char months[14][5] = { "NULL", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
-		"Aug", "Sep", "Oct", "Nov", "Dec", };
+static float prev_SOC;
+static float Left_SOC;
 
-uint8_t batt_charging_status;
+static System_sys::Parsing_Checking parsing;
+
 
 // Adjust these as needed:
 static constexpr float SOC_LOW = 20.0f;  // Turn generator ON if SoC < 20%
 static constexpr float SOC_HIGH = 90.0f; // If battery SoC > 85%, we might turn generator OFF
-uint8_t batt_chargetimekeeping_Flag = 0;
-char batTime[20];
-uint8_t sourceStatus;
-uint32_t DisplayChargeStartTime = 0;
-uint32_t DisplayChargeEndTime = 0;
-sensor_pzem::PZEM_004T::PZEM PZEM1_Data = { 0 };
-sensor_pzem::PZEM_004T::PZEM PZEM2_Data = { 0 };
-sensor_pzem::PZEM_004T::PZEM PZEM3_Data = { 0 };
-RTC_DateTypeDef DDate;
-RTC_TimeTypeDef DTime;
-RTC_TimeTypeDef DTimeCharging_;
-RTC_TimeTypeDef DTimeDischarging_;
-char ChargingTime[20] = "Null";
-char DischargingTime[20] = "Null";
-uint8_t flag = 0;
+static uint8_t sourceStatus;
+static uint32_t DisplayChargeStartTime = 0;
+static uint32_t DisplayChargeEndTime = 0;
+static sensor_pzem::PZEM_004T::PZEM PZEM1_Data = { 0 };
+static sensor_pzem::PZEM_004T::PZEM PZEM2_Data = { 0 };
+static sensor_pzem::PZEM_004T::PZEM PZEM3_Data = { 0 };
+static RTC_DateTypeDef DDate;
+static RTC_TimeTypeDef DTime;
+static RTC_TimeTypeDef DTimeCharging_;
+static RTC_TimeTypeDef DTimeDischarging_;
+
+
+
 uint8_t ManualSourceSelector = 0; // 0 - Batt  1 - Generator
 uint8_t ManualSourceSelectorDecider = 0;
 

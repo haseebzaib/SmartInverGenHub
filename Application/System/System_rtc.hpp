@@ -31,6 +31,8 @@ private:
     RTC_HandleTypeDef *Internal_handler;
 	System_sys::Parsing_Checking checking;
     System_Rtos::freertos_semaphore rtcSemaphore;
+	RTC_DateTypeDef Date;
+	RTC_TimeTypeDef Time;
 
 
 };
