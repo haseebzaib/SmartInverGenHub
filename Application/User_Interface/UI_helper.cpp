@@ -40,8 +40,8 @@ void UI::UI_helper::common_iconsMain(u8g2_t *u8g2)
 {
 	char time[50];
 	char date[50];
-	RTC_DateTypeDef DDate;
-	RTC_TimeTypeDef DTime;
+	static RTC_DateTypeDef DDate;
+	static RTC_TimeTypeDef DTime;
 	stmRTC.getTime(&DDate, &DTime, nullptr);
 	std::sprintf(time, "%02d:%02d:%02d", DTime.Hours, DTime.Minutes,DTime.Seconds);
 	std::sprintf(date, "%02d/%02d/%02d", DDate.Date,DDate.Month,DDate.Year);
