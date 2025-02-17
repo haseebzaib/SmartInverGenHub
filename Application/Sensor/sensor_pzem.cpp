@@ -57,6 +57,18 @@ void PZEM_004T::read(PZEM *pzemhandle) {
 	pzemhandle->pf = ((uint32_t)res_buf[19] << 8 | (uint32_t)res_buf[20]) / 100.0;
 	pzemhandle->alarms = ((uint32_t)res_buf[21] << 8 | (uint32_t)res_buf[22]);
 
+	if(pzemhandle->current > 100)
+	{
+		pzemhandle->current = 0;
+	}
+
+	if(pzemhandle->voltage > 500)
+	{
+		pzemhandle->voltage = 0;
+	}
+
+
+
 end:
 	PzemSemaphore.semaphoreGive();
 	}
@@ -92,6 +104,19 @@ void PZEM_004T::read(PZEM *pzemhandle,uint32_t timeout)
 	pzemhandle->frequency = ((uint32_t)res_buf[17] << 8 | (uint32_t)res_buf[18]) / 10.0;
 	pzemhandle->pf = ((uint32_t)res_buf[19] << 8 | (uint32_t)res_buf[20]) / 100.0;
 	pzemhandle->alarms = ((uint32_t)res_buf[21] << 8 | (uint32_t)res_buf[22]);
+
+
+
+	if(pzemhandle->current > 100)
+	{
+		pzemhandle->current = 0;
+	}
+
+	if(pzemhandle->voltage > 500)
+	{
+		pzemhandle->voltage = 0;
+	}
+
 
 	PzemSemaphore.semaphoreGive();
 	}
