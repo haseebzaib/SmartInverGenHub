@@ -37,27 +37,22 @@ liquidSensor::status liquidSensor::getLevel(uint8_t *getlevel) {
 		float totalSpan = InternalFullSpan - InternalLowSpan;
 
 		float current_mA;
-
-		uint32_t adcaverage[10] = { 0 };
 		uint32_t adcValue = 0;
 
 		if (hadc_sensor == NULL) {
 			return liquidSensor_ERR;
 		}
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 200; i++) {
 			CheckError(HAL_ADC_Start(hadc_sensor), liquidSensor_ERR, HAL_OK);
 			CheckError(HAL_ADC_PollForConversion(hadc_sensor, 10000),
 					liquidSensor_ERR, HAL_OK); //take the value
-			adcaverage[i] = HAL_ADC_GetValue(hadc_sensor);
+			adcValue += HAL_ADC_GetValue(hadc_sensor);
 		}
 		HAL_ADC_Stop(hadc_sensor);
-		for (int i = 0; i < 10; i++) {
-			adcValue = adcValue + adcaverage[i];
-		}
-		adcValue = adcValue / 10;
+
+		adcValue = adcValue / 200;
 		float voltage = (adcValue / Resolution) * Vref;
-		current_mA = ((voltage / InternalVoltOut) * (max_cur - min_cur))
-				+ min_cur;
+		current_mA = ((voltage / InternalVoltOut) * (max_cur - min_cur)) + min_cur;
 		fuel_level = (current_mA - min_cur) / (max_cur - min_cur) * totalSpan;
 		tank_volumeLiters = (fuel_level / totalSpan) * max_liters;
 		*getlevel = (tank_volumeLiters / max_liters) * 100; //get percentage

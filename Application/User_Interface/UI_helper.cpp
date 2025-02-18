@@ -53,7 +53,7 @@ void UI::UI_helper::common_iconsMain(u8g2_t *u8g2,const struct imgContainer *img
 
 	if(img != nullptr)
 	{
-		u8g2_DrawXBM(u8g2,128 - img->w,64 - img->h,img->w,img->h,img->img);
+		u8g2_DrawXBM(u8g2,123 - img->w,64 - img->h,img->w,img->h,img->img);
 	}
 
 

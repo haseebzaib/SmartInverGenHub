@@ -551,10 +551,10 @@ void power(u8g2_t *u8g2) {
 		u8g2_DrawStr(u8g2, 5, 38, V_1);
 		u8g2_DrawStr(u8g2, 5, 46, I_1);
 
-		u8g2_DrawXBM(u8g2, 50, 10, imgcont::Phase.w, imgcont::Phase.h,
+		u8g2_DrawXBM(u8g2, 50, 16, imgcont::Phase.w, imgcont::Phase.h,
 				imgcont::Phase.img);
-		u8g2_DrawStr(u8g2, 50, 32, V_2);
-		u8g2_DrawStr(u8g2, 50, 40, I_2);
+		u8g2_DrawStr(u8g2, 50, 38, V_2);
+		u8g2_DrawStr(u8g2, 50, 46, I_2);
 
 		u8g2_DrawXBM(u8g2, 96, 16, imgcont::Phase.w, imgcont::Phase.h,
 				imgcont::Phase.img);
