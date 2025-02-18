@@ -11,7 +11,7 @@
 
 #include "main.h"
 #include "u8g2.h"
-
+#include "img.hpp"
 
 
 
@@ -53,7 +53,7 @@ namespace UI_helper {
 /*Helper Functions*/
 void set_UIcode(enum MenuNo UIcode);
 enum MenuNo get_UIcode();
-void common_iconsMain(u8g2_t *u8g2);
+void common_iconsMain(u8g2_t *u8g2,const struct imgContainer *img);
 void SubMenuControlInfo(u8g2_t *u8g2);
 
 

@@ -150,10 +150,10 @@ void fuel_temp_humd(u8g2_t *u8g2) {
 	char buffer[3][10];
 	do {
 		u8g2_ClearBuffer(u8g2);
-		UI::UI_helper::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2,&imgcont::SensorInfo);
 
-		u8g2_DrawXBM(u8g2, 48, 2, imgcont::SensorInfo.w, imgcont::SensorInfo.h,
-				imgcont::SensorInfo.img);
+//		u8g2_DrawXBM(u8g2, 48, 2, imgcont::SensorInfo.w, imgcont::SensorInfo.h,
+//				imgcont::SensorInfo.img);
 
 		liquidSensor.getLevel(&FuelPercent);
 		AHT20.measure(&temp, &humid);
@@ -215,9 +215,10 @@ void Alarms(u8g2_t *u8g2) {
 	do {
 
 		u8g2_ClearBuffer(u8g2);
-		UI::UI_helper::common_iconsMain(u8g2);
-		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Alarms.w, imgcont::Alarms.h,
-				imgcont::Alarms.img);
+		UI::UI_helper::common_iconsMain(u8g2,&imgcont::Alarms);
+
+//		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Alarms.w, imgcont::Alarms.h,
+//				imgcont::Alarms.img);
 
 		u8g2_SetFontMode(u8g2, 1);
 		u8g2_SetDrawColor(u8g2, 2);
@@ -301,10 +302,10 @@ void Battery(u8g2_t *u8g2) {
 		std::sprintf(currentA,"%.01f%%/%.02f",soc,curr);
 		std::sprintf(voltageMeasure,"%.02f",DcVolt);
 
-		UI::UI_helper::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2, &imgcont::Battery);
 
-		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Battery.w, imgcont::Battery.h,
-				imgcont::Battery.img);
+//		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Battery.w, imgcont::Battery.h,
+//				imgcont::Battery.img);
 
 		u8g2_SetFontMode(u8g2, 1);
 		u8g2_SetDrawColor(u8g2, 2);
@@ -323,7 +324,7 @@ void Battery(u8g2_t *u8g2) {
 		u8g2_DrawStr(u8g2, 82, 35, StringEndTime);
 
 
-		u8g2_DrawStr(u8g2, 82, 58, voltageMeasure);
+		//u8g2_DrawStr(u8g2, 82, 58, voltageMeasure);
 
 		u8g2_SendBuffer(u8g2);
 		btncodes = button::get_eventTimed(1000);
@@ -363,9 +364,10 @@ void source(u8g2_t *u8g2) {
 
 		uint8_t source;
 		u8g2_ClearBuffer(u8g2);
-		UI::UI_helper::common_iconsMain(u8g2);
-		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Source.w, imgcont::Source.h,
-				imgcont::Source.img);
+		UI::UI_helper::common_iconsMain(u8g2,&imgcont::Source);
+
+//		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Source.w, imgcont::Source.h,
+//				imgcont::Source.img);
 
 		source = getSourceState();
 		char selec_Source[3][20];
@@ -440,10 +442,10 @@ void network(u8g2_t *u8g2) {
 	do {
 
 		u8g2_ClearBuffer(u8g2);
-		UI::UI_helper::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2,&imgcont::Network);
 
-		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Network.w, imgcont::Network.h,
-				imgcont::Network.img);
+//		u8g2_DrawXBM(u8g2, 48, 2, imgcont::Network.w, imgcont::Network.h,
+//				imgcont::Network.img);
 
 		char buf[3][20] = {
 				" ",
@@ -541,20 +543,20 @@ void power(u8g2_t *u8g2) {
         std::sprintf(I_3,"%.1f",I3);
 
 
-		UI::UI_helper::common_iconsMain(u8g2);
+		UI::UI_helper::common_iconsMain(u8g2,nullptr);
 		u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 
-		u8g2_DrawXBM(u8g2, 10, 16, imgcont::Phase.w, imgcont::Phase.h,
+		u8g2_DrawXBM(u8g2, 5, 16, imgcont::Phase.w, imgcont::Phase.h,
 				imgcont::Phase.img);
 		u8g2_DrawStr(u8g2, 5, 38, V_1);
 		u8g2_DrawStr(u8g2, 5, 46, I_1);
 
-		u8g2_DrawXBM(u8g2, 54, 10, imgcont::Phase.w, imgcont::Phase.h,
+		u8g2_DrawXBM(u8g2, 50, 10, imgcont::Phase.w, imgcont::Phase.h,
 				imgcont::Phase.img);
 		u8g2_DrawStr(u8g2, 50, 32, V_2);
 		u8g2_DrawStr(u8g2, 50, 40, I_2);
 
-		u8g2_DrawXBM(u8g2, 100, 16, imgcont::Phase.w, imgcont::Phase.h,
+		u8g2_DrawXBM(u8g2, 96, 16, imgcont::Phase.w, imgcont::Phase.h,
 				imgcont::Phase.img);
 		u8g2_DrawStr(u8g2, 96, 38, V_3);
 		u8g2_DrawStr(u8g2, 96, 46, I_3);

@@ -40,7 +40,7 @@ enum MenuNo UI::UI_helper::get_UIcode()
 }
 
 
-void UI::UI_helper::common_iconsMain(u8g2_t *u8g2)
+void UI::UI_helper::common_iconsMain(u8g2_t *u8g2,const struct imgContainer *img)
 {
 
 	stmRTC.getTime(&DDate, &DTime, nullptr);
@@ -49,8 +49,13 @@ void UI::UI_helper::common_iconsMain(u8g2_t *u8g2)
 	u8g2_SetFont(u8g2, u8g2_font_5x8_mf);
 	u8g2_DrawStr(u8g2, 0, 10, time);
 	u8g2_DrawStr(u8g2, 88, 10, date);
-	u8g2_DrawXBM(u8g2,55,48,imgcont::setting.w,imgcont::setting.h,imgcont::setting.img);
-	u8g2_DrawXBM(u8g2,112,48,imgcont::leftrightArrow.w,imgcont::leftrightArrow.h,imgcont::leftrightArrow.img);
+	//u8g2_DrawXBM(u8g2,55,48,imgcont::setting.w,imgcont::setting.h,imgcont::setting.img);
+
+	if(img != nullptr)
+	{
+		u8g2_DrawXBM(u8g2,128 - img->w,64 - img->h,img->w,img->h,img->img);
+	}
+
 
 }
 
