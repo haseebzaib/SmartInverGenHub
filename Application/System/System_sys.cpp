@@ -362,10 +362,10 @@ enum  Parsing_Checking::status  Parsing_Checking::extractdatainsegments(char *in
 
 
 	   // Skip leading spaces (if any)
-	    while (*input == skip_char || *input == '(') {
+	    while (*input != skip_char) {
 	        input++;
 	    }
-
+	    input++;
 	    // Extract characters until space or end of string
 	      while (*input != '\0' && *input != end_char && len < output_len - 1) {
 	          output[len++] = *input++;
