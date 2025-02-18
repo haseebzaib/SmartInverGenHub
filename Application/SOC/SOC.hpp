@@ -17,6 +17,7 @@
 namespace SOC {
 
 
+void setSoCChargingFlag(uint8_t flag);
 float getSoCVal();
 void CC_Loop(float *SoC,float BattCurrent, float BattVoltage);
 void CC_Init(float BattSoC,float IntervalSec);

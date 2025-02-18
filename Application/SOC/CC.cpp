@@ -31,6 +31,8 @@ static bool   g_isStable   = false;
 static float  g_lastCurrentA = 0.0f;
 static uint32_t g_stableStartMs = 0;
 
+static uint8_t SoCchargingFlag = 0;
+
 // -------- Voltage->SoC Table (for 48V LiFePO4) --------
 static float voltagePoints[] = {
     48.0f, // 0%
@@ -64,6 +66,10 @@ static float socPoints[] = {
 #define NUM_POINTS (sizeof(voltagePoints)/sizeof(voltagePoints[0]))
 
 
+void setSoCChargingFlag(uint8_t flag)
+{
+	SoCchargingFlag = flag;
+}
 
 
 float getSoCVal()
@@ -180,6 +186,10 @@ void CC_Loop(float *SoC,float BattCurrent, float BattVoltage)
 	     // CheckCurrentStability(BattCurrent,currentTime);
 	     }
 
+	     if (BattCurrent > -1.0 && BattCurrent <= -0.5 && SoCchargingFlag == 1) {
+
+	    	 g_SoC = 100.0f;
+	     }
 
 
 

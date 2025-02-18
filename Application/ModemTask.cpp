@@ -43,7 +43,7 @@ char command_buffer[255] = {0};
 char send_command_buffer[255] = {0};
 uint8_t ModemDataReceived = 0;
 
-#define totalModemCmds 7
+#define totalModemCmds 8
 
 using GSMCMDCallback = void (*)();
 
@@ -157,6 +157,15 @@ static void Modem_setGenerator()
 
 }
 
+static void Modem_setFixSOCCharging()
+{
+	char outbuf1[20];
+	uint16_t outlen1 = 0;
+	parsing.extractdatainsegments(command_buffer,outbuf1,20,&outlen1,':','\0');
+	SOC::setSoCChargingFlag(std::atoi(outbuf1));
+	send_ACK_NACK(1);
+}
+
 static void Modem_getSoCnDCur()
 {
 
@@ -177,12 +186,16 @@ static void Modem_getSystemMode()
 
 
 
+
+
+
 static struct GSMCMDList GSMCMDList_[totalModemCmds] = {
 		{"setTimedate:",Modem_setTimedate },     //format setTimedate:epoch|timezone    Reply:ACK/NACK
 		{"setFuelMeasurement:",Modem_setFuelMeasurement },//format setFuelMeasurement:zerospan|fullspan  Reply:ACK/NACK
 		{"setSoCnDCur:", Modem_setSoCnDCur},  //format setSoCnDCur:SOC|CurrentOffset    Reply:ACK/NACK
 		{"setAutoManualMode:", Modem_setAutoManualMode}, //format setAutoManualMode:(0 - Auto   1 - Manual) Reply:ACK/NACK
 		{"setGenerator:",Modem_setGenerator }, //format setGenerator: (0 - GeneratorOff   1 - GeneratorOn)  Reply:ACK/NACK
+		{"setFixSOCCharging:",Modem_setFixSOCCharging}, //format setFixSOCCharging:(0 - turnoff 1 - turnOm)
 		{"getSoCnDCur",Modem_getSoCnDCur },   //format getSoCnDCur     Reply: SoC|CurrentOffset
 		{"getSystemMode", Modem_getSystemMode }, //format getSystemMode   Reply: Auto/Manual   0 - Auto   1 - Manual
 };
