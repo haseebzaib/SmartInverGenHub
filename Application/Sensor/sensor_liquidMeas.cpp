@@ -42,7 +42,7 @@ liquidSensor::status liquidSensor::getLevel(uint8_t *getlevel) {
 		if (hadc_sensor == NULL) {
 			return liquidSensor_ERR;
 		}
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 500; i++) {
 			CheckError(HAL_ADC_Start(hadc_sensor), liquidSensor_ERR, HAL_OK);
 			CheckError(HAL_ADC_PollForConversion(hadc_sensor, 10000),
 					liquidSensor_ERR, HAL_OK); //take the value
@@ -50,7 +50,7 @@ liquidSensor::status liquidSensor::getLevel(uint8_t *getlevel) {
 		}
 		HAL_ADC_Stop(hadc_sensor);
 
-		adcValue = adcValue / 200;
+		adcValue = adcValue / 500;
 		float voltage = (adcValue / Resolution) * Vref;
 		current_mA = ((voltage / InternalVoltOut) * (max_cur - min_cur)) + min_cur;
 		fuel_level = (current_mA - min_cur) / (max_cur - min_cur) * totalSpan;
@@ -93,9 +93,18 @@ void liquidSensor::consumptionliters(float *consumption) {
 
 void liquidSensor::refuelingDetection(uint32_t curEpochTime,
 		uint32_t *startEpochtime, uint32_t *endEpochtime) {
-	if (LiquidMeasSemaphore.semaphoreTake(1000)
-			== System_Rtos::freertos_semaphore::semaphore_recived) {
+	if (LiquidMeasSemaphore.semaphoreTake(1000) == System_Rtos::freertos_semaphore::semaphore_recived) {
 		current_volume_change = tank_volumeLiters;
+
+		refueling_start_time = HAL_GetTick();
+		refueling_detect_start_time = refueling_start_time;
+
+		if(refueling_detect_prev_time <= 0)
+		{
+			refueling_detect_prev_time = refueling_detect_start_time;
+		}
+
+
 		if (prev_volume_change < 0) {
 			prev_volume_change = current_volume_change;
 			LiquidMeasSemaphore.semaphoreGive();
@@ -103,17 +112,21 @@ void liquidSensor::refuelingDetection(uint32_t curEpochTime,
 		}
 
 		// Calculate the change in volume
-		volume_change = current_volume_change - prev_volume_change;
+		volume_change = static_cast<int32_t>(current_volume_change - prev_volume_change);
 
-		refueling_start_time = HAL_GetTick();
+
 
 		if (!refueling_active) {
 			// Detect start of refueling
-			if (volume_change > refueling_threshold) {
+			if (volume_change > 0 && ((refueling_detect_start_time - refueling_detect_prev_time) >= refuel_detect_stabilize_time)) {
 				refueling_active = 1;
 				refueling_prev_time = refueling_start_time;
 				*startEpochtime = curEpochTime;
 				*endEpochtime = 0; //make it zero so we know we are refueling now to erase previous end time so user dont get confused
+			}
+			else if(volume_change <= 0)
+			{
+				refueling_detect_prev_time = refueling_detect_start_time;
 			}
 		} else {
 			if (volume_change <= 0) {

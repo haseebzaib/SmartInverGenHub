@@ -56,7 +56,8 @@ namespace sensor_liquidMeas
         static constexpr float max_cur = 20.0;
         static constexpr float max_liters = 5000;
         static constexpr int32_t refueling_threshold = 5;
-        static constexpr uint32_t refuel_stabilize_time = 5000;
+        static constexpr uint32_t refuel_stabilize_time = 30000;
+        static constexpr uint32_t refuel_detect_stabilize_time = 5000;
 
         float tank_volumeLiters;
     	float fuel_level;
@@ -65,9 +66,15 @@ namespace sensor_liquidMeas
     	float current_volume_change = 0;
     	float prev_volume_change = -1;
     	uint8_t refueling_active = 0;
-        uint32_t last_consumption_time = 0;
+
+    	uint32_t last_consumption_time = 0;
         uint32_t refueling_start_time = 0;
         uint32_t refueling_prev_time = 0;
+
+        uint32_t refueling_detect_start_time = 0;
+        uint32_t refueling_detect_prev_time = 0;
+
+
 
         float InternalLowSpan;
         float InternalFullSpan;
