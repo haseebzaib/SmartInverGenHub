@@ -146,7 +146,7 @@ static void Modem_setGenerator() {
 		ManualSourceSelectorOpt = std::atoi(outbuf1);
 		ManualSourceSelector = ManualSourceSelectorOpt;
 		ManualSourceSelectorDecider = ManualSourceSelectorOpt;
-		send_ACK_NACK(1);
+		send_ACK_NACK(0);
 	} else {
 		send_ACK_NACK(1);
 	}
@@ -159,7 +159,7 @@ static void Modem_setFixSOCCharging() {
 	parsing.extractdatainsegments(command_buffer, outbuf1, 20, &outlen1, ':',
 			'\0');
 	SOC::setSoCChargingFlag(std::atoi(outbuf1));
-	send_ACK_NACK(1);
+	send_ACK_NACK(0);
 }
 
 static void Modem_setTankSettings() {
@@ -179,15 +179,19 @@ static void Modem_setTankSettings() {
 	float length_;
 	float radius_;
 
-	parsing.extractdatainsegments(command_buffer, outbuf1, 20, &outlen1, ':',
-			'|');
+	char *ptr = command_buffer;
+
+	parsing.extractdatainsegments_(&ptr,outbuf1, 20, &outlen1, ':','|');
 
 	tankType_ = std::atoi(outbuf1);
 
 	if (tankType_ == 0) {
-		parsing.extractdatainsegments(command_buffer, outbuf2, 20, &outlen2,
+		parsing.extractdatainsegments_(&ptr, outbuf2, 20, &outlen2,
 				'|', '|');
-		parsing.extractdatainsegments(command_buffer, outbuf3, 20, &outlen3,
+
+
+
+		parsing.extractdatainsegments_(&ptr, outbuf3, 20, &outlen3,
 				'|', '\0');
 
 		max_liters_ = std::atof(outbuf2);
@@ -205,11 +209,11 @@ static void Modem_setTankSettings() {
 		SaveData();
 
 	} else if (tankType_ == 1) {
-		parsing.extractdatainsegments(command_buffer, outbuf2, 20, &outlen2,
+		parsing.extractdatainsegments_(&ptr, outbuf2, 20, &outlen2,
 				'|', '|');
-		parsing.extractdatainsegments(command_buffer, outbuf3, 20, &outlen3,
+		parsing.extractdatainsegments_(&ptr, outbuf3, 20, &outlen3,
 				'|', '|');
-		parsing.extractdatainsegments(command_buffer, outbuf4, 20, &outlen4,
+		parsing.extractdatainsegments_(&ptr, outbuf4, 20, &outlen4,
 				'|', '\0');
 
 		max_liters_ = std::atof(outbuf2);
@@ -231,7 +235,7 @@ static void Modem_setTankSettings() {
 
 	}
 
-	send_ACK_NACK(1);
+	send_ACK_NACK(0);
 
 }
 

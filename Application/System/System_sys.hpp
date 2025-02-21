@@ -30,6 +30,7 @@ public:
     enum status extractData(const char *buffer,const char *cmd,char midchar,char endchar,char *outputbuf,uint16_t outputSize);
     enum status extractdatainsegments(char *input,char *output,uint16_t output_len,uint16_t *get_len,uint8_t skip_char);
     enum status extractdatainsegments(char *input,char *output,uint16_t output_len,uint16_t *get_len,uint8_t skip_char,uint8_t end_char);
+    enum status extractdatainsegments_(char **input,char *output,uint16_t output_len,uint16_t *get_len,uint8_t skip_char,uint8_t end_char);
     enum status binarystringToUint8(char *binaryString,uint8_t *result);
 
 
