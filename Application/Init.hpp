@@ -104,6 +104,13 @@ struct PACKED flash_data {
     float fullSpan;
     float currentOffset;
 	float SOC;
+
+	uint8_t tanktype; // 0 - Cynlindrical 1 - rectangular
+    float max_liters;
+    //in meters
+    float width;
+    float length;
+    float radius;
 };
 
 extern struct flash_data flash_data_;
@@ -154,6 +161,8 @@ static constexpr char networkInfo[2][12] = {
 		    "},"\
 		    "\"battery\":{"\
 		        "\"batteryLevel\":\"%.2f\","\
+				"\"batteryVoltage\":\"%.2f\","\
+				"\"batteryCurrent\":\"%.2f\","\
 		        "\"batteryChargeStartTime\":\"%ld\","\
 		        "\"batteryChargeEndTime\":\"%ld\""\
 		    "},"\

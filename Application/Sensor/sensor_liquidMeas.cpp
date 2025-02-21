@@ -7,6 +7,7 @@
 
 #include "sensor_liquidMeas.hpp"
 #include "adc.h"
+#include "cmath"
 
 namespace sensor_liquidMeas {
 
@@ -54,7 +55,20 @@ liquidSensor::status liquidSensor::getLevel(uint8_t *getlevel) {
 		float voltage = (adcValue / Resolution) * Vref;
 		current_mA = ((voltage / InternalVoltOut) * (max_cur - min_cur)) + min_cur;
 		fuel_level = (current_mA - min_cur) / (max_cur - min_cur) * totalSpan;
-		tank_volumeLiters = (fuel_level / totalSpan) * max_liters;
+
+		//tank_volumeLiters = (fuel_level / totalSpan) * max_liters;
+		//*getlevel = (tank_volumeLiters / max_liters) * 100; //get percentage
+
+		if(tanktype)
+		{
+			tank_volumeLiters = (width * length * fuel_level) * 1000;
+		}
+		else
+		{
+			tank_volumeLiters = (PI_cal * pow(radius,2) * fuel_level) * 1000;
+		}
+
+
 		*getlevel = (tank_volumeLiters / max_liters) * 100; //get percentage
 
 		LiquidMeasSemaphore.semaphoreGive();
@@ -105,7 +119,7 @@ void liquidSensor::refuelingDetection(uint32_t curEpochTime,
 		}
 
 
-		if (prev_volume_change < 0) {
+		if (prev_volume_change < 0.0) {
 			prev_volume_change = current_volume_change;
 			LiquidMeasSemaphore.semaphoreGive();
 			return;
@@ -122,22 +136,18 @@ void liquidSensor::refuelingDetection(uint32_t curEpochTime,
 				refueling_active = 1;
 				refueling_prev_time = refueling_start_time;
 				*startEpochtime = curEpochTime;
-				*endEpochtime = 0; //make it zero so we know we are refueling now to erase previous end time so user dont get confused
+				//*endEpochtime = 0; //make it zero so we know we are refueling now to erase previous end time so user dont get confused
 			}
 			else if(volume_change <= 0)
 			{
 				refueling_detect_prev_time = refueling_detect_start_time;
 			}
 		} else {
-			if (volume_change <= 0) {
-				if ((refueling_start_time - refueling_prev_time)
-						>= refuel_stabilize_time) {
-
+			  if((volume_change <= 0) && ((refueling_start_time - refueling_prev_time) >= refuel_stabilize_time)) {
 					refueling_active = 0;
 					*endEpochtime = curEpochTime;
-
 				}
-			} else {
+			  else if(volume_change > 0) {
 				refueling_prev_time = refueling_start_time;
 			}
 		}
@@ -150,8 +160,50 @@ void liquidSensor::refuelingDetection(uint32_t curEpochTime,
 
 }
 
+
+void liquidSensor::setTankType(uint8_t tanktype_)
+{
+	if (LiquidMeasSemaphore.semaphoreTake(30000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
+		tanktype = tanktype_;
+		LiquidMeasSemaphore.semaphoreGive();
+	}
+}
+void liquidSensor::setTankMaxLiters(float max_liters_)
+{
+	if (LiquidMeasSemaphore.semaphoreTake(30000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
+		max_liters = max_liters_;
+		LiquidMeasSemaphore.semaphoreGive();
+	}
+}
+void liquidSensor::setTankWidth(float width_)
+{
+	if (LiquidMeasSemaphore.semaphoreTake(30000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
+		width = width_;
+		LiquidMeasSemaphore.semaphoreGive();
+	}
+}
+void liquidSensor::setTankLength(float length_)
+{
+	if (LiquidMeasSemaphore.semaphoreTake(30000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
+		length = length_;
+		LiquidMeasSemaphore.semaphoreGive();
+	}
+}
+void liquidSensor::setTankRadius(float radius_)
+{
+	if (LiquidMeasSemaphore.semaphoreTake(30000)
+			== System_Rtos::freertos_semaphore::semaphore_recived) {
+		radius = radius_;
+		LiquidMeasSemaphore.semaphoreGive();
+	}
+}
+
 void liquidSensor::setParameters(float LowSpan, float FullSpan) {
-	if (LiquidMeasSemaphore.semaphoreTake(8000)
+	if (LiquidMeasSemaphore.semaphoreTake(30000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 		InternalLowSpan = LowSpan;
 		InternalFullSpan = FullSpan;
@@ -160,7 +212,7 @@ void liquidSensor::setParameters(float LowSpan, float FullSpan) {
 }
 
 void liquidSensor::getParameters(float *LowSpan, float *FullSpan) {
-	if (LiquidMeasSemaphore.semaphoreTake(8000)
+	if (LiquidMeasSemaphore.semaphoreTake(30000)
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 		*LowSpan = InternalLowSpan;
 		*FullSpan = InternalFullSpan;

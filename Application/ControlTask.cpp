@@ -63,7 +63,7 @@ static void SwitchingLoadLogic(struct ControlData_Queue *ControlData) {
 
 	if (flash_data_.Auto_Manual == 0) {
 
-		if (ControlData->SoC <= SOC_LOW
+		if ((ControlData->SoC <= SOC_LOW || ControlData->DcCurrent < -0.5)
 				&& (ControlData->SelectedSource
 						== static_cast<uint8_t>(sources::Battery))) {
 			TurnOnGenerator();
@@ -78,7 +78,7 @@ static void SwitchingLoadLogic(struct ControlData_Queue *ControlData) {
 			std::memcpy((RTC_TimeTypeDef*) &DTimeCharging_,
 					(RTC_TimeTypeDef*) &DTime, sizeof(RTC_TimeTypeDef));
 			SaveData();
-		} else if (ControlData->SoC >= SOC_HIGH
+		} else if ((ControlData->SoC >= SOC_HIGH  || ControlData->DcCurrent > 0.5)
 				&& (ControlData->SelectedSource
 						== static_cast<uint8_t>(sources::Generator))) {
 			TurnOffGenerator();
@@ -184,6 +184,13 @@ void ControlTask(void *pvParameters) {
 	DCCurrentSensor.setOffset(flash_data_.currentOffset);
 
 	liquidSensor.setParameters(flash_data_.zeroSpan, flash_data_.fullSpan);
+
+	liquidSensor.setTankType(flash_data_.tanktype);
+	liquidSensor.setTankMaxLiters(flash_data_.max_liters);
+	liquidSensor.setTankWidth(flash_data_.width);
+	liquidSensor.setTankLength(flash_data_.length);
+	liquidSensor.setTankRadius(flash_data_.radius);
+
 	stmRTC.setTimezone(flash_data_.zone);
 
 	prev_SOC = flash_data_.SOC;

@@ -165,6 +165,12 @@ void getSaveData() {
 		flash_data_.currentOffset = 0.002f;
 		flash_data_.selectedSource = 0;
 		flash_data_.Auto_Manual = 0;
+		flash_data_.tanktype = 0; // 0 - Cynlindrical 1 - rectangular
+		flash_data_.max_liters = 208;
+		flash_data_.width  = 0;
+		flash_data_.length = 0;
+		flash_data_.radius = 0.29;
+
 	}
 	else
 	{
