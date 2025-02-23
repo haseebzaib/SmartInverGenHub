@@ -132,7 +132,7 @@ void liquidSensor::refuelingDetection(uint32_t curEpochTime,
 
 		if (!refueling_active) {
 			// Detect start of refueling
-			if (volume_change > 2 && ((refueling_detect_start_time - refueling_detect_prev_time) >= refuel_detect_stabilize_time)) {
+			if (volume_change > 4 && ((refueling_detect_start_time - refueling_detect_prev_time) >= refuel_detect_stabilize_time)) {
 				refueling_active = 1;
 				refueling_prev_time = refueling_start_time;
 				*startEpochtime = curEpochTime;
