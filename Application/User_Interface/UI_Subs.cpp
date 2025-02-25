@@ -36,8 +36,8 @@ void UI::UI_Subs::SetTimeDate(u8g2_t *u8g2) {
 	char epochtimeStr[50];
 
 	uint32_t epochTime;
-	RTC_DateTypeDef DDate;
-	RTC_TimeTypeDef DTime;
+	RTC_DateTypeDef DDate = {0};
+	RTC_TimeTypeDef DTime = {0};
 
 	int8_t timezone;
 	stmRTC.getTime(&DDate, &DTime, &epochTime, &timezone);
@@ -196,6 +196,7 @@ void UI::UI_Subs::SetTimeDate(u8g2_t *u8g2) {
 
 		case button::btncodes::cEnter_BT: {
 
+			DDate.WeekDay = 1;
 			stmRTC.setTime(&DDate, &DTime, timezone);
 			flash_data_.zone = timezone;
 			SaveData();

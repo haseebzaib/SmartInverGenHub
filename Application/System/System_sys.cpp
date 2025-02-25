@@ -629,11 +629,10 @@ void Parsing_Checking::convertEpochToSimTime(uint32_t epoch,int timezone,char *r
 void Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,uint32_t epoch,int timezone)
 {
 uint8_t prevYear;
-	RTC_DateTypeDef gDate;
-	RTC_TimeTypeDef gTime;
-
-	RTC_DateTypeDef gDate1;
-	RTC_TimeTypeDef gTime1;
+	RTC_DateTypeDef gDate = {0};
+	RTC_TimeTypeDef gTime = {0};
+	RTC_DateTypeDef gDate1 = {0};
+	RTC_TimeTypeDef gTime1 = {0};
 
 	int TimezoneQuaters;
 	int TimezoneOffsetMinutes;
@@ -658,6 +657,8 @@ uint8_t prevYear;
 	    gTime.Hours = timeinfo->tm_hour;
 	    gTime.Minutes = timeinfo->tm_min;
 	    gTime.Seconds = timeinfo->tm_sec;
+
+	    gDate.WeekDay = 1;
 
 	    HAL_RTC_SetTime(hrtc, &gTime, RTC_FORMAT_BIN);
 	    HAL_RTC_SetDate(hrtc, &gDate, RTC_FORMAT_BIN);

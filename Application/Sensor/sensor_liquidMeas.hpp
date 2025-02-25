@@ -64,7 +64,7 @@ namespace sensor_liquidMeas
         static constexpr float PI_cal = 3.1416;
         static constexpr int32_t refueling_threshold = 5;
         static constexpr uint32_t refuel_stabilize_time = 18000;
-        static constexpr uint32_t refuel_detect_stabilize_time = 10000;
+        static constexpr uint32_t refuel_detect_stabilize_time = 8000;
 
 
         uint8_t tanktype; // 0 - Cynlindrical 1 - rectangular

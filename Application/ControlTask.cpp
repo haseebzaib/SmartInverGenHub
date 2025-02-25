@@ -39,11 +39,16 @@ static uint32_t DisplayChargeEndTime = 0;
 static sensor_pzem::PZEM_004T::PZEM PZEM1_Data = { 0 };
 static sensor_pzem::PZEM_004T::PZEM PZEM2_Data = { 0 };
 static sensor_pzem::PZEM_004T::PZEM PZEM3_Data = { 0 };
-static RTC_DateTypeDef DDate;
-static RTC_TimeTypeDef DTime;
+
+static RTC_DateTypeDef DDate = {0};
+static RTC_TimeTypeDef DTime = {0};
+
 static RTC_TimeTypeDef DTimeCharging_;
 static RTC_TimeTypeDef DTimeDischarging_;
 
+
+static RTC_DateTypeDef set_DDate = {0};
+static RTC_TimeTypeDef set_DTime = {0};
 
 
 uint8_t ManualSourceSelector = 0; // 0 - Batt  1 - Generator
@@ -194,6 +199,21 @@ void ControlTask(void *pvParameters) {
 	stmRTC.setTimezone(flash_data_.zone);
 
 	prev_SOC = flash_data_.SOC;
+
+
+//	set_DTime.Hours = 23;
+//	set_DTime.Minutes = 58;
+//	set_DTime.Seconds = 35;
+////	set_DTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+////	set_DTime.StoreOperation = RTC_STOREOPERATION_RESET;
+//
+//	set_DDate.WeekDay = RTC_WEEKDAY_MONDAY;
+//	set_DDate.Month = RTC_MONTH_JANUARY;
+//	set_DDate.Date = 1;
+//	set_DDate.Year = 0;
+//
+//
+//	stmRTC.setTime(&set_DDate,&set_DTime, flash_data_.zone);
 
 	stmRTC.getTime(&DDate, &DTime, &ControlData.timestamp);
 	ControlData.batteryChargeDischargeEndTime[0] = ControlData.timestamp;

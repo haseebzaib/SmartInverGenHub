@@ -25,8 +25,8 @@ enum MenuNo UIcodeStorage;
 
 static char time[50];
 static char date[50];
-static RTC_DateTypeDef DDate;
-static RTC_TimeTypeDef DTime;
+static RTC_DateTypeDef DDate= {0};
+static RTC_TimeTypeDef DTime= {0};
 
 void UI::UI_helper::set_UIcode(enum MenuNo UIcode)
 {

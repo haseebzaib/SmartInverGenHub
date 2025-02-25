@@ -131,8 +131,8 @@ uint8_t stmRTC::setTime(RTC_DateTypeDef *DDate, RTC_TimeTypeDef *DTime,
 		HAL_RTC_SetDate(Internal_handler, DDate, RTC_FORMAT_BIN);
 		zone = timezone;
 
-		HAL_RTC_GetTime(Internal_handler, &Time, RTC_FORMAT_BIN);
-		HAL_RTC_GetDate(Internal_handler, &Date, RTC_FORMAT_BIN);
+		//HAL_RTC_GetTime(Internal_handler, &Time, RTC_FORMAT_BIN);
+		//HAL_RTC_GetDate(Internal_handler, &Date, RTC_FORMAT_BIN);
 
 		rtcSemaphore.semaphoreGive();
 		err = 0;
