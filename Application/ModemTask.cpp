@@ -518,7 +518,10 @@ void ModemTask(void *pvParameters) {
 						== Modem::simA7672::mqtt_msgrecv) {
 					/*take flag to do something*/
 
-					ModemDataReceived = 1;
+					if(std::strstr(command_buffer,ControlData.uniqueID))
+					{
+						ModemDataReceived = 1;
+					}
 				}
 				simA7672.mqttunsubTopic(ModemData.mqtt_client_index,
 						ModemData.mqttSubTopic);

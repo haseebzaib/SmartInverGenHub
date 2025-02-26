@@ -99,6 +99,9 @@ static void SwitchingLoadLogic(struct ControlData_Queue *ControlData) {
 			SaveData();
 		}
 
+
+
+
 	} else // on Manual
 	{
 		if (ManualSourceSelector == 1 && ManualSourceSelectorDecider == 1) {
