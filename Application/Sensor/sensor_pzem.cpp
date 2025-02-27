@@ -67,6 +67,12 @@ void PZEM_004T::read(PZEM *pzemhandle) {
 		pzemhandle->voltage = 0;
 	}
 
+	if(pzemhandle->power > 24000)
+	{
+		pzemhandle->power = 0;
+	}
+
+
 
 
 end:
@@ -116,6 +122,13 @@ void PZEM_004T::read(PZEM *pzemhandle,uint32_t timeout)
 	{
 		pzemhandle->voltage = 0;
 	}
+
+	if(pzemhandle->power > 24000)
+	{
+		pzemhandle->voltage = 0;
+	}
+
+
 
 
 	PzemSemaphore.semaphoreGive();
