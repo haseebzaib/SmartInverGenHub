@@ -522,6 +522,7 @@ void ModemTask(void *pvParameters) {
 					{
 						ModemDataReceived = 1;
 					}
+
 				}
 				simA7672.mqttunsubTopic(ModemData.mqtt_client_index,
 						ModemData.mqttSubTopic);
