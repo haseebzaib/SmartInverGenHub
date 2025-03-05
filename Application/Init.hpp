@@ -84,6 +84,7 @@ struct ModemData_Queue {
 	char serverAddr[100];
 	char mqttPubTopic[20];
 	char mqttSubTopic[20];
+	char client_id[20];
 	uint8_t internet;
 	uint8_t mqtt_client_index;
 };

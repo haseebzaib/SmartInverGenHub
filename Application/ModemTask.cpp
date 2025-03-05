@@ -426,9 +426,10 @@ void ModemTask(void *pvParameters) {
 						&ModemData.mqtt_client_index);
 				if (mqttstartinfo == Modem::simA7672::mqtt_OK) {
 
+
 					mqttstartinfo = simA7672.mqttSetClient(
 							ModemData.mqtt_client_index,
-							const_cast<char*>("STM32"), 1);
+							ControlData.uniqueID, 1);
 
 					if (mqttstartinfo == Modem::simA7672::mqtt_OK) {
 

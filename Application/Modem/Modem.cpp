@@ -551,7 +551,7 @@ enum simA7672::mqtt_flags simA7672::mqttSetClient(uint8_t mqtt_index,
 		char *client,uint8_t activate_ssl) {
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
-	char buf[80] = { 0 };
+	char buf[150] = { 0 };
 
 	std::sprintf(buf, "AT+CMQTTACCQ=%d,\"%s\",%d\r\n", mqtt_index, client,activate_ssl);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
