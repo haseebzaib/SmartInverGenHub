@@ -190,7 +190,7 @@ void app_mainCpp() {
 	ModemTaskHandler.createTask();
 	ControlTaskHandler.createTask();
 	DisplayTaskHandler.createTask();
-	//SoCTaskHandler.createTask();
+
 
 	ModemDataQueue.queueCreate();
 	ControlDataQueue.queueCreate();
