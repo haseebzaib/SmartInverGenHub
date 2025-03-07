@@ -63,7 +63,8 @@ static float socPoints[] = {
     90.0f,  // matches 53.6V
     100.0f  // matches 54.4V
 };
-#define NUM_POINTS (sizeof(voltagePoints)/sizeof(voltagePoints[0]))
+
+const constexpr int NUM_POINTS =  (sizeof(voltagePoints)/sizeof(voltagePoints[0]));
 
 
 void setSoCChargingFlag(uint8_t flag)

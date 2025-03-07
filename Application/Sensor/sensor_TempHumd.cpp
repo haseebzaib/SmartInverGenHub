@@ -49,7 +49,11 @@ DHT::status DHT::read(uint8_t *temp,uint8_t *humidity){
 			== System_Rtos::freertos_semaphore::semaphore_recived) {
 
 	uint16_t mTime1 = 0, mTime2 = 0, mBit = 0;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 		uint8_t humVal = 0, tempVal = 0, parityVal = 0, genParity = 0;
+#pragma GCC diagnostic pop
+
 		uint8_t mData[40];
 
 		//start comm

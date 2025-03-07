@@ -78,6 +78,7 @@ public:
 	enum status setTimeDate(char *TimeDate);
 	enum status setAPN( char *apn);
 	enum status activate_deactivatePDP(enum pdp_stat activate_deactivate);
+	enum status sendSMS(char *number, char *message);
 
 
 
@@ -117,11 +118,6 @@ public:
 	enum ssl_flags ssldevicekeyset();
 
 private:
-#define CheckError(func, returnStat, checkStat) \
-  if (func != checkStat)       \
-  {                            \
-    return returnStat;         \
-  }
 
 	enum Rxmode {
 		CMD_mode = 1, MSG_mode = 2, Notification_mode = 3,

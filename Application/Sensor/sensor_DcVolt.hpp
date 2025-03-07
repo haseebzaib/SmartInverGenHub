@@ -30,12 +30,14 @@ public:
 
 private:
 
-#define CheckError(func, returnStat, checkStat) \
+#define CheckError3(func, returnStat, checkStat) \
   if (func != checkStat)          \
   {                            \
 	DcVoltSemaphore.semaphoreGive();\
     return returnStat;               \
   }
+
+
 
 	  static constexpr float Vref = 3.3f;
 	  static constexpr float Resolution = 4096.0f;

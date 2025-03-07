@@ -130,7 +130,10 @@ enum simA7672::status simA7672::setTimeDate(char *TimeDate) {
 enum simA7672::status simA7672::setAPN(char *apn) {
 
 	status stat = simA7672_OK;
-	char buf[150] = { 0 };
+
+	static char buf[150] = { 0 };
+	std::memset(buf,0,sizeof(buf));
+
 
 	std::sprintf(buf, "AT+CGDCONT=1,\"ip\",\"%s\"\r\n", apn);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
@@ -166,6 +169,33 @@ enum simA7672::status simA7672::activate_deactivatePDP(
 		stat = simA7672_ERR;
 
 	}
+
+	return stat;
+
+}
+
+enum simA7672::status simA7672::sendSMS(char *number, char *message)
+{
+	status stat = simA7672_OK;
+	char buf[30] = { 0 };
+
+	if(setTextMode() == simA7672_ERR)
+	{
+        return simA7672_ERR;
+	}
+
+	std::sprintf(buf,"AT+CMGS=\"%s\"\r\n", number);
+	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
+			std::strlen(const_cast<const char*>(buf)), 1000, '>', MSG_mode);
+	stat = check_eventTimeout(rx_evt, 5000);
+	if (stat != simA7672_OK)
+	{
+		std::strcat(message,"\x1A");
+		PrepRxTx(reinterpret_cast<const uint8_t*>(message),
+				std::strlen(const_cast<const char*>(message)), 1000, _LF, CMD_mode);
+		stat = check_eventTimeout(rx_evt, 5000);
+	}
+
 
 	return stat;
 
@@ -471,7 +501,8 @@ enum simA7672::mqtt_flags simA7672::getmqttconnectionstatus(char *serverAddr) {
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_serverDisconnected;
 
-	char buf[100] = { 0 };
+	static char buf[100] = { 0 };
+	std::memset(buf,0,sizeof(buf));
 
 	PrepRxTx(atcmd_GATCMQTTCONNECT, sizeof(atcmd_GATCMQTTCONNECT) - 1, 1000,
 			_LF, CMD_mode);
@@ -551,7 +582,10 @@ enum simA7672::mqtt_flags simA7672::mqttSetClient(uint8_t mqtt_index,
 		char *client,uint8_t activate_ssl) {
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
-	char buf[150] = { 0 };
+
+	static char buf[150] = { 0 };
+	std::memset(buf,0,sizeof(buf));
+
 
 	std::sprintf(buf, "AT+CMQTTACCQ=%d,\"%s\",%d\r\n", mqtt_index, client,activate_ssl);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
@@ -573,7 +607,9 @@ enum simA7672::mqtt_flags simA7672::mqttReleaseClient(uint8_t mqtt_index) {
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
 
-	char buf[80] = { 0 };
+	static char buf[80] = { 0 };
+
+	std::memset(buf,0,sizeof(buf));
 
 	std::sprintf(buf, "AT+CMQTTREL=%d\r\n", mqtt_index);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
@@ -595,8 +631,11 @@ enum simA7672::mqtt_flags simA7672::mqttConnectServer(uint8_t mqtt_index,
 
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
-	char buf[150] = { 0 };
-	char recv_buf[5] = { 0 };
+	static char buf[150] = { 0 };
+	static char recv_buf[5] = { 0 };
+
+	std::memset(buf,0,sizeof(buf));
+	std::memset(recv_buf,0,sizeof(recv_buf));
 
 	std::sprintf(buf, "AT+CMQTTCONNECT=%d,\"%s\",60,1\r\n", mqtt_index, url);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
@@ -624,8 +663,11 @@ enum simA7672::mqtt_flags simA7672::mqttDisconnectServer(uint8_t mqtt_index) {
 
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
-	char buf[150] = { 0 };
-	char recv_buf[5] = { 0 };
+	static char buf[150] = { 0 };
+	static char recv_buf[5] = { 0 };
+
+	std::memset(buf,0,sizeof(buf));
+	std::memset(recv_buf,0,sizeof(recv_buf));
 
 	std::sprintf(buf, "AT+CMQTTDISC=%d,120\r\n", mqtt_index);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
@@ -673,7 +715,9 @@ enum simA7672::mqtt_flags simA7672::mqttsubTopicAndRead(uint8_t mqtt_index,
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
 
-	char buf[150] = { 0 };
+	static char buf[150] = { 0 };
+	std::memset(buf,0,sizeof(buf));
+
 
 
 	std::sprintf(buf, "AT+CMQTTSUB=%d,%d,1\r\n", mqtt_index,
@@ -720,8 +764,12 @@ enum simA7672::mqtt_flags simA7672::mqttunsubTopic(uint8_t mqtt_index,
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
 
-	char buf[150] = { 0 };
-	char recv_buf[5] = { 0 };
+	static char buf[150] = { 0 };
+	static char recv_buf[5] = { 0 };
+
+	std::memset(buf,0,sizeof(buf));
+	std::memset(recv_buf,0,sizeof(recv_buf));
+
 
 	std::sprintf(buf, "AT+CMQTTUNSUB=%d,%d,0\r\n", mqtt_index,
 			std::strlen(const_cast<const char*>(subTopic)));
@@ -761,7 +809,8 @@ enum simA7672::ssl_flags simA7672::mqttsslenable(uint8_t mqtt_index)
 	status stat = simA7672_ERR;
 	ssl_flags sslstat = ssl_ERR;
 
-	char buf[80] = { 0 };
+	static char buf[80] = { 0 };
+	std::memset(buf,0,sizeof(buf));
 
 	std::sprintf(buf, "AT+CMQTTSSLCFG=%d,0\r\n", mqtt_index);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
@@ -881,7 +930,9 @@ enum simA7672::mqtt_flags simA7672::mqttSetPubTopic(uint8_t mqtt_index,char *pub
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
 
-	char buf[150] = { 0 };
+	static char buf[150] = { 0 };
+	std::memset(buf,0,sizeof(buf));
+
 
 	std::sprintf(buf, "AT+CMQTTTOPIC=%d,%d\r\n", mqtt_index,
 			std::strlen(const_cast<const char*>(pubTopic)));
@@ -915,7 +966,9 @@ enum simA7672::mqtt_flags simA7672::mqttSetPubPayload(uint8_t mqtt_index,char *p
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
 
-	char buf[150] = { 0 };
+	static char buf[150] = { 0 };
+	std::memset(buf,0,sizeof(buf));
+
 
 	std::sprintf(buf, "AT+CMQTTPAYLOAD=%d,%d\r\n", mqtt_index,len);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),
@@ -947,8 +1000,11 @@ enum simA7672::mqtt_flags simA7672::mqttPublishData(uint8_t mqtt_index)
 	status stat = simA7672_ERR;
 	mqtt_flags statMqtt = mqtt_ERR;
 
-	char buf[150] = { 0 };
-	char recv_buf[5] = { 0 };
+	static char buf[150] = { 0 };
+	static char recv_buf[5] = { 0 };
+
+	std::memset(buf,0,sizeof(buf));
+	std::memset(recv_buf,0,sizeof(recv_buf));
 
 	std::sprintf(buf, "AT+CMQTTPUB=%d,1,60\r\n", mqtt_index);
 	PrepRxTx(reinterpret_cast<const uint8_t*>(buf),

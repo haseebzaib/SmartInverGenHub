@@ -35,13 +35,20 @@ public:
 
 
 
+
+
 private:
-#define CheckError(func, returnStat, checkStat) \
-  if (func != checkStat)          \
-  {                            \
-	DcHallSemaphore.semaphoreGive();\
-    return returnStat;               \
+
+
+#define CheckError2(func, returnStat, checkStat) \
+  if (func != checkStat)                        \
+  {                                             \
+	DcHallSemaphore.semaphoreGive();            \
+    return returnStat;                          \
   }
+
+
+
 	  static constexpr uint32_t samples = 1000;
 	  static constexpr float Vref = 3.3f;
 	  static constexpr float Resolution = 4096.0f;

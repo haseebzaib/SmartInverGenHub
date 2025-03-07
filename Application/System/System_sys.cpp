@@ -54,26 +54,24 @@ enum Parsing_Checking::status Parsing_Checking::parseDate_Time_Timezone( char *b
         "Err", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     };
 
+
 	int Ncolonpos;
 	char *Scolonpos;
 	int Ncommapos;
 	char *Scommapos;
-	int Npluspos;
 	char *Spluspos;
-	int Nminuspos;
 	char *Sminuspos;
-
-
 	char *DatePart;
 	char *TimePart;
-	char *TimezonePart;
-
-
 	char temp[100];
-
 	char compare_sign[10];
-	int8_t useSign = -1;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+	int Npluspos;
+	int Nminuspos;
+	int8_t useSign = -1;
+#pragma GCC diagnostic pop
 
 	std::strncpy(temp,buffer,bufferLen);
 
@@ -190,7 +188,7 @@ enum Parsing_Checking::status Parsing_Checking::parseSkipCharnDTillEndChar(char 
 
 	enum status stat = sys_notFound;
     uint16_t len = 0;
-	char temp[500];
+	static char temp[500];
 
 	std::strncpy(temp,buffer,bufferLen);
 
@@ -209,8 +207,7 @@ enum Parsing_Checking::status Parsing_Checking::parseSkipCharnDTillEndChar(char 
 
 	int Ncolonpos;
 	char *Scolonpos;
-	int Nendpos;
-	char *Sendpos;
+
 
 
 	Scolonpos = std::strchr(temp, skipChar);
@@ -628,14 +625,14 @@ void Parsing_Checking::convertEpochToSimTime(uint32_t epoch,int timezone,char *r
 
 void Parsing_Checking::convertEpochToSTMTime(RTC_HandleTypeDef *hrtc,uint32_t epoch,int timezone)
 {
-uint8_t prevYear;
-	RTC_DateTypeDef gDate = {0};
-	RTC_TimeTypeDef gTime = {0};
-	RTC_DateTypeDef gDate1 = {0};
-	RTC_TimeTypeDef gTime1 = {0};
+	static uint8_t prevYear;
+	static RTC_DateTypeDef gDate = {0};
+	static RTC_TimeTypeDef gTime = {0};
+	static RTC_DateTypeDef gDate1 = {0};
+	static RTC_TimeTypeDef gTime1 = {0};
 
-	int TimezoneQuaters;
-	int TimezoneOffsetMinutes;
+	static int TimezoneQuaters;
+	static int TimezoneOffsetMinutes;
 
 	TimezoneQuaters = timezone*4;
 	TimezoneOffsetMinutes = TimezoneQuaters*15;
@@ -679,7 +676,7 @@ uint8_t prevYear;
 
 void Parsing_Checking::convertEpochToTimeString(uint32_t epoch,int timezone,char *Timestring)
 {
-	uint8_t prevYear;
+
 
 		int TimezoneQuaters;
 		int TimezoneOffsetMinutes;
@@ -706,7 +703,7 @@ void Parsing_Checking::convertEpochToTimeString(uint32_t epoch,int timezone,char
 		    min = timeinfo->tm_min;
 		    sec = timeinfo->tm_sec;
 
-		    std::sprintf(Timestring,"%02d:%02d:%02d", hour, sec);
+		    std::sprintf(Timestring,"%02d:%02d:%02d", hour,min ,sec);
 
 
 

@@ -178,6 +178,9 @@ static const uint8_t u8x8_d_ssd1606_to_display_seq[] = {
   U8X8_END()             			/* end of sequence */
 };
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-const-variable"
+
 static const uint8_t u8x8_d_ssd1606_172x72_powersave0_seq[] = {
   U8X8_START_TRANSFER(),             	/* enable chip, delay is part of the transfer start */
   U8X8_END_TRANSFER(),             	/* disable chip */
@@ -201,7 +204,7 @@ static const uint8_t u8x8_d_ssd1606_172x72_flip1_seq[] = {
   U8X8_END_TRANSFER(),             	/* disable chip */
   U8X8_END()             			/* end of sequence */
 };
-
+#pragma GCC diagnostic pop
 
 static uint8_t *u8x8_convert_tile_for_ssd1606(uint8_t *t)
 {

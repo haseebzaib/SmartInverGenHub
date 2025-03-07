@@ -44,8 +44,8 @@ liquidSensor::status liquidSensor::getLevel(uint8_t *getlevel) {
 			return liquidSensor_ERR;
 		}
 		for (int i = 0; i < 800; i++) {
-			CheckError(HAL_ADC_Start(hadc_sensor), liquidSensor_ERR, HAL_OK);
-			CheckError(HAL_ADC_PollForConversion(hadc_sensor, 10000),
+			CheckError1(HAL_ADC_Start(hadc_sensor), liquidSensor_ERR, HAL_OK);
+			CheckError1(HAL_ADC_PollForConversion(hadc_sensor, 10000),
 					liquidSensor_ERR, HAL_OK); //take the value
 			adcValue += HAL_ADC_GetValue(hadc_sensor);
 		}

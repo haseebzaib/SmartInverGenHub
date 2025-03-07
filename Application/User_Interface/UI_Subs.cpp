@@ -32,18 +32,18 @@ float SpanSetting[6] = { 10.0, 01.0, 0.1, 10.0, 01.0, 0.1, };
 float Setting[6] = { 10.0, 01.0, 0.1, 10.0, 01.0, 0.1, };
 
 void UI::UI_Subs::SetTimeDate(u8g2_t *u8g2) {
-	enum button::btncodes btncodes;
-	char epochtimeStr[50];
+	static enum button::btncodes btncodes;
+	static char epochtimeStr[50];
 
-	uint32_t epochTime;
-	RTC_DateTypeDef DDate = {0};
-	RTC_TimeTypeDef DTime = {0};
+	static uint32_t epochTime;
+	static RTC_DateTypeDef DDate = {0};
+	static RTC_TimeTypeDef DTime = {0};
 
-	int8_t timezone;
+	static int8_t timezone;
 	stmRTC.getTime(&DDate, &DTime, &epochTime, &timezone);
 
-	int8_t selEpochPos = 0;
-	int8_t prevselPos = 0;
+	static int8_t selEpochPos = 0;
+	static int8_t prevselPos = 0;
 
 	do {
 		button::resetCode(button::btncodes::cNONE);
@@ -204,6 +204,11 @@ void UI::UI_Subs::SetTimeDate(u8g2_t *u8g2) {
 			break;
 		}
 
+		case button::btncodes::cLFT_BT:
+		case button::btncodes::cNONE:
+		default:
+				break;
+
 		}
 
 		selEpochPos = selEpochPos % 14;
@@ -245,16 +250,18 @@ void UI::UI_Subs::SetTimeDate(u8g2_t *u8g2) {
 }
 
 void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
-	enum button::btncodes btncodes;
-	float zeroSpan = 00.0;
-	float fullSpan = 00.0;
+	static enum button::btncodes btncodes;
+	static float zeroSpan = 00.0;
+	static float fullSpan = 00.0;
 	liquidSensor.getParameters(&zeroSpan, &fullSpan);
 
-	char headings[50];
-	char buffer[50];
+	static char headings[50];
+	static char buffer[50];
+	std::memset(headings,0,sizeof(headings));
+	std::memset(buffer,0,sizeof(buffer));
 
-	uint8_t cursor = 0;
-	uint8_t cursorPos = 0;
+	static uint8_t cursor = 0;
+	static uint8_t cursorPos = 0;
 	do {
 		button::resetCode(button::btncodes::cNONE);
 		do {
@@ -344,6 +351,11 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 			break;
 		}
 
+		case button::btncodes::cLFT_BT:
+		case button::btncodes::cNONE:
+		default:
+				break;
+
 		}
 
 		cursor = cursor % 6;
@@ -356,18 +368,18 @@ void UI::UI_Subs::SetFuelMeas(u8g2_t *u8g2) {
 }
 
 void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
-	enum button::btncodes btncodes;
+	static enum button::btncodes btncodes;
 
 
-	char headings[50];
-	char buffer[20];
-	char buffer2[20];
+	static char headings[50];
+	static char buffer[20];
+	static char buffer2[20];
 
 	uint8_t cursor = 0;
-	uint8_t cursorPos = 0;
 
-	float soc;
-	float currentoffset;
+
+	static float soc;
+	static float currentoffset;
 
 	soc = SOC::getSoCVal();
 	currentoffset = DCCurrentSensor.getOffset();
@@ -461,6 +473,11 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 			break;
 		}
 
+		case button::btncodes::cLFT_BT:
+		case button::btncodes::cNONE:
+		default:
+				break;
+
 		}
 
 	} while (btncodes != button::btncodes::cEnter_BT
@@ -469,17 +486,17 @@ void UI::UI_Subs::SetSoCnDCurr(u8g2_t *u8g2) {
 
 void UI::UI_Subs::SetAutoManual(u8g2_t *u8g2) {
 
-	enum button::btncodes btncodes;
+	static enum button::btncodes btncodes;
 
-	char headings[50];
-	char buffer[20];
+	static char headings[50];
+	static char buffer[20];
 
 
 	uint8_t cursor = 0;
 
-	uint8_t Auto_ManualSelector = flash_data_.Auto_Manual;
-	uint8_t ManualSourceSelectorOpt = ManualSourceSelector;
-	uint8_t ManualSourceSelectorDecidorOpt = ManualSourceSelectorDecider;
+	static uint8_t Auto_ManualSelector = flash_data_.Auto_Manual;
+	static uint8_t ManualSourceSelectorOpt = ManualSourceSelector;
+	static uint8_t ManualSourceSelectorDecidorOpt = ManualSourceSelectorDecider;
 
 	do {
 		button::resetCode(button::btncodes::cNONE);
@@ -577,6 +594,11 @@ void UI::UI_Subs::SetAutoManual(u8g2_t *u8g2) {
 			SaveData();
 			break;
 		}
+
+		case button::btncodes::cLFT_BT:
+		case button::btncodes::cNONE:
+		default:
+				break;
 
 		}
 	} while (btncodes != button::btncodes::cEnter_BT

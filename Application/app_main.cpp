@@ -147,7 +147,7 @@ void SaveData() {
 
 void getSaveData() {
 
-	uint8_t save = 0;
+
 
 	struct flash_data *pFlashData;
 

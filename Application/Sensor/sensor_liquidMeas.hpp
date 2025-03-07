@@ -50,7 +50,7 @@ namespace sensor_liquidMeas
 
 
     private:
-#define CheckError(func, returnStat, checkStat) \
+#define CheckError1(func, returnStat, checkStat) \
   if (func != checkStat)          \
   {                            \
 	LiquidMeasSemaphore.semaphoreGive();\

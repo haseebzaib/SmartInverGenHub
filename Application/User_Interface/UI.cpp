@@ -24,12 +24,12 @@
 
 //#define SCROLLING
 
-#define scrollTiming 2
-#define TotalEnterIndexes 10
+constexpr int scrollTiming = 2;
+constexpr int TotalEnterIndexes = 10;
 
-uint8_t FuelPercent = 0;
-uint32_t temp = 0;
-uint32_t humid = 0;
+static uint8_t FuelPercent = 0;
+static uint32_t temp = 0;
+static uint32_t humid = 0;
 
 
 struct SettingMenuCodes SettingsMenuCodes[TotalSettingsSub] =
@@ -43,7 +43,7 @@ struct SettingMenuCodes SettingsMenuCodes[TotalSettingsSub] =
 namespace UI {
 
 char display_buffer[255] = { 0 };
-enum MenuNo CurrMenu = MenuNo::None;
+static enum MenuNo CurrMenu = MenuNo::None;
 
 using UIFunc = void(*)(u8g2_t *u8g2);
 
@@ -148,6 +148,7 @@ void fuel_temp_humd(u8g2_t *u8g2) {
 	uint8_t scroll = 0;
 
 	char buffer[3][10];
+
 	do {
 		u8g2_ClearBuffer(u8g2);
 		UI::UI_helper::common_iconsMain(u8g2,&imgcont::SensorInfo);
@@ -268,18 +269,17 @@ void Alarms(u8g2_t *u8g2) {
 void Battery(u8g2_t *u8g2) {
 	enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
-	uint8_t scroll = 0;
+	 static uint8_t scroll = 0;
+	 scroll = 0;
 	do {
-		float soc;
-		float curr;
-		float DcVolt;
-
-		char StringStartTime[20];
-		char StringEndTime[20];
-		char voltageMeasure[10];
-
-		RTC_TimeTypeDef DTimeCharging_;
-		RTC_TimeTypeDef DTimeDischarging_;
+		static float soc;
+		static float curr;
+		static float DcVolt;
+		static char StringStartTime[20];
+		static char StringEndTime[20];
+		static char voltageMeasure[10];
+		static RTC_TimeTypeDef DTimeCharging_;
+		static RTC_TimeTypeDef DTimeDischarging_;
 
 		getChargeTimestamp(&DTimeCharging_);
 		getDischargeTimestamp(&DTimeDischarging_);
@@ -502,22 +502,22 @@ void network(u8g2_t *u8g2) {
 
 void power(u8g2_t *u8g2) {
 
-	enum button::btncodes btncodes;
+	static enum button::btncodes btncodes;
 	button::resetCode(button::btncodes::cNONE);
-	uint8_t scroll = 0;
+	static uint8_t scroll = 0;
+	scroll = 0;
 
+	static float V1=0;
+	static float I1=0;
+	static float P1=0;
 
-	float V1=0;
-	float I1=0;
-	float P1=0;
+	static float V2=0;
+	static float I2=0;
+	static float P2=0;
 
-	float V2=0;
-	float I2=0;
-	float P2=0;
-
-	float V3=0;
-	float I3=0;
-	float P3=0;
+	static float V3=0;
+	static float I3=0;
+	static float P3=0;
 
 	do {
 

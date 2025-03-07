@@ -69,7 +69,8 @@ struct u8x8_sbn1661_vars
   uint8_t c;
   uint8_t arg_int;
 };
-
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 static void u8x8_sbn1661_out(u8x8_t *u8x8, struct u8x8_sbn1661_vars *v, void *arg_ptr)
 {
   uint8_t cnt;
@@ -107,7 +108,7 @@ static void u8x8_sbn1661_out(u8x8_t *u8x8, struct u8x8_sbn1661_vars *v, void *ar
 	break;       
   } 
 }
-
+#pragma GCC diagnostic pop
 
 static const u8x8_display_info_t u8x8_sbn1661_122x32_display_info =
 {

@@ -17,32 +17,28 @@
 #include "Sensor/sensor_DcHall.hpp"
 #include "SOC/SOC.hpp"
 
-Modem::simA7672 simA7672(&GSM_U);
+static Modem::simA7672 simA7672(&GSM_U);
 
 static System_sys::Parsing_Checking parsing;
 
-uint32_t currentTime = 0;
-uint32_t prevTime = 0;
-uint32_t setTime = 30000; //60 seconds
+static uint32_t currentTime = 0;
+static uint32_t prevTime = 0;
+static uint32_t setTime = 30000; //60 seconds
 
-struct ModemData_Queue ModemData = { 0 };
-//System_sys::Parsing_Checking parsing;
+static struct ModemData_Queue ModemData = { 0 };
 
-struct ModemData_TaskUsage {
-	char SetTimeDate[50];
-};
 
-struct ModemData_TaskUsage ModemData_TaskUsage;
+
 
 enum routine {
 	net_enable = 0, mqtt_enable = 1, mqtt_connect = 2, mqtt_loop = 3,
 };
 
-char command_buffer[255] = { 0 };
-char send_command_buffer[255] = { 0 };
-uint8_t ModemDataReceived = 0;
+static char command_buffer[255] = { 0 };
+static char send_command_buffer[255] = { 0 };
+static uint8_t ModemDataReceived = 0;
 
-#define totalModemCmds 9
+constexpr int totalModemCmds = 9;
 
 using GSMCMDCallback = void (*)();
 
@@ -66,11 +62,11 @@ static void send_data(char *Data, uint16_t size) {
 }
 
 static void Modem_setTimedate() {
-	char outbuf1[20];
-	char outbuf2[20];
-	uint16_t outlen1 = 0;
-	uint16_t outlen2 = 0;
-	uint32_t extractedEpoch = 0;
+	static char outbuf1[20];
+	static char outbuf2[20];
+	static uint16_t outlen1 = 0;
+	static uint16_t outlen2 = 0;
+	static uint32_t extractedEpoch = 0;
 	int8_t extractedTimezone = 0;
 	parsing.extractdatainsegments(command_buffer, outbuf1, 20, &outlen1, ':',
 			'|');
@@ -83,12 +79,12 @@ static void Modem_setTimedate() {
 }
 
 static void Modem_setFuelMeasurement() {
-	char outbuf1[20];
-	char outbuf2[20];
-	uint16_t outlen1 = 0;
-	uint16_t outlen2 = 0;
-	float zeroSpan = 00.0;
-	float fullSpan = 00.0;
+	static char outbuf1[20];
+	static char outbuf2[20];
+	static uint16_t outlen1 = 0;
+	static uint16_t outlen2 = 0;
+	static float zeroSpan = 00.0;
+	static float fullSpan = 00.0;
 	parsing.extractdatainsegments(command_buffer, outbuf1, 20, &outlen1, ':',
 			'|');
 	parsing.extractdatainsegments(command_buffer, outbuf2, 20, &outlen2, '|',
@@ -103,12 +99,12 @@ static void Modem_setFuelMeasurement() {
 }
 
 static void Modem_setSoCnDCur() {
-	char outbuf1[20];
-	char outbuf2[20];
-	uint16_t outlen1 = 0;
-	uint16_t outlen2 = 0;
-	float soc = 0.0;
-	float currentoffset = 0.0;
+	static char outbuf1[20];
+	static char outbuf2[20];
+	static uint16_t outlen1 = 0;
+	static uint16_t outlen2 = 0;
+	static float soc = 0.0;
+	static float currentoffset = 0.0;
 	parsing.extractdatainsegments(command_buffer, outbuf1, 20, &outlen1, ':',
 			'|');
 	parsing.extractdatainsegments(command_buffer, outbuf2, 20, &outlen2, '|',
@@ -124,9 +120,9 @@ static void Modem_setSoCnDCur() {
 }
 
 static void Modem_setAutoManualMode() {
-	char outbuf1[20];
-	uint16_t outlen1 = 0;
-	uint8_t Auto_ManualSelector;
+    static char outbuf1[20];
+    static uint16_t outlen1 = 0;
+    static uint8_t Auto_ManualSelector;
 	parsing.extractdatainsegments(command_buffer, outbuf1, 20, &outlen1, ':',
 			'\0');
 	Auto_ManualSelector = std::atoi(outbuf1);
@@ -136,9 +132,9 @@ static void Modem_setAutoManualMode() {
 }
 
 static void Modem_setGenerator() {
-	char outbuf1[20];
-	uint16_t outlen1 = 0;
-	uint8_t ManualSourceSelectorOpt;
+	 static char outbuf1[20];
+	 static uint16_t outlen1 = 0;
+	 static uint8_t ManualSourceSelectorOpt;
 
 	if (flash_data_.Auto_Manual == 1) {
 		parsing.extractdatainsegments(command_buffer, outbuf1, 20, &outlen1,
@@ -163,21 +159,21 @@ static void Modem_setFixSOCCharging() {
 }
 
 static void Modem_setTankSettings() {
-	char outbuf1[20];
-	char outbuf2[20];
-	char outbuf3[20];
-	char outbuf4[20];
-	uint16_t outlen1 = 0;
-	uint16_t outlen2 = 0;
-	uint16_t outlen3 = 0;
-	uint16_t outlen4 = 0;
+	static char outbuf1[20];
+	static char outbuf2[20];
+	static char outbuf3[20];
+	static char outbuf4[20];
+	static uint16_t outlen1 = 0;
+	static uint16_t outlen2 = 0;
+	static uint16_t outlen3 = 0;
+	static uint16_t outlen4 = 0;
 
-	uint8_t tankType_;
-	float max_liters_;
+	static uint8_t tankType_;
+	static float max_liters_;
 	//in meters
-	float width_;
-	float length_;
-	float radius_;
+	static float width_;
+	static float length_;
+	static float radius_;
 
 	char *ptr = command_buffer;
 
@@ -313,19 +309,21 @@ char* getModemData() {
 
 }
 
+
+
 void ModemTask(void *pvParameters) {
 
 	simA7672.init();
 
-	struct ControlData_Queue ControlData = { 0 };
+	static struct ControlData_Queue ControlData = { 0 };
 
-	Modem::simA7672::UE_systemInfo cpsiInfo;
-	Modem::simA7672::pdp_stat pdpinfo;
-	Modem::simA7672::status modeminfo;
-	Modem::simA7672::mqtt_flags mqttstartinfo = Modem::simA7672::mqtt_ERR;
-	Modem::simA7672::mqtt_flags mqttserverinfo = Modem::simA7672::mqtt_ERR;
+	static Modem::simA7672::UE_systemInfo cpsiInfo;
+	static Modem::simA7672::pdp_stat pdpinfo;
+	static Modem::simA7672::status modeminfo;
+	static Modem::simA7672::mqtt_flags mqttstartinfo = Modem::simA7672::mqtt_ERR;
+	static Modem::simA7672::mqtt_flags mqttserverinfo = Modem::simA7672::mqtt_ERR;
 
-	enum routine mqtt_routine = net_enable;
+	static enum routine mqtt_routine = net_enable;
 
 	std::strcpy(ModemData.serverAddr,
 			"tcp://apfp7i6y92d6b-ats.iot.us-east-1.amazonaws.com:8883");
@@ -333,18 +331,13 @@ void ModemTask(void *pvParameters) {
 	std::strcpy(ModemData.mqttSubTopic, "devicereceive");
 	std::strcpy(ModemData.mqttPubTopic, "devicedata");
 
-	uint8_t mqtt_counter = 0;
+	static uint8_t mqtt_counter = 0;
 
-	//std::strcpy(ModemData_TaskUsage.SetTimeDate, "24/11/15,16:38:55+20");
 
-	//simA7672.setTimeDate(ModemData_TaskUsage.SetTimeDate);
 
 	while (1) {
 
-		//simA7672.getTimeDate(ModemData.time, ModemData.date,
-		//		ModemData.timezone);
 
-		//ModemData.timestamp = parsing.convertToEpoch(ModemData.date, ModemData.time, ModemData.timezone);
 		simA7672.getSim(ModemData.pin);
 		simA7672.getNetwork(ModemData.networkStat);
 		simA7672.getNetworkPDP(ModemData.networkStatpdp);

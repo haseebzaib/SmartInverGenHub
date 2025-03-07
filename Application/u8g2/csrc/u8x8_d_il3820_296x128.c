@@ -126,6 +126,9 @@ static const uint8_t u8x8_d_il3820_296x128_powersave1_seq[] = {
   U8X8_END()             			/* end of sequence */
 };
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-const-variable"
+
 static const uint8_t u8x8_d_il3820_296x128_flip0_seq[] = {
   U8X8_START_TRANSFER(),             	/* enable chip, delay is part of the transfer start */
   U8X8_END_TRANSFER(),             	/* disable chip */
@@ -138,7 +141,7 @@ static const uint8_t u8x8_d_il3820_296x128_flip1_seq[] = {
   U8X8_END()             			/* end of sequence */
 };
 
-
+#pragma GCC diagnostic pop
 static const u8x8_display_info_t u8x8_il3820_296x128_display_info =
 {
   /* chip_enable_level = */ 0,
