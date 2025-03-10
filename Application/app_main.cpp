@@ -154,7 +154,6 @@ void getSaveData() {
 	pFlashData = (struct flash_data *) Address_Mem;
 
 
-
 	if(pFlashData->validPattern != 0xFEED)
 	{
 		flash_data_.validPattern =  0xFEED;
