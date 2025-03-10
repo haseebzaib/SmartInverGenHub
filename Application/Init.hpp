@@ -40,9 +40,9 @@ char *getModemNetwork();
 char *getSignalQuality();
 char *getModemData();
 
-#define _StackSize_Modem 1024
-#define _StackSize_Control 1024
-#define _StackSize_Display 1024
+constexpr uint16_t _StackSize_Modem   =  4096/sizeof(StackType_t);
+constexpr uint16_t _StackSize_Control =  4096/sizeof(StackType_t);
+constexpr uint16_t _StackSize_Display =  4096/sizeof(StackType_t);
 
 
 extern System_Rtos::freertos_Tasks ModemTaskHandler;

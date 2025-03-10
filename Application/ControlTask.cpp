@@ -12,6 +12,7 @@
 #include "Sensor/sensor_TempHumd.hpp"
 #include "Sensor/sensor_pzem.hpp"
 #include "Sensor/sensor_DcHall.hpp"
+#include "Embedded_CLI/console.hpp"
 #include "sensor_DcVolt.hpp"
 #include "SOC/SOC.hpp"
 #include "i2c.h"
@@ -205,10 +206,13 @@ void ControlTask(void *pvParameters) {
 	ControlData.batteryChargeDischargeEndTime[0] = ControlData.timestamp;
 	std::memcpy((RTC_TimeTypeDef*) &DTimeDischarging_,
 			(RTC_TimeTypeDef*) &DTime, sizeof(RTC_TimeTypeDef));
-	HAL_IWDG_Refresh(&hiwdg); //20second
+
+	console_init();
 
 	while (1) {
-		HAL_IWDG_Refresh(&hiwdg); //20second
+
+		console_process();
+
 		stmRTC.getTime(&DDate, &DTime, &ControlData.timestamp);
 		AHT20.measure(&ControlData.temp, &ControlData.humid);
 		liquidSensor.Measurement_loop(&ControlData.fuelPer,
@@ -245,8 +249,9 @@ void ControlTask(void *pvParameters) {
 		sourceStatus = ControlData.SelectedSource;
 		ControlDataQueue.queueSend(reinterpret_cast<void*>(&ControlData));
 		HAL_GPIO_TogglePin(alive_led_GPIO_Port, alive_led_Pin);
-		System_Rtos::delay(100);
-		HAL_IWDG_Refresh(&hiwdg); //20second
+
+		System_Rtos::delay(50);
+
 	}
 
 }

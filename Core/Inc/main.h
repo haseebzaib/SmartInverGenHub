@@ -62,6 +62,7 @@ void Error_Handler(void);
 #define PZEM1_U huart1
 #define GSM_U huart2
 #define OLEDSpi hspi2
+#define CONSOLE huart5
 #define RelayCont_Pin GPIO_PIN_3
 #define RelayCont_GPIO_Port GPIOC
 #define alive_led_Pin GPIO_PIN_1
@@ -98,6 +99,10 @@ void Error_Handler(void);
 #define PZEM3_UART4_TX_GPIO_Port GPIOC
 #define PZEM3_UART4_RX_Pin GPIO_PIN_11
 #define PZEM3_UART4_RX_GPIO_Port GPIOC
+#define CONSOLE_UART5_TX_Pin GPIO_PIN_12
+#define CONSOLE_UART5_TX_GPIO_Port GPIOC
+#define CONSOLE_UART5_RX_Pin GPIO_PIN_2
+#define CONSOLE_UART5_RX_GPIO_Port GPIOD
 #define DISPLAY_CS_Pin GPIO_PIN_5
 #define DISPLAY_CS_GPIO_Port GPIOB
 

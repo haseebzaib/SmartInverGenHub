@@ -107,6 +107,7 @@ int main(void)
   MX_ADC2_Init();
   MX_ADC3_Init();
   MX_IWDG_Init();
+  MX_UART5_Init();
   /* USER CODE BEGIN 2 */
 #ifdef disable_auto
   /* USER CODE END 2 */
