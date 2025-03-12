@@ -30,7 +30,7 @@
 #include "usart.h"
 #include <array>
 #include <utility>  // For std::forward
-
+#include "xmodem.hpp"
 
 static EmbeddedCli *cli;
 // Definitions for CLI UART peripheral
@@ -62,6 +62,15 @@ uint8_t cli_other = 0;
 uint8_t flag_cli = 0;
 uint8_t invoke_time = 0;
 uint8_t invoke_date = 0;
+
+uint8_t oad_transmit(uint8_t data, uint32_t timeout)
+{
+
+}
+uint8_t oad_receive(uint8_t *data,uint16_t length ,uint32_t timeout)
+{
+
+}
 
 // STM32 UART callback function, to pass received characters to the embedded-cli
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
@@ -192,6 +201,7 @@ void initializeEmbeddedCli() {
 
 void console_process(void) {
 	embeddedCliProcess(cli);
+
 }
 
 void console_init(void) {
